@@ -1,0 +1,4 @@
+cyniris_syndicate:
+    resource: "@CynirisSyndicateBundle/Resources/config/routing.yml"
+    prefix:   /
+

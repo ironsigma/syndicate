@@ -1,0 +1,3 @@
+cyniris_syndicate_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: CynirisSyndicateBundle:Default:index }
