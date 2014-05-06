@@ -205,6 +205,56 @@ XML;
             . "<a href=\"http://howe.iki.rssi.ru/GCTC/gctc_e.htm\">Star City</a>.", $post['text']);
     }
 
+    public function testFileParse() {
+        $fileReader = $this->getMock(
+            'IzyLab\FeedParserBundle\Parser\FileReader',
+            array('read', 'eof'),
+            array('myfile.xml'));
+
+        $fileReader->expects($this->at(0))
+            ->method('read')
+            ->will($this->returnValue('<rss><channel><item><title>Star</title></item></channel></rss>'));
+
+        $fileReader->expects($this->at(1))
+            ->method('read')
+            ->will($this->returnValue(null));
+
+        $fileReader->expects($this->once())
+            ->method('eof')
+            ->will($this->returnValue(true));
+
+        $this->assertEquals('myfile.xml', $fileReader->getFile());
+
+        $this->parser->parseReader($fileReader);
+        $this->assertCount(1, $this->postList);
+        $this->assertEquals('Star', $this->postList[0]['title']);
+    }
+
+    public function testUrlParse() {
+        $urlReader = $this->getMock(
+            'IzyLab\FeedParserBundle\Parser\UrlReader',
+            array('read', 'eof'),
+            array('http://yahoo.com/myrss.php'));
+
+        $urlReader->expects($this->at(0))
+            ->method('read')
+            ->will($this->returnValue('<rss><channel><item><title>Star</title></item></channel></rss>'));
+
+        $urlReader->expects($this->at(1))
+            ->method('read')
+            ->will($this->returnValue(null));
+
+        $urlReader->expects($this->once())
+            ->method('eof')
+            ->will($this->returnValue(true));
+
+        $this->assertEquals('http://yahoo.com/myrss.php', $urlReader->getUrl());
+
+        $this->parser->parseReader($urlReader);
+        $this->assertCount(1, $this->postList);
+        $this->assertEquals('Star', $this->postList[0]['title']);
+    }
+
     public function postCreated($post) {
         $this->postList[] = $post;
     }

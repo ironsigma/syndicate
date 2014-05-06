@@ -1,8 +1,6 @@
 <?php
 namespace IzyLab\FeedParserBundle\Parser;
 
-//use \Exception;
-
 class FeedParser {
     private $parser = null;
     private $observers = array();
@@ -110,13 +108,9 @@ class FeedParser {
         $this->freeParser();
     }
 
-    public function parseFile($file) {
-        if (!($fp = fopen($file, "r"))) {
-            throw new Exception("Could not open XML input file: $file");
-        }
-
-        while ($data = fread($fp, 4096)) {
-            $this->parseString($data, feof($fp));
+    public function parseReader($reader) {
+        while ($data = $reader->read()) {
+            $this->parseString($data, $reader->eof());
         }
     }
 
@@ -129,21 +123,6 @@ class FeedParser {
                         xml_get_current_line_number($this->parser),
                         xml_get_current_column_number($this->parser));
         }
-    }
-
-    public function parseUrl($url) {
-        return $this->parseString($this->fetchFeed($url));
-    }
-
-    protected function fetchFeed($url) {
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_USERAGENT, "Syndicate/0.1.alpha (http://syndicate.axisym3.net/)");
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-        $data = curl_exec($curl);
-        curl_close($curl);
-        return $data;
     }
 
     public function addObserver($observer) {
