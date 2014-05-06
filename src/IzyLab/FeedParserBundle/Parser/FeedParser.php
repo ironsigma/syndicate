@@ -27,6 +27,7 @@ class FeedParser {
         // clear data
         case 'PUBDATE':
         case 'PUBLISHED':
+        case 'UPDATED':
         case 'DESCRIPTION':
         case 'CONTENT':
         case 'TITLE':
@@ -78,9 +79,14 @@ class FeedParser {
 
         case 'PUBDATE':
         case 'PUBLISHED':
-            $this->post['published'] = strtotime($this->data);
+        case 'UPDATED':
+            $time = strtotime($this->data);
+            if ($time !== false) {
+                $this->post['published'] = $time;
+            }
             break;
 
+        case 'ID':
         case 'GUID':
             $this->post['guid'] = md5($this->data);
             break;
