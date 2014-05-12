@@ -13,11 +13,19 @@ class ParserTest extends \PHPUnit_Framework_TestCase {
         $this->parser = new FeedParser($this);
     }
 
+    public function testObjectCreation() {
+        $p = new FeedParser();
+        $p->parseString('<rss/>');
+        $p->__destruct(); // destructor test coverage
+        $p = null; 
+    }
+
     public function testEmptyXml() {
         try {
             $xml = '';
             $this->parser->parseString($xml);
         } catch (InvalidXmlException $ex) {
+            $this->assertNotNull($ex->__toString());
             $this->assertEquals(5, $ex->getCode());
             $this->assertEquals(1, $ex->getLineNumber());
             $this->assertEquals(1, $ex->getColumnNumber());

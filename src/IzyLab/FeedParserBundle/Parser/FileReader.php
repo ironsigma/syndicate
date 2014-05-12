@@ -31,9 +31,9 @@ class FileReader {
     }
 
     protected function open() {
-        $this->fp = fopen($this->file, 'r');
+        $this->fp = @fopen($this->file, 'r');
         if ($this->fp === false) {
-            throw new Exception('Could not open input file: '. $this->file);
+            throw new \Exception('Could not open input file: '. $this->file);
         }
     }
 }

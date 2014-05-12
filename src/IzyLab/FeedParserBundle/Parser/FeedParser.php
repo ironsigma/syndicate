@@ -104,8 +104,13 @@ class FeedParser {
         }
     }
 
-    public function __desctruct() {
-        $this->freeParser();
+    public function __destruct() {
+        $this->post = null;
+        $this->data = null;
+        if ($this->parser != null) {
+            xml_parser_free($this->parser);
+            $this->parser = null;
+        }
     }
 
     public function parseReader($reader) {
@@ -132,14 +137,6 @@ class FeedParser {
     private function notifyObservers() {
         foreach ($this->observers as $obj) {
             $obj->postCreated($this->post);
-        }
-    }
-
-    private function freeParser() {
-        $this->post = null;
-        $this->data = '';
-        if ($this->parser != null) {
-            xml_parser_free($this->parser);
         }
     }
 
