@@ -47,7 +47,7 @@ class Preference {
     protected $feed;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Feed")
+     * @ORM\ManyToOne(targetEntity="Folder")
      * @ORM\JoinColumn(name="folder_id", referencedColumnName="id", nullable=true)
      */
     protected $folder;
@@ -203,10 +203,10 @@ class Preference {
     /**
      * Set folder
      *
-     * @param \Cyniris\SyndicateBundle\Entity\Feed $folder
+     * @param \Cyniris\SyndicateBundle\Entity\Folder $folder
      * @return Preference
      */
-    public function setFolder(\Cyniris\SyndicateBundle\Entity\Feed $folder = null)
+    public function setFolder(\Cyniris\SyndicateBundle\Entity\Folder $folder = null)
     {
         $this->folder = $folder;
 
@@ -216,7 +216,7 @@ class Preference {
     /**
      * Get folder
      *
-     * @return \Cyniris\SyndicateBundle\Entity\Feed 
+     * @return \Cyniris\SyndicateBundle\Entity\Folder 
      */
     public function getFolder()
     {
