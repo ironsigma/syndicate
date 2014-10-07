@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="net.codejava.spring.model">
+	<class name="com.hawkprime.syndicate.model.Feed" table="feed">
+		<id name="id" column="feed_id">
+			<generator class="native" />
+		</id>
+		<property name="name" column="name" />
+		<property name="url" column="url" />
+	</class>
+</hibernate-mapping>

@@ -1,7 +1,4 @@
-/web/bundles/
-/app/cache/
-/app/logs/
-/vendor/
-*~
-*.swp
-/web/cov/
+/.classpath
+/.project
+/.settings
+/target
