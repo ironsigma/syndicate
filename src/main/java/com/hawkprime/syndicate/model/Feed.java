@@ -1,10 +1,21 @@
 package com.hawkprime.syndicate.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 /**
  * Feed.
  */
+@Entity
+@Table(name="feed")
 public class Feed {
+	@Id
+	@GeneratedValue
+	@Column(name="feed_id")
 	private Long id;
 	private String name;
 	private String url;
