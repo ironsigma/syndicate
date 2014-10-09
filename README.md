@@ -1,6 +1,6 @@
 # Syndicate
 
-In order to run the application the follwoing need to be setup.
+In order to run the application the following needs to be setup.
 
 For Tomcat update the `context.xml` to have the following:
 
@@ -31,4 +31,41 @@ Define the data source dialect
     <Environment name="jdbc/syndicate/dialect" 
                 type="java.lang.String"
                 value="org.hibernate.dialect.HSQLDialect" />
+```
+
+Create a `logback.xml` configuration file and point to it using `-Dlogback.configurationFile="/config/logback.xml"`
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/Users/m075878/Servers/config/tomcat7.log</file>
+        <append>true</append>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>tomcat7.%i.log.zip</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>3</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>5MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
 ```

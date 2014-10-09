@@ -16,10 +16,11 @@
 	<task:annotation-driven />
 	<tx:annotation-driven />
 
-	<context:component-scan base-package="com.hawkprime.syndicate.service, com.hawkprime.syndicate.dao" />
-<!-- 
+	<context:component-scan base-package="com.hawkprime.syndicate" />
+
+	<!-- RSS Parsing Task -->
 	<bean id="rssParserTask" class="com.hawkprime.syndicate.task.RssParserTask" /> 
--->
+
 	<!-- JNDI Location of property override file -->
 	<bean id="syndicatePropertiesPath" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/config/syndicate" />
