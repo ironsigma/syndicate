@@ -1,5 +1,7 @@
 package com.hawkprime.syndicate.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,23 +9,29 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="feed_update")
 public class Update {
 	@Id
 	@GeneratedValue
-	@Column(name="feed_id")
+	@Column(name="update_id")
 	private Long id;
 	
-	@Column(name="total_count")
+	@Column(name="total_count", nullable=false)
 	private Long totalCount;
 
-	@Column(name="new_count")
+	@Column(name="new_count", nullable=false)
 	private Long newCount;
 
+	@Column(nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updated;
+
 	@ManyToOne
-	@JoinColumn(name="feed_id", insertable=false, updatable=false)
+	@JoinColumn(name="feed_id", insertable=false, updatable=false, nullable=false)
 	private Feed feed;
 
 	/**
@@ -80,5 +88,19 @@ public class Update {
 	 */
 	public void setFeed(Feed feed) {
 		this.feed = feed;
+	}
+
+	/**
+	 * @return the updated
+	 */
+	public Date getUpdated() {
+		return updated;
+	}
+
+	/**
+	 * @param updated the updated to set
+	 */
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 }

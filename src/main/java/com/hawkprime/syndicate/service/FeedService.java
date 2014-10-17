@@ -17,6 +17,6 @@ public class FeedService {
 	private FeedDao feedDao;
 
 	public List<Feed> list() {
-		return feedDao.list();
+		return feedDao.findAll();
 	}
 }

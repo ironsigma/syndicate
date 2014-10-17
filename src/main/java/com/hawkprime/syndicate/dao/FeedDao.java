@@ -1,9 +1,12 @@
 package com.hawkprime.syndicate.dao;
 
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 import com.hawkprime.syndicate.model.Feed;
 
-public interface FeedDao {
-	List<Feed> list();
+/**
+ * Feed DAO.
+ */
+@Repository
+public class FeedDao extends GenericDao<Feed> {
 }

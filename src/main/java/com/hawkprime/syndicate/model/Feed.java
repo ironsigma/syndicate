@@ -17,7 +17,11 @@ public class Feed {
 	@GeneratedValue
 	@Column(name="feed_id")
 	private Long id;
+	
+	@Column(nullable=false)
 	private String name;
+
+	@Column(nullable=false)
 	private String url;
 
 	/**

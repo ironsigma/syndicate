@@ -19,17 +19,25 @@ public class Post {
 	@GeneratedValue
 	@Column(name="feed_id")
 	private Long id;
+
+	@Column(nullable=false)
 	private String title;
 
+	@Column(nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date published;
 
+	@Column(nullable=false)
 	private String text;
+
+	@Column(nullable=false)
 	private String link;
+
+	@Column(nullable=false)
 	private String guid;
 
 	@ManyToOne
-	@JoinColumn(name="feed_id", insertable=false, updatable=false)
+	@JoinColumn(name="feed_id", insertable=false, updatable=false, nullable=false)
 	private Feed feed;
 
 	/**
