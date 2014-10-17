@@ -50,7 +50,6 @@
 		</property>
 		<property name="jpaProperties">
 			<util:map>
-				<entry key="hibernate.show_sql" value="${syndicate.datasource.show_sql}" />
 				<entry key="hibernate.dialect">
 					<jee:jndi-lookup jndi-name="java:comp/env/jdbc/syndicate/dialect" />
 				</entry>

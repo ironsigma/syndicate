@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Environment override="true" name="config/syndicate" type="java.lang.String"
+		value="file:///Users/m075878/Servers/config/syndicate.properties" />
+
+	<Environment name="jdbc/syndicate/dialect" type="java.lang.String"
+		value="org.hibernate.dialect.HSQLDialect" />
+
+	<Resource name="jdbc/syndicate/datasource" auth="Container"
+		type="javax.sql.DataSource" maxActive="8" maxIdle="2" username="SA"
+		driverClassName="org.hsqldb.jdbc.JDBCDriver"
+		url="jdbc:hsqldb:file:///Users/m075878/Servers/config/syndicate-db" />
+</Context>

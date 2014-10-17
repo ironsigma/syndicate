@@ -2,7 +2,7 @@
 
 In order to run the application the following needs to be setup.
 
-For Tomcat update the `context.xml` to have the following:
+For Tomcat update the `config/Catalina/localhost/syndicate.xml` to have the following:
 
 Define the location of the configuration files
 
@@ -38,14 +38,7 @@ Create a `logback.xml` configuration file and point to it using `-Dlogback.confi
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>/Users/m075878/Servers/config/tomcat7.log</file>
         <append>true</append>
 
@@ -59,13 +52,12 @@ Create a `logback.xml` configuration file and point to it using `-Dlogback.confi
             <maxFileSize>5MB</maxFileSize>
         </triggeringPolicy>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+            <pattern>%date [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <root level="debug">
-        <appender-ref ref="FILE" />
-        <appender-ref ref="STDOUT" />
+    <root level="warn">
+        <appender-ref ref="file" />
     </root>
 </configuration>
 ```
