@@ -1,7 +1,5 @@
 package com.hawkprime.syndicate.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,23 +7,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
 
 @Entity
 @Table(name="post")
 public class Post {
 	@Id
 	@GeneratedValue
-	@Column(name="feed_id")
+	@Column(name="post_id")
 	private Long id;
 
 	@Column(nullable=false)
 	private String title;
 
 	@Column(nullable=false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date published;
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+	private LocalDateTime published;
 
 	@Column(nullable=false)
 	private String text;
@@ -71,14 +70,14 @@ public class Post {
 	/**
 	 * @return the published
 	 */
-	public Date getPublished() {
+	public LocalDateTime getPublished() {
 		return published;
 	}
 
 	/**
 	 * @param published the published to set
 	 */
-	public void setPublished(Date published) {
+	public void setPublished(LocalDateTime published) {
 		this.published = published;
 	}
 

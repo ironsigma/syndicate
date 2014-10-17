@@ -7,6 +7,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+/**
+ * Generic DAO.
+ * @param <T> Entity type.
+ */
 public abstract class GenericDao<T> {
 	
 	@PersistenceContext

@@ -1,7 +1,5 @@
 package com.hawkprime.syndicate.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,15 +7,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
 
 @Entity
 @Table(name="feed_update")
 public class Update {
 	@Id
 	@GeneratedValue
-	@Column(name="update_id")
+	@Column(name="feed_update_id")
 	private Long id;
 	
 	@Column(name="total_count", nullable=false)
@@ -27,8 +26,8 @@ public class Update {
 	private Long newCount;
 
 	@Column(nullable=false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated;
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+	private LocalDateTime updated;
 
 	@ManyToOne
 	@JoinColumn(name="feed_id", insertable=false, updatable=false, nullable=false)
@@ -93,14 +92,14 @@ public class Update {
 	/**
 	 * @return the updated
 	 */
-	public Date getUpdated() {
+	public LocalDateTime getUpdated() {
 		return updated;
 	}
 
 	/**
 	 * @param updated the updated to set
 	 */
-	public void setUpdated(Date updated) {
+	public void setUpdated(LocalDateTime updated) {
 		this.updated = updated;
 	}
 }
