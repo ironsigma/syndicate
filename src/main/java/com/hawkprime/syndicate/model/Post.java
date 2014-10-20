@@ -36,7 +36,7 @@ public class Post {
 	private String guid;
 
 	@ManyToOne
-	@JoinColumn(name="feed_id", insertable=false, updatable=false, nullable=false)
+	@JoinColumn(name="feed_id", nullable=false)
 	private Feed feed;
 
 	/**

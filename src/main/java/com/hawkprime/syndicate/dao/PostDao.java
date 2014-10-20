@@ -9,7 +9,7 @@ import com.hawkprime.syndicate.model.Post;
  */
 @Repository
 public class PostDao extends GenericDao<Post> {
-	public boolean isPosExistsByGuid(String guid) {
+	public boolean doesPosExistsWithGuid(String guid) {
 		return 0 != (Long) entityManager
 				.createQuery("SELECT COUNT(guid) FROM Post WHERE guid=:guid")
 				.setParameter("guid", guid)
