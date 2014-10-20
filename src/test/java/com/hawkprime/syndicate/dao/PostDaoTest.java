@@ -2,12 +2,8 @@ package com.hawkprime.syndicate.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -23,20 +19,12 @@ import com.hawkprime.syndicate.model.builder.PostBuilder;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/testContext.xml")
 public class PostDaoTest {
-	@PersistenceContext
-	private EntityManager entityManager;
-	
 	@Autowired
 	private PostDao postDao;
 
 	@Autowired
 	private FeedDao feedDao;
 
-	@Test
-	public void shouldHaveAnEntityManager() {
-		assertNotNull(entityManager);
-	}
-	
 	@Test
 	public void readPost() {
 		Post post = postDao.findById(1L);
