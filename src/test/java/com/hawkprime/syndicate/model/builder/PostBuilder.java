@@ -6,16 +6,19 @@ import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Post;
 import com.hawkprime.syndicate.util.Sha1;
 
+/**
+ * Post Builder.
+ */
 public class PostBuilder {
 	private String title = "Post";
 	private String link = "http://myfeed.com/post";
 	private String text = "My Post";
 	private LocalDateTime published = new LocalDateTime();
-	private Feed feed = null;
+	private Feed feed;
 	private String guid = published.toString();
 
 	public Post build() {
-		Post post = new Post();
+		final Post post = new Post();
 		post.setTitle(title);
 		post.setLink(link);
 		post.setGuid(Sha1.digest(guid));
@@ -24,33 +27,33 @@ public class PostBuilder {
 		post.setFeed(feed);
 		return post;
 	}
-	
-	public PostBuilder withTitle(String title) {
+
+	public PostBuilder withTitle(final String title) {
 		this.title = title;
 		return this;
 	}
-	
-	public PostBuilder withLink(String link) {
+
+	public PostBuilder withLink(final String link) {
 		this.link = link;
 		return this;
 	}
-	
-	public PostBuilder withGuid(String guid) {
+
+	public PostBuilder withGuid(final String guid) {
 		this.guid = guid;
 		return this;
 	}
-	
-	public PostBuilder withText(String text) {
+
+	public PostBuilder withText(final String text) {
 		this.text = text;
 		return this;
 	}
-	
-	public PostBuilder withPublished(LocalDateTime published) {
+
+	public PostBuilder withPublished(final LocalDateTime published) {
 		this.published = published;
 		return this;
 	}
-	
-	public PostBuilder withFeed(Feed feed) {
+
+	public PostBuilder withFeed(final Feed feed) {
 		this.feed = feed;
 		return this;
 	}

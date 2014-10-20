@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
+/**
+ * Post Entity.
+ */
 @Entity
 @Table(name="post")
 public class Post {
@@ -49,7 +52,7 @@ public class Post {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
@@ -63,7 +66,7 @@ public class Post {
 	/**
 	 * @param title the title to set
 	 */
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
@@ -77,7 +80,7 @@ public class Post {
 	/**
 	 * @param published the published to set
 	 */
-	public void setPublished(LocalDateTime published) {
+	public void setPublished(final LocalDateTime published) {
 		this.published = published;
 	}
 
@@ -91,7 +94,7 @@ public class Post {
 	/**
 	 * @param text the text to set
 	 */
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 
@@ -105,7 +108,7 @@ public class Post {
 	/**
 	 * @param link the link to set
 	 */
-	public void setLink(String link) {
+	public void setLink(final String link) {
 		this.link = link;
 	}
 
@@ -119,7 +122,7 @@ public class Post {
 	/**
 	 * @param guid the guid to set
 	 */
-	public void setGuid(String guid) {
+	public void setGuid(final String guid) {
 		this.guid = guid;
 	}
 
@@ -133,7 +136,7 @@ public class Post {
 	/**
 	 * @param feed the feed to set
 	 */
-	public void setFeed(Feed feed) {
+	public void setFeed(final Feed feed) {
 		this.feed = feed;
 	}
 }

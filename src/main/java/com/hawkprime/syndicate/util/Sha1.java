@@ -8,9 +8,14 @@ import java.security.NoSuchAlgorithmException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * SHA1 Message Digest.
+ */
 public final class Sha1 {
 	private static final Logger LOG = LoggerFactory.getLogger(Sha1.class);
 	private static MessageDigest messageDigest;
+
+	private Sha1() { /* empty */ }
 
 	private static void initMessageDigest() {
 		try {
@@ -19,9 +24,9 @@ public final class Sha1 {
 			LOG.error("Unable to create message digest.");
 		}
 	}
-	
-	public static String digest(String string) {
-		if (messageDigest == null ){
+
+	public static String digest(final String string) {
+		if (messageDigest == null) {
 			initMessageDigest();
 		}
 		try {

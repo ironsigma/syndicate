@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
+/**
+ * Feed Update Entity.
+ */
 @Entity
 @Table(name="feed_update")
 public class Update {
@@ -18,7 +21,7 @@ public class Update {
 	@GeneratedValue
 	@Column(name="feed_update_id")
 	private Long id;
-	
+
 	@Column(name="total_count", nullable=false)
 	private Long totalCount;
 
@@ -43,7 +46,7 @@ public class Update {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
@@ -57,7 +60,7 @@ public class Update {
 	/**
 	 * @param totalCount the totalCount to set
 	 */
-	public void setTotalCount(Long totalCount) {
+	public void setTotalCount(final Long totalCount) {
 		this.totalCount = totalCount;
 	}
 
@@ -71,7 +74,7 @@ public class Update {
 	/**
 	 * @param newCount the newCount to set
 	 */
-	public void setNewCount(Long newCount) {
+	public void setNewCount(final Long newCount) {
 		this.newCount = newCount;
 	}
 
@@ -85,7 +88,7 @@ public class Update {
 	/**
 	 * @param feed the feed to set
 	 */
-	public void setFeed(Feed feed) {
+	public void setFeed(final Feed feed) {
 		this.feed = feed;
 	}
 
@@ -99,7 +102,7 @@ public class Update {
 	/**
 	 * @param updated the updated to set
 	 */
-	public void setUpdated(LocalDateTime updated) {
+	public void setUpdated(final LocalDateTime updated) {
 		this.updated = updated;
 	}
 }

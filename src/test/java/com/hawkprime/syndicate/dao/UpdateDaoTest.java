@@ -11,7 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hawkprime.syndicate.model.Update;
 import com.hawkprime.syndicate.model.builder.UpdateBuilder;
 
-public class UpdateDaoTest extends BaseDaoTest {
+/**
+ * Update DAO Tests.
+ */
+public class UpdateDaoTest extends AbstractDaoTest {
 	@Autowired
 	private FeedDao feedDao;
 
@@ -20,17 +23,20 @@ public class UpdateDaoTest extends BaseDaoTest {
 
 	@Test
 	public void readUpdate() {
-		Update update = updateDao.findById(1L);
-		assertEquals(new Long(120), update.getTotalCount());
-		assertEquals(new Long(13), update.getNewCount());
+		final Long expectedTotal = 120L;
+		final Long expectedNewCount = 13L;
+
+		final Update update = updateDao.findById(1L);
+		assertEquals(expectedTotal, update.getTotalCount());
+		assertEquals(expectedNewCount, update.getNewCount());
 	}
 
 	@Test
 	@Transactional
 	public void createUpdate() {
-		Long totalCount = 530L;
-		Long newCount = 330L;
-		
+		final Long totalCount = 530L;
+		final Long newCount = 330L;
+
 		Update update = new UpdateBuilder()
 				.withTotalCount(totalCount)
 				.withNewCount(newCount)
@@ -39,15 +45,15 @@ public class UpdateDaoTest extends BaseDaoTest {
 
 		updateDao.create(update);
 
-		Long id = update.getId();
+		final Long id = update.getId();
 		update = null;
-		
+
 		update = updateDao.findById(id);
 
 		assertEquals(totalCount, update.getTotalCount());
 		assertEquals(newCount, update.getNewCount());
 	}
-	
+
 	@Test
 	@Transactional
 	public void updateUpdate() {
@@ -59,15 +65,15 @@ public class UpdateDaoTest extends BaseDaoTest {
 		updateDao.create(update);
 
 		// clear out
-		Long id = update.getId();
+		final Long id = update.getId();
 		update = null;
 
 		// fetch back
 		update = updateDao.findById(id);
 
 		// change values
-		Long totalCount = 600L;
-		Long newCount = 250L;
+		final Long totalCount = 600L;
+		final Long newCount = 250L;
 
 		// update Update
 		update.setTotalCount(totalCount);
@@ -81,7 +87,7 @@ public class UpdateDaoTest extends BaseDaoTest {
 
 		// fetch back
 		update = updateDao.findById(id);
-		
+
 		// test
 		assertEquals(totalCount, update.getTotalCount());
 		assertEquals(newCount, update.getNewCount());
@@ -96,9 +102,9 @@ public class UpdateDaoTest extends BaseDaoTest {
 
 		updateDao.create(update);
 
-		Long id = update.getId();
+		final Long id = update.getId();
 		update = null;
-		
+
 		updateDao.delete(id);
 
 		update = updateDao.findById(id);
@@ -108,17 +114,23 @@ public class UpdateDaoTest extends BaseDaoTest {
 	@Test
 	@Transactional
 	public void findLatest() {
-		Update nonExistentUpdate = updateDao.findLatestUpdateByFeedId(0L);
+		final Update nonExistentUpdate = updateDao.findLatestUpdateByFeedId(0L);
 		assertNull(nonExistentUpdate);
 
+		final Long feed1Total = 120L;
+		final Long feed1New = 5L;
+
 		Update update = updateDao.findLatestUpdateByFeedId(1L);
-		assertEquals(new Long(120), update.getTotalCount());
-		assertEquals(new Long(5), update.getNewCount());
-		assertEquals(new LocalDateTime(2014, 10, 17, 14, 38, 0), update.getUpdated());
+		assertEquals(feed1Total, update.getTotalCount());
+		assertEquals(feed1New, update.getNewCount());
+		assertEquals(LocalDateTime.parse("2014-10-17T14:38:00"), update.getUpdated());
+
+		final Long feed2Total = 980L;
+		final Long feed2New = 63L;
 
 		update = updateDao.findLatestUpdateByFeedId(2L);
-		assertEquals(new Long(980), update.getTotalCount());
-		assertEquals(new Long(63), update.getNewCount());
-		assertEquals(new LocalDateTime(2014, 10, 17, 18, 00, 1), update.getUpdated());
+		assertEquals(feed2Total, update.getTotalCount());
+		assertEquals(feed2New, update.getNewCount());
+		assertEquals(LocalDateTime.parse("2014-10-17T18:00:01"), update.getUpdated());
 	}
 }

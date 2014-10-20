@@ -10,13 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.builder.FeedBuilder;
 
-public class FeedDaoTest extends BaseDaoTest {
+/**
+ * Feed Dao Tests.
+ */
+public class FeedDaoTest extends AbstractDaoTest {
 	@Autowired
 	private FeedDao feedDao;
 
 	@Test
 	public void readFeed() {
-		Feed feed = feedDao.findById(1L);
+		final Feed feed = feedDao.findById(1L);
 		assertEquals("MyFeed", feed.getName());
 		assertEquals("http://myfeed.com/rss", feed.getUrl());
 	}
@@ -24,9 +27,9 @@ public class FeedDaoTest extends BaseDaoTest {
 	@Test
 	@Transactional
 	public void createFeed() {
-		String name = "Another Feed";
-		String url = "http://myfeed.com/another_Feed";
-		
+		final String name = "Another Feed";
+		final String url = "http://myfeed.com/another_Feed";
+
 		Feed feed = new FeedBuilder()
 				.withName("Another Feed")
 				.withUrl(url)
@@ -34,15 +37,15 @@ public class FeedDaoTest extends BaseDaoTest {
 
 		feedDao.create(feed);
 
-		Long id = feed.getId();
+		final Long id = feed.getId();
 		feed = null;
-		
+
 		feed = feedDao.findById(id);
 
 		assertEquals(name, feed.getName());
 		assertEquals(url, feed.getUrl());
 	}
-	
+
 	@Test
 	@Transactional
 	public void updateFeed() {
@@ -52,15 +55,15 @@ public class FeedDaoTest extends BaseDaoTest {
 		feedDao.create(feed);
 
 		// clear out
-		Long id = feed.getId();
+		final Long id = feed.getId();
 		feed = null;
 
 		// fetch back
 		feed = feedDao.findById(id);
 
 		// change values
-		String name = "Awsome Feed";
-		String url = "http://myfeed.com/awsome_Feed";
+		final String name = "Awsome Feed";
+		final String url = "http://myfeed.com/awsome_Feed";
 
 		// update Feed
 		feed.setName(name);
@@ -74,7 +77,7 @@ public class FeedDaoTest extends BaseDaoTest {
 
 		// fetch back
 		feed = feedDao.findById(id);
-		
+
 		// test
 		assertEquals(name, feed.getName());
 		assertEquals(url, feed.getUrl());
@@ -87,9 +90,9 @@ public class FeedDaoTest extends BaseDaoTest {
 
 		feedDao.create(feed);
 
-		Long id = feed.getId();
+		final Long id = feed.getId();
 		feed = null;
-		
+
 		feedDao.delete(id);
 
 		feed = feedDao.findById(id);

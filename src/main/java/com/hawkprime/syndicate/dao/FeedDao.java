@@ -8,5 +8,5 @@ import com.hawkprime.syndicate.model.Feed;
  * Feed DAO.
  */
 @Repository
-public class FeedDao extends GenericDao<Feed> {
+public class FeedDao extends AbstractDao<Feed> {
 }

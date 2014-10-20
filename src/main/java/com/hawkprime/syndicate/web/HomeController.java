@@ -18,15 +18,15 @@ import com.hawkprime.syndicate.service.FeedService;
 @Controller
 public class HomeController {
 	private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
-	
+
 	@Autowired
 	private FeedService feedService;
 
-	@RequestMapping({"/", "/home"})
+	@RequestMapping({ "/", "/home" })
 	public ModelAndView home() {
 		LOG.info("handling: /home");
-		List<Feed> feeds = feedService.list();
-		ModelAndView mav = new ModelAndView("home");
+		final List<Feed> feeds = feedService.list();
+		final ModelAndView mav = new ModelAndView("home");
 		mav.getModel().put("name", feeds.get(0).getName());
 		mav.getModel().put("url", feeds.get(0).getUrl());
 		return mav;

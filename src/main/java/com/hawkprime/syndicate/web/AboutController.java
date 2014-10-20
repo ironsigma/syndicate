@@ -12,11 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AboutController {
 	private static final Logger LOG = LoggerFactory.getLogger(AboutController.class);
-	
+
 	@RequestMapping("/about")
 	public ModelAndView about() {
 		LOG.info("handling: /about");
-		ModelAndView mav = new ModelAndView("about");
+		final ModelAndView mav = new ModelAndView("about");
 		return mav;
 	}
 

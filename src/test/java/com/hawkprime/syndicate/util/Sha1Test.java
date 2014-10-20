@@ -4,8 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+/**
+ * SHA1 Tests.
+ */
 public class Sha1Test {
-	
+
 	@Test
 	public void testSha1() {
 		assertEquals("da39a3ee5e6b4b0d3255bfef95601890afd80709",

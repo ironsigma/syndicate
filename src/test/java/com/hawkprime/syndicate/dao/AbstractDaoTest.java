@@ -4,7 +4,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+/**
+ * Base DaO Test Class.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/testContext.xml")
-abstract public class BaseDaoTest {
+public abstract class AbstractDaoTest {
 }

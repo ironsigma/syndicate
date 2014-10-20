@@ -1,7 +1,6 @@
 package com.hawkprime.syndicate.dao;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,42 +10,46 @@ import javax.persistence.PersistenceContext;
  * Generic DAO.
  * @param <T> Entity type.
  */
-public abstract class GenericDao<T> {
-	
+public abstract class AbstractDao<T> {
+
 	@PersistenceContext
-	protected EntityManager entityManager;
-	
-	private Class<T> entityType;
-	
+	private EntityManager entityManager;
+
+	private final Class<T> entityType;
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public GenericDao() {
-		Type t = getClass().getGenericSuperclass();
-		ParameterizedType pt = (ParameterizedType) t;
-		entityType = (Class) pt.getActualTypeArguments()[0];
+	public AbstractDao() {
+		entityType = (Class) ((ParameterizedType) getClass()
+				.getGenericSuperclass())
+				.getActualTypeArguments()[0];
 	}
 
-	public T create(T t) {
+	public T create(final T t) {
 		entityManager.persist(t);
 		return t;
 	}
 
-	public void delete(Object id) {
+	public void delete(final Object id) {
 		entityManager.remove(entityManager.getReference(entityType, id));
 	}
 
-	public T findById(Object id) {
-		return (T) entityManager.find(entityType, id);
+	public T findById(final Object id) {
+		return entityManager.find(entityType, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		final StringBuffer queryString = new StringBuffer("SELECT e FROM ");
 		queryString.append(entityType.getSimpleName()).append(" e ");
-		return (List<T>) entityManager.createQuery(queryString.toString()).getResultList();
+		return entityManager.createQuery(queryString.toString()).getResultList();
 	}
 
-	public T update(T t) {
+	public T update(final T t) {
 		return entityManager.merge(t);
+	}
+
+	protected EntityManager getEntityManager() {
+		return entityManager;
 	}
 
 }

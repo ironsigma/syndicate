@@ -8,9 +8,9 @@ import com.hawkprime.syndicate.model.Post;
  * Post DAO.
  */
 @Repository
-public class PostDao extends GenericDao<Post> {
-	public boolean doesPosExistsWithGuid(String guid) {
-		return 0 != (Long) entityManager
+public class PostDao extends AbstractDao<Post> {
+	public boolean doesPosExistsWithGuid(final String guid) {
+		return 0 != (Long) getEntityManager()
 				.createQuery("SELECT COUNT(guid) FROM Post WHERE guid=:guid")
 				.setParameter("guid", guid)
 				.getSingleResult();
