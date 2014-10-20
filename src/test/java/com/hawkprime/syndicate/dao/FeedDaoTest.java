@@ -4,26 +4,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.builder.FeedBuilder;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/testContext.xml")
-public class FeedDaoTest {
+public class FeedDaoTest extends BaseDaoTest {
 	@Autowired
 	private FeedDao feedDao;
 
 	@Test
 	public void readFeed() {
-		Feed Feed = feedDao.findById(1L);
-		assertEquals("MyFeed", Feed.getName());
-		assertEquals("http://myfeed.com/rss", Feed.getUrl());
+		Feed feed = feedDao.findById(1L);
+		assertEquals("MyFeed", feed.getName());
+		assertEquals("http://myfeed.com/rss", feed.getUrl());
 	}
 
 	@Test
@@ -32,72 +27,72 @@ public class FeedDaoTest {
 		String name = "Another Feed";
 		String url = "http://myfeed.com/another_Feed";
 		
-		Feed Feed = new FeedBuilder()
+		Feed feed = new FeedBuilder()
 				.withName("Another Feed")
 				.withUrl(url)
 				.build();
 
-		feedDao.create(Feed);
+		feedDao.create(feed);
 
-		Long id = Feed.getId();
-		Feed = null;
+		Long id = feed.getId();
+		feed = null;
 		
-		Feed = feedDao.findById(id);
+		feed = feedDao.findById(id);
 
-		assertEquals(name, Feed.getName());
-		assertEquals(url, Feed.getUrl());
+		assertEquals(name, feed.getName());
+		assertEquals(url, feed.getUrl());
 	}
 	
 	@Test
 	@Transactional
 	public void updateFeed() {
-		Feed Feed = new FeedBuilder().build();
+		Feed feed = new FeedBuilder().build();
 
 		// persist
-		feedDao.create(Feed);
+		feedDao.create(feed);
 
 		// clear out
-		Long id = Feed.getId();
-		Feed = null;
+		Long id = feed.getId();
+		feed = null;
 
 		// fetch back
-		Feed = feedDao.findById(id);
+		feed = feedDao.findById(id);
 
 		// change values
 		String name = "Awsome Feed";
 		String url = "http://myfeed.com/awsome_Feed";
 
 		// update Feed
-		Feed.setName(name);
-		Feed.setUrl(url);
+		feed.setName(name);
+		feed.setUrl(url);
 
 		// persist
-		feedDao.update(Feed);
+		feedDao.update(feed);
 
 		// clear out
-		Feed = null;
+		feed = null;
 
 		// fetch back
-		Feed = feedDao.findById(id);
+		feed = feedDao.findById(id);
 		
 		// test
-		assertEquals(name, Feed.getName());
-		assertEquals(url, Feed.getUrl());
+		assertEquals(name, feed.getName());
+		assertEquals(url, feed.getUrl());
 	}
 
 	@Test
 	@Transactional
 	public void deleteFeed() {
-		Feed Feed = new FeedBuilder().build();
+		Feed feed = new FeedBuilder().build();
 
-		feedDao.create(Feed);
+		feedDao.create(feed);
 
-		Long id = Feed.getId();
-		Feed = null;
+		Long id = feed.getId();
+		feed = null;
 		
 		feedDao.delete(id);
 
-		Feed = feedDao.findById(id);
-		assertNull(Feed);
+		feed = feedDao.findById(id);
+		assertNull(feed);
 	}
 }
