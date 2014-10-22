@@ -1,8 +1,8 @@
 -- Feeds
-INSERT INTO feed (feed_id, name, url)
-VALUES (1, 'MyFeed', 'http://myfeed.com/rss');
-INSERT INTO feed (feed_id, name, url)
-VALUES (2, 'Another Feed', 'http://anotherfeed.com/rss');
+INSERT INTO feed (feed_id, name, url, update_frequency, active)
+VALUES (1, 'MyFeed', 'http://myfeed.com/rss', 60, 1);
+INSERT INTO feed (feed_id, name, url, update_frequency, active)
+VALUES (2, 'Another Feed', 'http://anotherfeed.com/rss', 30, 0);
 
 -- Posts
 INSERT INTO post (post_id, title, published, link, guid, text, feed_id)

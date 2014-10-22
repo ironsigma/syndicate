@@ -19,9 +19,12 @@ public class FeedDaoTest extends AbstractDaoTest {
 
 	@Test
 	public void readFeed() {
+		final Long expectedUpdateFrequency = 60L;
 		final Feed feed = feedDao.findById(1L);
 		assertEquals("MyFeed", feed.getName());
 		assertEquals("http://myfeed.com/rss", feed.getUrl());
+		assertEquals(true, feed.isActive());
+		assertEquals(expectedUpdateFrequency, feed.getUpdateFrequency());
 	}
 
 	@Test
@@ -29,10 +32,14 @@ public class FeedDaoTest extends AbstractDaoTest {
 	public void createFeed() {
 		final String name = "Another Feed";
 		final String url = "http://myfeed.com/another_Feed";
+		final Boolean active = true;
+		final Long updateFrequency = 30L;
 
 		Feed feed = new FeedBuilder()
 				.withName("Another Feed")
 				.withUrl(url)
+				.withUpdateFrequency(updateFrequency)
+				.withIsActive(active)
 				.build();
 
 		feedDao.create(feed);
@@ -44,6 +51,8 @@ public class FeedDaoTest extends AbstractDaoTest {
 
 		assertEquals(name, feed.getName());
 		assertEquals(url, feed.getUrl());
+		assertEquals(active, feed.isActive());
+		assertEquals(updateFrequency, feed.getUpdateFrequency());
 	}
 
 	@Test
@@ -64,10 +73,14 @@ public class FeedDaoTest extends AbstractDaoTest {
 		// change values
 		final String name = "Awsome Feed";
 		final String url = "http://myfeed.com/awsome_Feed";
+		final Boolean active = false;
+		final Long updateFrequency = 80L;
 
 		// update Feed
 		feed.setName(name);
 		feed.setUrl(url);
+		feed.setUpdateFrequency(updateFrequency);
+		feed.setActive(active);
 
 		// persist
 		feedDao.update(feed);
@@ -81,6 +94,8 @@ public class FeedDaoTest extends AbstractDaoTest {
 		// test
 		assertEquals(name, feed.getName());
 		assertEquals(url, feed.getUrl());
+		assertEquals(active, feed.isActive());
+		assertEquals(updateFrequency, feed.getUpdateFrequency());
 	}
 
 	@Test

@@ -2,6 +2,8 @@ CREATE TABLE feed (
 	feed_id INTEGER IDENTITY,
 	name VARCHAR(255) NOT NULL,
 	url VARCHAR(255) NOT NULL,
+	update_frequency INTEGER NOT NULL,
+	active BOOLEAN NOT NULL,
 );
 
 CREATE TABLE post (
@@ -15,6 +17,8 @@ CREATE TABLE post (
 	FOREIGN KEY (feed_id) REFERENCES feed (feed_id),
 	CONSTRAINT uc_post_guid UNIQUE (guid),
 );
+
+CREATE INDEX post_guid_idx ON post (guid);
 
 CREATE TABLE feed_update (
 	feed_update_id INTEGER IDENTITY,

@@ -24,6 +24,12 @@ public class Feed {
 	@Column(nullable=false)
 	private String url;
 
+	@Column(nullable=false)
+	private Boolean active;
+
+	@Column(nullable=false, name="update_frequency")
+	private Long updateFrequency;
+
 	/**
 	 * @return the id
 	 */
@@ -59,5 +65,29 @@ public class Feed {
 	 */
 	public void setUrl(final String url) {
 		this.url = url;
+	}
+	/**
+	 * @return the active
+	 */
+	public Boolean isActive() {
+		return active;
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(final Boolean active) {
+		this.active = active;
+	}
+	/**
+	 * @return the updateFrequency
+	 */
+	public Long getUpdateFrequency() {
+		return updateFrequency;
+	}
+	/**
+	 * @param updateFrequency the updateFrequency to set
+	 */
+	public void setUpdateFrequency(final Long updateFrequency) {
+		this.updateFrequency = updateFrequency;
 	}
 }
