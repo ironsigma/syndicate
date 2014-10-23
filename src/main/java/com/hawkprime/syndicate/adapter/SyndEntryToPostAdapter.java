@@ -20,17 +20,22 @@ public final class SyndEntryToPostAdapter {
 	 * @param entry Syndicate entry.
 	 * @param feed Parent feed.
 	 * @return The post object.
+	 * @throws Exception
 	 */
-	public static Post convert(final SyndEntry entry, final Feed feed) {
+	public static Post convert(final SyndEntry entry, final Feed feed) throws SyndEntryToPostAdapterException {
+		if (entry.getTitle() == null || entry.getTitle().trim().isEmpty()) {
+			throw new SyndEntryToPostAdapterException("Title is required");
+		}
 		final SyndContent content = entry.getDescription();
 		final Post post = new Post();
-		post.setId(null);
 		post.setFeed(feed);
 		post.setTitle(entry.getTitle());
 		post.setGuid(generateGuid(entry));
 		post.setLink(entry.getLink());
 		post.setPublished(new LocalDateTime(entry.getPublishedDate()));
-		post.setText(content.getValue());
+		if (content != null) {
+			post.setText(content.getValue());
+		}
 		return post;
 	}
 
@@ -42,7 +47,11 @@ public final class SyndEntryToPostAdapter {
 	private static String generateGuid(final SyndEntry entry) {
 		String guid = entry.getUri();
 		if (guid == null || guid.trim().isEmpty()) {
-			guid = entry.getTitle() + entry.getPublishedDate().getTime();
+			final StringBuilder sb = new StringBuilder(entry.getTitle());
+			if (entry.getPublishedDate() != null) {
+				sb.append(entry.getPublishedDate().getTime());
+			}
+			guid = sb.toString();
 		}
 		return Sha1.digest(guid);
 	}

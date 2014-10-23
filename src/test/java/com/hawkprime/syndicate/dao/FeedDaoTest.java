@@ -1,7 +1,8 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
@@ -20,18 +21,24 @@ public class FeedDaoTest extends AbstractDaoTest {
 	private FeedDao feedDao;
 
 	@Test
-	public void readFeed() {
+	public void findAllTest() {
+		final List<Feed> allFeeds = feedDao.findAll();
+		assertThat(allFeeds.size(), is(2));
+	}
+
+	@Test
+	public void readFeedTest() {
 		final Long expectedUpdateFrequency = 60L;
 		final Feed feed = feedDao.findById(1L);
-		assertEquals("MyFeed", feed.getName());
-		assertEquals("http://myfeed.com/rss", feed.getUrl());
-		assertEquals(true, feed.isActive());
-		assertEquals(expectedUpdateFrequency, feed.getUpdateFrequency());
+		assertThat(feed.getName(), is("MyFeed"));
+		assertThat(feed.getUrl(), is("http://myfeed.com/rss"));
+		assertThat(feed.isActive(), is(true));
+		assertThat(feed.getUpdateFrequency(), is(expectedUpdateFrequency));
 	}
 
 	@Test
 	@Transactional
-	public void createFeed() {
+	public void createFeedTest() {
 		final String name = "Another Feed";
 		final String url = "http://myfeed.com/another_Feed";
 		final Boolean active = true;
@@ -51,15 +58,15 @@ public class FeedDaoTest extends AbstractDaoTest {
 
 		feed = feedDao.findById(id);
 
-		assertEquals(name, feed.getName());
-		assertEquals(url, feed.getUrl());
-		assertEquals(active, feed.isActive());
-		assertEquals(updateFrequency, feed.getUpdateFrequency());
+		assertThat(feed.getName(), is(name));
+		assertThat(feed.getUrl(), is(url));
+		assertThat(feed.isActive(), is(active));
+		assertThat(feed.getUpdateFrequency(), is(updateFrequency));
 	}
 
 	@Test
 	@Transactional
-	public void updateFeed() {
+	public void updateFeedTest() {
 		Feed feed = new FeedBuilder().build();
 
 		// persist
@@ -94,15 +101,15 @@ public class FeedDaoTest extends AbstractDaoTest {
 		feed = feedDao.findById(id);
 
 		// test
-		assertEquals(name, feed.getName());
-		assertEquals(url, feed.getUrl());
-		assertEquals(active, feed.isActive());
-		assertEquals(updateFrequency, feed.getUpdateFrequency());
+		assertThat(feed.getName(), is(name));
+		assertThat(feed.getUrl(), is(url));
+		assertThat(feed.isActive(), is(active));
+		assertThat(feed.getUpdateFrequency(), is(updateFrequency));
 	}
 
 	@Test
 	@Transactional
-	public void deleteFeed() {
+	public void deleteFeedTest() {
 		Feed feed = new FeedBuilder().build();
 
 		feedDao.create(feed);
@@ -113,15 +120,15 @@ public class FeedDaoTest extends AbstractDaoTest {
 		feedDao.delete(id);
 
 		feed = feedDao.findById(id);
-		assertNull(feed);
+		assertThat(feed, is(nullValue()));
 	}
 
 	@Test
 	@Transactional
-	public void findActiveFeeds() {
+	public void findActiveFeedsTest() {
 		final Long activeFeedId = 1L;
 		final List<Feed> feedList = feedDao.findActive();
-		assertEquals(1, feedList.size());
-		assertEquals(activeFeedId, feedList.get(0).getId());
+		assertThat(feedList.size(), is(1));
+		assertThat(feedList.get(0).getId(), is(activeFeedId));
 	}
 }

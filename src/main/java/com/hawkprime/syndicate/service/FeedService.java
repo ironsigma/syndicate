@@ -56,6 +56,17 @@ public class FeedService {
 	}
 
 	@Transactional(readOnly=true)
+	public long postPerMinute(final Feed feed) {
+		final Update oldestUpdate = updateDao.findOldestUpdateByFeedId(feed.getId());
+		if (oldestUpdate == null) {
+			return 0;
+		}
+		final LocalDateTime now = new LocalDateTime();
+		final long minutesSinceOldestUpdate = Minutes.minutesBetween(oldestUpdate.getUpdated(), now).getMinutes();
+		return updateDao.countNewPosts(feed.getId()) / minutesSinceOldestUpdate;
+	}
+
+	@Transactional(readOnly=true)
 	public boolean needsUpdate(final Feed feed) {
 		if (feed.getUpdateFrequency() <= 0) {
 			LOG.warn("Feed \"{}\" update frequency is {}, not updating",
@@ -83,5 +94,9 @@ public class FeedService {
 
 	public void setUpdateDao(final UpdateDao updateDao) {
 		this.updateDao = updateDao;
+	}
+
+	public void setFeedDao(final FeedDao feedDao) {
+		this.feedDao = feedDao;
 	}
 }

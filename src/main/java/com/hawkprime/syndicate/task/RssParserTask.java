@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import com.hawkprime.syndicate.adapter.SyndEntryToPostAdapter;
+import com.hawkprime.syndicate.adapter.SyndEntryToPostAdapterException;
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.service.FeedService;
 import com.hawkprime.syndicate.service.PostService;
@@ -73,7 +74,12 @@ public class RssParserTask {
 
 				for (SyndEntry entry : entries) {
 					totalCount++;
-					newCount += postService.save(SyndEntryToPostAdapter.convert(entry, feed));
+					try {
+						newCount += postService.save(SyndEntryToPostAdapter.convert(entry, feed));
+					} catch (SyndEntryToPostAdapterException ex) {
+						LOG.error("Unable to convert Syndicate Entry to Post");
+						LOG.debug(ExceptionUtils.getStackTrace(ex));
+					}
 				}
 
 				feedService.saveTotals(feed, totalCount, newCount);

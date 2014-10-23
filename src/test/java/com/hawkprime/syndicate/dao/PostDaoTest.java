@@ -1,9 +1,10 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
+import java.util.List;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -24,18 +25,24 @@ public class PostDaoTest extends AbstractDaoTest {
 	private FeedDao feedDao;
 
 	@Test
-	public void readPost() {
+	public void findAllTest() {
+		final List<Post> allPosts = postDao.findAll();
+		assertThat(allPosts.size(), is(1));
+	}
+
+	@Test
+	public void readPostTest() {
 		final Post post = postDao.findById(1L);
-		assertEquals("My First Post", post.getTitle());
-		assertEquals("http://myfeed.com/my_first_post", post.getLink());
-		assertEquals("This is my first post!", post.getText());
-		assertEquals("2048a082fd924a742f9d92b83c24092af8309a72", post.getGuid());
-		assertEquals(LocalDateTime.parse("2014-10-17T14:39:00"), post.getPublished());
+		assertThat(post.getTitle(), is("My First Post"));
+		assertThat(post.getLink(), is("http://myfeed.com/my_first_post"));
+		assertThat(post.getText(), is("This is my first post!"));
+		assertThat(post.getGuid(), is("2048a082fd924a742f9d92b83c24092af8309a72"));
+		assertThat(post.getPublished(), is(LocalDateTime.parse("2014-10-17T14:39:00")));
 	}
 
 	@Test
 	@Transactional
-	public void createPost() {
+	public void createPostTest() {
 		final String title = "Another Post";
 		final String link = "http://myfeed.com/another_post";
 		final String text = "My next Post";
@@ -57,16 +64,16 @@ public class PostDaoTest extends AbstractDaoTest {
 
 		post = postDao.findById(id);
 
-		assertEquals(title, post.getTitle());
-		assertEquals(link, post.getLink());
-		assertEquals(guid, post.getGuid());
-		assertEquals(text, post.getText());
-		assertEquals(published, post.getPublished());
+		assertThat(post.getTitle(), is(title));
+		assertThat(post.getLink(), is(link));
+		assertThat(post.getGuid(), is(guid));
+		assertThat(post.getText(), is(text));
+		assertThat(post.getPublished(), is(published));
 	}
 
 	@Test
 	@Transactional
-	public void updatePost() {
+	public void updatePostTest() {
 		Post post = new PostBuilder()
 				.withFeed(feedDao.findById(1L))
 				.build();
@@ -105,16 +112,16 @@ public class PostDaoTest extends AbstractDaoTest {
 		post = postDao.findById(id);
 
 		// test
-		assertEquals(title, post.getTitle());
-		assertEquals(link, post.getLink());
-		assertEquals(guid, post.getGuid());
-		assertEquals(text, post.getText());
-		assertEquals(published, post.getPublished());
+		assertThat(post.getTitle(), is(title));
+		assertThat(post.getLink(), is(link));
+		assertThat(post.getGuid(), is(guid));
+		assertThat(post.getText(), is(text));
+		assertThat(post.getPublished(), is(published));
 	}
 
 	@Test
 	@Transactional
-	public void deletePost() {
+	public void deletePostTest() {
 		Post post = new PostBuilder()
 			.withFeed(feedDao.findById(1L))
 			.build();
@@ -127,13 +134,13 @@ public class PostDaoTest extends AbstractDaoTest {
 		postDao.delete(id);
 
 		post = postDao.findById(id);
-		assertNull(post);
+		assertThat(post, is(nullValue()));
 	}
 
 	@Test
 	@Transactional
-	public void postExists() {
-		assertTrue(postDao.doesPosExistsWithGuid("2048a082fd924a742f9d92b83c24092af8309a72"));
-		assertFalse(postDao.doesPosExistsWithGuid("abc123"));
+	public void postExistsTest() {
+		assertThat(postDao.doesPosExistsWithGuid("2048a082fd924a742f9d92b83c24092af8309a72"), is(true));
+		assertThat(postDao.doesPosExistsWithGuid("abc123"), is(false));
 	}
 }

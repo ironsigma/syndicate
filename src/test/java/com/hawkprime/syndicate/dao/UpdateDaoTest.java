@@ -1,7 +1,10 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
+import java.util.List;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -22,13 +25,39 @@ public class UpdateDaoTest extends AbstractDaoTest {
 	private UpdateDao updateDao;
 
 	@Test
+	public void findAllTest() {
+		final int expectedUpdateCount = 5;
+		final List<Update> allUpdates = updateDao.findAll();
+		assertThat(allUpdates.size(), is(expectedUpdateCount));
+	}
+	@Test
+	public void findOldestUpdateTest() {
+		assertThat(updateDao.findOldestUpdateByFeedId(0L), is(nullValue()));
+
+		Update update = updateDao.findOldestUpdateByFeedId(1L);
+		assertThat(update.getId(), is(1L));
+
+		update = updateDao.findOldestUpdateByFeedId(2L);
+		assertThat(update.getId(), is(5L));
+	}
+
+	@Test
+	public void coutNewPostTest() {
+		final long expectedCountFeed1 = 18L;
+		assertThat(updateDao.countNewPosts(1L), is(expectedCountFeed1));
+
+		final long expectedCountFeed2 = 597;
+		assertThat(updateDao.countNewPosts(2L), is(expectedCountFeed2));
+	}
+
+	@Test
 	public void readUpdate() {
 		final Long expectedTotal = 120L;
 		final Long expectedNewCount = 13L;
 
 		final Update update = updateDao.findById(1L);
-		assertEquals(expectedTotal, update.getTotalCount());
-		assertEquals(expectedNewCount, update.getNewCount());
+		assertThat(update.getTotalCount(), is(expectedTotal));
+		assertThat(update.getNewCount(), is(expectedNewCount));
 	}
 
 	@Test
@@ -50,8 +79,8 @@ public class UpdateDaoTest extends AbstractDaoTest {
 
 		update = updateDao.findById(id);
 
-		assertEquals(totalCount, update.getTotalCount());
-		assertEquals(newCount, update.getNewCount());
+		assertThat(update.getTotalCount(), is(totalCount));
+		assertThat(update.getNewCount(), is(newCount));
 	}
 
 	@Test
@@ -89,8 +118,8 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		update = updateDao.findById(id);
 
 		// test
-		assertEquals(totalCount, update.getTotalCount());
-		assertEquals(newCount, update.getNewCount());
+		assertThat(update.getTotalCount(), is(totalCount));
+		assertThat(update.getNewCount(), is(newCount));
 	}
 
 	@Test
@@ -108,29 +137,29 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		updateDao.delete(id);
 
 		update = updateDao.findById(id);
-		assertNull(update);
+		assertThat(update, is(nullValue()));
 	}
 
 	@Test
 	@Transactional
 	public void findLatest() {
 		final Update nonExistentUpdate = updateDao.findLatestUpdateByFeedId(0L);
-		assertNull(nonExistentUpdate);
+		assertThat(nonExistentUpdate, is(nullValue()));
 
 		final Long feed1Total = 120L;
 		final Long feed1New = 5L;
 
 		Update update = updateDao.findLatestUpdateByFeedId(1L);
-		assertEquals(feed1Total, update.getTotalCount());
-		assertEquals(feed1New, update.getNewCount());
-		assertEquals(LocalDateTime.parse("2014-10-17T14:38:00"), update.getUpdated());
+		assertThat(update.getTotalCount(), is(feed1Total));
+		assertThat(update.getNewCount(), is(feed1New));
+		assertThat(update.getUpdated(), is(LocalDateTime.parse("2014-10-17T14:38:00")));
 
 		final Long feed2Total = 980L;
 		final Long feed2New = 63L;
 
 		update = updateDao.findLatestUpdateByFeedId(2L);
-		assertEquals(feed2Total, update.getTotalCount());
-		assertEquals(feed2New, update.getNewCount());
-		assertEquals(LocalDateTime.parse("2014-10-17T18:00:01"), update.getUpdated());
+		assertThat(update.getTotalCount(), is(feed2Total));
+		assertThat(update.getNewCount(), is(feed2New));
+		assertThat(update.getUpdated(), is(LocalDateTime.parse("2014-10-17T18:00:01")));
 	}
 }
