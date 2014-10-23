@@ -24,10 +24,12 @@ public class SyndEntryBuilder {
 		entry.setLink(link);
 		entry.setPublishedDate(published);
 
-		final SyndContent content = new SyndContentImpl();
-		content.setType("text");
-		content.setValue(text);
-		entry.setDescription(content);
+		if (text != null) {
+			final SyndContent content = new SyndContentImpl();
+			content.setType("text");
+			content.setValue(text);
+			entry.setDescription(content);
+		}
 		return entry;
 	}
 

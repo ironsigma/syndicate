@@ -17,20 +17,14 @@ public final class Sha1 {
 
 	private Sha1() { /* empty */ }
 
-	private static void initMessageDigest() {
+	public static String digest(final String string) {
 		try {
-			messageDigest = MessageDigest.getInstance("SHA1");
+			if (messageDigest == null) {
+				messageDigest = MessageDigest.getInstance("SHA1");
+			}
+			return String.format("%040x", new BigInteger(1, messageDigest.digest(string.getBytes("UTF-8"))));
 		} catch (NoSuchAlgorithmException e) {
 			LOG.error("Unable to create message digest.");
-		}
-	}
-
-	public static String digest(final String string) {
-		if (messageDigest == null) {
-			initMessageDigest();
-		}
-		try {
-			return String.format("%040x", new BigInteger(1, messageDigest.digest(string.getBytes("UTF-8"))));
 		} catch (UnsupportedEncodingException e) {
 			LOG.error("Invalid string encoding");
 		}

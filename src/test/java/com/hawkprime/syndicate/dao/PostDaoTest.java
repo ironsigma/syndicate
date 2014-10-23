@@ -38,6 +38,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post.getText(), is("This is my first post!"));
 		assertThat(post.getGuid(), is("2048a082fd924a742f9d92b83c24092af8309a72"));
 		assertThat(post.getPublished(), is(LocalDateTime.parse("2014-10-17T14:39:00")));
+		assertThat(post.getFeed().getId(), is(1L));
 	}
 
 	@Test

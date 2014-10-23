@@ -3,8 +3,6 @@ package com.hawkprime.syndicate.adapter;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
@@ -14,25 +12,32 @@ import com.hawkprime.syndicate.model.builder.FeedBuilder;
 import com.hawkprime.syndicate.model.builder.SyndEntryBuilder;
 import com.hawkprime.syndicate.util.Sha1;
 import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
 
 /**
  * Syndicate Entry to Post Adapter Tests.
  */
 public class SyndEntryToPostAdapterTest {
 
-	@Test
-	public void emptyTitleTest() {
+	@Test(expected=SyndEntryToPostAdapterException.class)
+	public void emptyTitleTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
-		final SyndEntry entry = new SyndEntryImpl();
-		Post post = null;
-		try {
-			post = SyndEntryToPostAdapter.convert(entry, feed);
-			fail("SyndEntryToPostAdapterException expected");
-		} catch (SyndEntryToPostAdapterException ex) {
-			assertThat(post, is(nullValue()));
-		}
 
+		final SyndEntry entry = new SyndEntryBuilder()
+				.withTitle(null)
+				.build();
+
+		SyndEntryToPostAdapter.convert(entry, feed);
+	}
+
+	@Test(expected=SyndEntryToPostAdapterException.class)
+	public void blankTitleTest() throws SyndEntryToPostAdapterException {
+		final Feed feed = new FeedBuilder().build();
+
+		final SyndEntry entry = new SyndEntryBuilder()
+				.withTitle("      ")
+				.build();
+
+		SyndEntryToPostAdapter.convert(entry, feed);
 	}
 
 	@Test
@@ -47,6 +52,17 @@ public class SyndEntryToPostAdapterTest {
 		assertThat(post.getLink(), is(entry.getLink()));
 		assertThat(post.getPublished(), is(new LocalDateTime(entry.getPublishedDate())));
 		assertThat(post.getText(), is(entry.getDescription().getValue()));
+	}
+
+	@Test
+	public void emptyContent() throws SyndEntryToPostAdapterException {
+		final Feed feed = new FeedBuilder().build();
+		final SyndEntry entry = new SyndEntryBuilder()
+				.withText(null)
+				.build();
+
+		final Post post = SyndEntryToPostAdapter.convert(entry, feed);
+		assertThat(post.getText(), is(nullValue()));
 	}
 
 	@Test

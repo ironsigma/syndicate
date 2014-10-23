@@ -51,18 +51,20 @@ public class UpdateDaoTest extends AbstractDaoTest {
 	}
 
 	@Test
-	public void readUpdate() {
+	public void readUpdateTest() {
 		final Long expectedTotal = 120L;
 		final Long expectedNewCount = 13L;
 
 		final Update update = updateDao.findById(1L);
+
 		assertThat(update.getTotalCount(), is(expectedTotal));
 		assertThat(update.getNewCount(), is(expectedNewCount));
+		assertThat(update.getFeed().getId(), is(1L));
 	}
 
 	@Test
 	@Transactional
-	public void createUpdate() {
+	public void createUpdateTest() {
 		final Long totalCount = 530L;
 		final Long newCount = 330L;
 
@@ -85,7 +87,7 @@ public class UpdateDaoTest extends AbstractDaoTest {
 
 	@Test
 	@Transactional
-	public void updateUpdate() {
+	public void updateUpdateTest() {
 		Update update = new UpdateBuilder()
 				.withFeed(feedDao.findById(1L))
 				.build();
@@ -124,7 +126,7 @@ public class UpdateDaoTest extends AbstractDaoTest {
 
 	@Test
 	@Transactional
-	public void deleteUpdate() {
+	public void deleteUpdateTest() {
 		Update update = new UpdateBuilder()
 				.withFeed(feedDao.findById(1L))
 				.build();
@@ -142,7 +144,7 @@ public class UpdateDaoTest extends AbstractDaoTest {
 
 	@Test
 	@Transactional
-	public void findLatest() {
+	public void findLatestTest() {
 		final Update nonExistentUpdate = updateDao.findLatestUpdateByFeedId(0L);
 		assertThat(nonExistentUpdate, is(nullValue()));
 

@@ -6,6 +6,7 @@ import com.hawkprime.syndicate.model.Feed;
  * Feed Builder.
  */
 public class FeedBuilder {
+	private Long id;
 	private String name = "Feed";
 	private String url = "http://myfeed.com/rss";
 	private Long updateFrequency = 1L;
@@ -13,11 +14,17 @@ public class FeedBuilder {
 
 	public Feed build() {
 		final Feed feed = new Feed();
+		feed.setId(id);
 		feed.setName(name);
 		feed.setUrl(url);
 		feed.setActive(active);
 		feed.setUpdateFrequency(updateFrequency);
 		return feed;
+	}
+
+	public FeedBuilder withId(final Long id) {
+		this.id = id;
+		return this;
 	}
 
 	public FeedBuilder withName(final String name) {

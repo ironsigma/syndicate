@@ -24,4 +24,8 @@ public class PostService {
 		postDao.create(post);
 		return 1;
 	}
+
+	public void setPostDao(final PostDao postDao) {
+		this.postDao = postDao;
+	}
 }

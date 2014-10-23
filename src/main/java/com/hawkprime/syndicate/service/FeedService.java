@@ -61,7 +61,7 @@ public class FeedService {
 		if (oldestUpdate == null) {
 			return 0;
 		}
-		final LocalDateTime now = new LocalDateTime();
+		final LocalDateTime now = LocalDateTime.now();
 		final long minutesSinceOldestUpdate = Minutes.minutesBetween(oldestUpdate.getUpdated(), now).getMinutes();
 		return updateDao.countNewPosts(feed.getId()) / minutesSinceOldestUpdate;
 	}
@@ -78,7 +78,7 @@ public class FeedService {
 			LOG.debug("Feed \"{}\" has no previous updates", feed.getName());
 			return true;
 		}
-		final LocalDateTime now = new LocalDateTime();
+		final LocalDateTime now = LocalDateTime.now();
 		final int minutesSinceUpdate = Minutes.minutesBetween(feedUpdate.getUpdated(), now).getMinutes();
 		if (feed.getUpdateFrequency() <= minutesSinceUpdate) {
 			LOG.debug("Feed \"{}\" updates every {} minutes, "

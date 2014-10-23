@@ -10,6 +10,7 @@ import com.hawkprime.syndicate.util.Sha1;
  * Post Builder.
  */
 public class PostBuilder {
+	private Long id;
 	private String title = "Post";
 	private String link = "http://myfeed.com/post";
 	private String text = "My Post";
@@ -19,6 +20,7 @@ public class PostBuilder {
 
 	public Post build() {
 		final Post post = new Post();
+		post.setId(id);
 		post.setTitle(title);
 		post.setLink(link);
 		post.setGuid(Sha1.digest(guid));
@@ -26,6 +28,11 @@ public class PostBuilder {
 		post.setPublished(published);
 		post.setFeed(feed);
 		return post;
+	}
+
+	public PostBuilder withId(final Long id) {
+		this.id = id;
+		return this;
 	}
 
 	public PostBuilder withTitle(final String title) {

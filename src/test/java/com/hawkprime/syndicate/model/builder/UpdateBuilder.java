@@ -12,6 +12,7 @@ public class UpdateBuilder {
 	private static final Long DEFAULT_TOTAL = 100L;
 	private static final Long DEFAULT_NEW = 50L;
 
+	private Long id;
 	private Long totalCount = DEFAULT_TOTAL;
 	private Long newCount = DEFAULT_NEW;
 	private LocalDateTime updated = new LocalDateTime();
@@ -19,11 +20,17 @@ public class UpdateBuilder {
 
 	public Update build() {
 		final Update post = new Update();
+		post.setId(id);
 		post.setTotalCount(totalCount);
 		post.setNewCount(newCount);
 		post.setUpdated(updated);
 		post.setFeed(feed);
 		return post;
+	}
+
+	public UpdateBuilder withId(final Long id) {
+		this.id = id;
+		return this;
 	}
 
 	public UpdateBuilder withTotalCount(final Long totalCount) {
