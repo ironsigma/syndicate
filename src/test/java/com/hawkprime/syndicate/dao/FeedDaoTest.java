@@ -3,6 +3,8 @@ package com.hawkprime.syndicate.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,5 +114,14 @@ public class FeedDaoTest extends AbstractDaoTest {
 
 		feed = feedDao.findById(id);
 		assertNull(feed);
+	}
+
+	@Test
+	@Transactional
+	public void findActiveFeeds() {
+		final Long activeFeedId = 1L;
+		final List<Feed> feedList = feedDao.findActive();
+		assertEquals(1, feedList.size());
+		assertEquals(activeFeedId, feedList.get(0).getId());
 	}
 }

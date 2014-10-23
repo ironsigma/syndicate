@@ -3,6 +3,9 @@ package com.hawkprime.syndicate.service;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
+import org.joda.time.Minutes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,15 +20,29 @@ import com.hawkprime.syndicate.model.Update;
  */
 @Component
 public class FeedService {
+	private static final Logger LOG = LoggerFactory.getLogger(FeedService.class);
 	@Autowired
 	private FeedDao feedDao;
 
 	@Autowired
 	private UpdateDao updateDao;
 
+	/**
+	 * Find all feeds.
+	 * @return results.
+	 */
 	@Transactional(readOnly=true)
-	public List<Feed> list() {
+	public List<Feed> findAll() {
 		return feedDao.findAll();
+	}
+
+	/**
+	 * Find all active feeds.
+	 * @return results.
+	 */
+	@Transactional(readOnly=true)
+	public List<Feed> findActiveFeeds() {
+		return feedDao.findActive();
 	}
 
 	@Transactional
@@ -36,5 +53,35 @@ public class FeedService {
 		update.setNewCount(newCount);
 		update.setUpdated(new LocalDateTime());
 		updateDao.create(update);
+	}
+
+	@Transactional(readOnly=true)
+	public boolean needsUpdate(final Feed feed) {
+		if (feed.getUpdateFrequency() <= 0) {
+			LOG.warn("Feed \"{}\" update frequency is {}, not updating",
+					feed.getName(), feed.getUpdateFrequency());
+			return false;
+		}
+		final Update feedUpdate = updateDao.findLatestUpdateByFeedId(feed.getId());
+		if (feedUpdate == null) {
+			LOG.debug("Feed \"{}\" has no previous updates", feed.getName());
+			return true;
+		}
+		final LocalDateTime now = new LocalDateTime();
+		final int minutesSinceUpdate = Minutes.minutesBetween(feedUpdate.getUpdated(), now).getMinutes();
+		if (feed.getUpdateFrequency() <= minutesSinceUpdate) {
+			LOG.debug("Feed \"{}\" updates every {} minutes, "
+					+ "it's been {} minutes since lasts update, update required",
+					feed.getName(), feed.getUpdateFrequency(), minutesSinceUpdate);
+			return true;
+		}
+		LOG.debug("Feed \"{}\" updates every {} minutes, "
+				+ "it's been {} minutes since lasts update, no update required",
+				feed.getName(), feed.getUpdateFrequency(), minutesSinceUpdate);
+		return false;
+	}
+
+	public void setUpdateDao(final UpdateDao updateDao) {
+		this.updateDao = updateDao;
 	}
 }

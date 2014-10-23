@@ -54,14 +54,18 @@ public class RssParserTask {
 	@Scheduled(initialDelay=DELAY_30_SECONDS, fixedDelay=EVERY_60_SECONDS)
 	public void parseFeeds() {
 		LOG.info("--- Starting RSS Parse");
-		final List<Feed> feedList = feedService.list();
+		final List<Feed> feedList = feedService.findActiveFeeds();
 
 		for (Feed feed: feedList) {
 			try {
+				LOG.debug("Checking feed \"{}\" ({}) ...", feed.getName(), feed.getUrl());
+				if (!feedService.needsUpdate(feed)) {
+					continue;
+				}
+
 				long totalCount = 0;
 				long newCount = 0;
 
-				LOG.debug(String.format("Checking feed \"%s\" (%s) ...", feed.getName(), feed.getUrl()));
 				final SyndFeed syndFeed = feedFetcher.retrieveFeed(new URL(feed.getUrl()));
 
 				@SuppressWarnings("unchecked")
@@ -73,7 +77,7 @@ public class RssParserTask {
 				}
 
 				feedService.saveTotals(feed, totalCount, newCount);
-				LOG.debug(String.format("Total entries %d, new entries %d", totalCount, newCount));
+				LOG.debug("Total entries {}, new entries {}", totalCount, newCount);
 
 			} catch (IOException ex) {
 				LOG.error("IO Error reading feed");

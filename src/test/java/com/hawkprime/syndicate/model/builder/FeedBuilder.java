@@ -8,7 +8,7 @@ import com.hawkprime.syndicate.model.Feed;
 public class FeedBuilder {
 	private String name = "Feed";
 	private String url = "http://myfeed.com/rss";
-	private Long updateFrequency = 0L;
+	private Long updateFrequency = 1L;
 	private Boolean active = true;
 
 	public Feed build() {

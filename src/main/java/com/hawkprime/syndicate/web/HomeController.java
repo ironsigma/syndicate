@@ -25,7 +25,7 @@ public class HomeController {
 	@RequestMapping({ "/", "/home" })
 	public ModelAndView home() {
 		LOG.info("handling: /home");
-		final List<Feed> feeds = feedService.list();
+		final List<Feed> feeds = feedService.findAll();
 		final ModelAndView mav = new ModelAndView("home");
 		mav.getModel().put("name", feeds.get(0).getName());
 		mav.getModel().put("url", feeds.get(0).getUrl());
