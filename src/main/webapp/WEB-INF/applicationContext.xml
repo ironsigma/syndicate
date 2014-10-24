@@ -19,7 +19,7 @@
 	<context:component-scan base-package="com.hawkprime.syndicate" />
 
 	<!-- RSS Parsing Task -->
-	<bean id="rssParserTask" class="com.hawkprime.syndicate.task.RssParserTask" /> 
+	<bean id="rssParserTask" class="com.hawkprime.syndicate.task.SyndicateUpdateTask" /> 
 
 	<!-- JNDI Location of property override file -->
 	<bean id="syndicatePropertiesPath" class="org.springframework.jndi.JndiObjectFactoryBean">

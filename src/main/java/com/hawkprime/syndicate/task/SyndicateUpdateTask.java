@@ -29,10 +29,10 @@ import com.sun.syndication.io.FeedException;
 /**
  * RSS Parse Task.
  */
-public class RssParserTask {
+public class SyndicateUpdateTask {
 	private static final int DELAY_30_SECONDS = 30000;
 	private static final int EVERY_60_SECONDS = 60000;
-	private static final Logger LOG  = LoggerFactory.getLogger(RssParserTask.class);
+	private static final Logger LOG  = LoggerFactory.getLogger(SyndicateUpdateTask.class);
 
 	@Autowired
 	private FeedService feedService;
