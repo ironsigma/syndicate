@@ -85,6 +85,8 @@ public class RssParserTask {
 				feedService.saveTotals(feed, totalCount, newCount);
 				LOG.debug("Total entries {}, new entries {}", totalCount, newCount);
 
+				feedService.updateFeedFrequency(feed);
+
 			} catch (IOException ex) {
 				LOG.error("IO Error reading feed");
 				LOG.debug(ExceptionUtils.getStackTrace(ex));

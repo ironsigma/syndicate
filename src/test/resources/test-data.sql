@@ -3,6 +3,8 @@ INSERT INTO feed (feed_id, name, url, update_frequency, active)
 VALUES (1, 'MyFeed', 'http://myfeed.com/rss', 60, 1);
 INSERT INTO feed (feed_id, name, url, update_frequency, active)
 VALUES (2, 'Another Feed', 'http://anotherfeed.com/rss', 30, 0);
+INSERT INTO feed (feed_id, name, url, update_frequency, active)
+VALUES (3, 'Your Feed', 'http://yourfeed.com/rss', 25, 1);
 
 -- Posts
 INSERT INTO post (post_id, title, published, link, guid, text, feed_id)
@@ -20,3 +22,5 @@ INSERT INTO feed_update (feed_update_id, total_count, new_count, updated, feed_i
 VALUES (4, 827, 534, '2014-10-17 13:01:00', 2);
 INSERT INTO feed_update (feed_update_id, total_count, new_count, updated, feed_id)
 VALUES (5, 827, 0, '2014-10-17 12:00:00', 2);
+INSERT INTO feed_update (feed_update_id, total_count, new_count, updated, feed_id)
+VALUES (6, 0, 0, '2014-10-17 12:00:00', 3);

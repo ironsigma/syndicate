@@ -23,12 +23,12 @@ public class FeedDaoTest extends AbstractDaoTest {
 	@Test
 	public void findAllTest() {
 		final List<Feed> allFeeds = feedDao.findAll();
-		assertThat(allFeeds.size(), is(2));
+		assertThat(allFeeds.size(), is(3));
 	}
 
 	@Test
 	public void readFeedTest() {
-		final Long expectedUpdateFrequency = 60L;
+		final Integer expectedUpdateFrequency = 60;
 		final Feed feed = feedDao.findById(1L);
 		assertThat(feed.getName(), is("MyFeed"));
 		assertThat(feed.getUrl(), is("http://myfeed.com/rss"));
@@ -42,7 +42,7 @@ public class FeedDaoTest extends AbstractDaoTest {
 		final String name = "Another Feed";
 		final String url = "http://myfeed.com/another_Feed";
 		final Boolean active = true;
-		final Long updateFrequency = 30L;
+		final Integer updateFrequency = 30;
 
 		Feed feed = new FeedBuilder()
 				.withName("Another Feed")
@@ -83,7 +83,7 @@ public class FeedDaoTest extends AbstractDaoTest {
 		final String name = "Awsome Feed";
 		final String url = "http://myfeed.com/awsome_Feed";
 		final Boolean active = false;
-		final Long updateFrequency = 80L;
+		final Integer updateFrequency = 80;
 
 		// update Feed
 		feed.setName(name);
@@ -128,7 +128,7 @@ public class FeedDaoTest extends AbstractDaoTest {
 	public void findActiveFeedsTest() {
 		final Long activeFeedId = 1L;
 		final List<Feed> feedList = feedDao.findActive();
-		assertThat(feedList.size(), is(1));
+		assertThat(feedList.size(), is(2));
 		assertThat(feedList.get(0).getId(), is(activeFeedId));
 	}
 }

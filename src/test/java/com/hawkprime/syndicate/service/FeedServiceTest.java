@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -117,13 +118,13 @@ public class FeedServiceTest {
 	@Test
 	public void badUpdateFrequency() {
 		Feed feed = new FeedBuilder()
-				.withUpdateFrequency(0L)
+				.withUpdateFrequency(0)
 				.build();
 
 		assertThat(feedService.needsUpdate(feed), is(false));
 
 		feed = new FeedBuilder()
-				.withUpdateFrequency(-1L)
+				.withUpdateFrequency(-1)
 				.build();
 
 		assertThat(feedService.needsUpdate(feed), is(false));
@@ -135,7 +136,7 @@ public class FeedServiceTest {
 		feedService.setUpdateDao(updateDao);
 
 		final Feed feed = new FeedBuilder()
-				.withUpdateFrequency(1L)
+				.withUpdateFrequency(1)
 				.build();
 
 		when(updateDao.findLatestUpdateByFeedId(feed.getId()))
@@ -144,7 +145,7 @@ public class FeedServiceTest {
 		assertThat(feedService.needsUpdate(feed), is(true));
 	}
 
-	private Feed updateTestSetup(final long feedUpdateFrequency) {
+	private Feed updateTestSetup(final int feedUpdateFrequency) {
 		final int minutesSinceLastFeedUpdate = 15;
 
 		final UpdateDao updateDao = mock(UpdateDao.class);
@@ -167,22 +168,66 @@ public class FeedServiceTest {
 
 	@Test
 	public void needsUpdateTest() {
-		final long feedUpdateFrequency = 10L;
+		final int feedUpdateFrequency = 10;
 		final Feed feed = updateTestSetup(feedUpdateFrequency);
 		assertThat(feedService.needsUpdate(feed), is(true));
 	}
 
 	@Test
 	public void needsNoUpdateTest() {
-		final long feedUpdateFrequency = 20L;
+		final int feedUpdateFrequency = 20;
 		final Feed feed = updateTestSetup(feedUpdateFrequency);
 		assertThat(feedService.needsUpdate(feed), is(false));
 	}
 
 	@Test
 	public void rightAtUpdateTest() {
-		final long feedUpdateFrequency = 15L;
+		final int feedUpdateFrequency = 15;
 		final Feed feed = updateTestSetup(feedUpdateFrequency);
 		assertThat(feedService.needsUpdate(feed), is(true));
+	}
+
+	@Test
+	public void updateFrequencyTest() {
+		final UpdateDao updateDao = mock(UpdateDao.class);
+		feedService.setUpdateDao(updateDao);
+
+		final FeedDao feedDao = mock(FeedDao.class);
+		feedService.setFeedDao(feedDao);
+
+		final int feedUpdateFrequency = 60;
+		final Feed feed = new FeedBuilder()
+				.withUpdateFrequency(feedUpdateFrequency)
+				.build();
+
+		final int percentNewPosts = 55;
+		when(updateDao.percentNewByFeedId(feed.getId()))
+				.thenReturn(percentNewPosts);
+
+		feedService.updateFeedFrequency(feed);
+
+		verify(feedDao).update(feed);
+	}
+
+	@Test
+	public void unchangedFrequencyTest() {
+		final UpdateDao updateDao = mock(UpdateDao.class);
+		feedService.setUpdateDao(updateDao);
+
+		final FeedDao feedDao = mock(FeedDao.class);
+		feedService.setFeedDao(feedDao);
+
+		final int feedUpdateFrequency = 60;
+		final Feed feed = new FeedBuilder()
+				.withUpdateFrequency(feedUpdateFrequency)
+				.build();
+
+		final int percentNewPosts = 75;
+		when(updateDao.percentNewByFeedId(feed.getId()))
+				.thenReturn(percentNewPosts);
+
+		feedService.updateFeedFrequency(feed);
+
+		verify(feedDao, never()).update(feed);
 	}
 }

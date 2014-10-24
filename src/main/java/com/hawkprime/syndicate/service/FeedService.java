@@ -14,6 +14,7 @@ import com.hawkprime.syndicate.dao.FeedDao;
 import com.hawkprime.syndicate.dao.UpdateDao;
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Update;
+import com.hawkprime.syndicate.util.FrequencyCalculator;
 
 /**
  * Feed Service.
@@ -43,6 +44,18 @@ public class FeedService {
 	@Transactional(readOnly=true)
 	public List<Feed> findActiveFeeds() {
 		return feedDao.findActive();
+	}
+
+	@Transactional
+	public void updateFeedFrequency(final Feed feed) {
+		final int percentNewPosts = updateDao.percentNewByFeedId(feed.getId());
+		final int newUpdateFrequency = FrequencyCalculator.calculateNewFrequency(
+				feed.getUpdateFrequency(), percentNewPosts);
+
+		if (newUpdateFrequency != feed.getUpdateFrequency()) {
+			feed.setUpdateFrequency(newUpdateFrequency);
+			feedDao.update(feed);
+		}
 	}
 
 	@Transactional

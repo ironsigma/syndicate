@@ -9,7 +9,7 @@ public class FeedBuilder {
 	private Long id;
 	private String name = "Feed";
 	private String url = "http://myfeed.com/rss";
-	private Long updateFrequency = 1L;
+	private Integer updateFrequency = 1;
 	private Boolean active = true;
 
 	public Feed build() {
@@ -37,7 +37,7 @@ public class FeedBuilder {
 		return this;
 	}
 
-	public FeedBuilder withUpdateFrequency(final Long updateFrequency) {
+	public FeedBuilder withUpdateFrequency(final Integer updateFrequency) {
 		this.updateFrequency = updateFrequency;
 		return this;
 	}

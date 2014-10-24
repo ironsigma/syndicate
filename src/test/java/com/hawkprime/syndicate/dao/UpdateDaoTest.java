@@ -31,11 +31,12 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		assertThat(updateDao.percentNewByFeedId(0L), is(0));
 		assertThat(updateDao.percentNewByFeedId(1L), is(expectedPercentNewFeed1));
 		assertThat(updateDao.percentNewByFeedId(2L), is(expectedPercentNewFeed2));
+		assertThat(updateDao.percentNewByFeedId(3L), is(0));
 	}
 
 	@Test
 	public void findAllTest() {
-		final int expectedUpdateCount = 5;
+		final int expectedUpdateCount = 6;
 		final List<Update> allUpdates = updateDao.findAll();
 		assertThat(allUpdates.size(), is(expectedUpdateCount));
 	}

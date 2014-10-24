@@ -28,7 +28,7 @@ public class Feed {
 	private Boolean active;
 
 	@Column(nullable=false, name="update_frequency")
-	private Long updateFrequency;
+	private Integer updateFrequency;
 
 	/**
 	 * @return the id
@@ -81,13 +81,13 @@ public class Feed {
 	/**
 	 * @return the updateFrequency
 	 */
-	public Long getUpdateFrequency() {
+	public Integer getUpdateFrequency() {
 		return updateFrequency;
 	}
 	/**
 	 * @param updateFrequency the updateFrequency to set
 	 */
-	public void setUpdateFrequency(final Long updateFrequency) {
+	public void setUpdateFrequency(final Integer updateFrequency) {
 		this.updateFrequency = updateFrequency;
 	}
 }
