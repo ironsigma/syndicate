@@ -25,6 +25,15 @@ public class UpdateDaoTest extends AbstractDaoTest {
 	private UpdateDao updateDao;
 
 	@Test
+	public void percentTest() {
+		final int expectedPercentNewFeed1 = 8;
+		final int expectedPercentNewFeed2 = 23;
+		assertThat(updateDao.percentNewByFeedId(0L), is(0));
+		assertThat(updateDao.percentNewByFeedId(1L), is(expectedPercentNewFeed1));
+		assertThat(updateDao.percentNewByFeedId(2L), is(expectedPercentNewFeed2));
+	}
+
+	@Test
 	public void findAllTest() {
 		final int expectedUpdateCount = 5;
 		final List<Update> allUpdates = updateDao.findAll();
@@ -44,10 +53,10 @@ public class UpdateDaoTest extends AbstractDaoTest {
 	@Test
 	public void coutNewPostTest() {
 		final long expectedCountFeed1 = 18L;
-		assertThat(updateDao.countNewPosts(1L), is(expectedCountFeed1));
+		assertThat(updateDao.countNewPostsByFeedId(1L), is(expectedCountFeed1));
 
 		final long expectedCountFeed2 = 597;
-		assertThat(updateDao.countNewPosts(2L), is(expectedCountFeed2));
+		assertThat(updateDao.countNewPostsByFeedId(2L), is(expectedCountFeed2));
 	}
 
 	@Test

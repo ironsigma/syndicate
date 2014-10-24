@@ -11,7 +11,27 @@ import com.hawkprime.syndicate.model.Update;
  */
 @Repository
 public class UpdateDao extends AbstractDao<Update> {
-	public long countNewPosts(final Long id) {
+	public int percentNewByFeedId(final Long id) {
+		final Object[] counts = (Object[]) getEntityManager()
+					.createQuery("SELECT sum(totalCount), sum(newCount) FROM Update WHERE feed.id=:id")
+					.setParameter("id", id)
+					.getSingleResult();
+
+		if (counts[0] == null) {
+			return 0;
+		}
+
+		final long totalCount = Long.valueOf(counts[0].toString());
+		if (totalCount == 0) {
+			return 0;
+		}
+
+		final long newCount = Long.valueOf(counts[1].toString());
+		final double percent = 100.00;
+		return (int) (Math.round(newCount * percent / totalCount));
+	}
+
+	public long countNewPostsByFeedId(final Long id) {
 		return ((Number) getEntityManager()
 					.createQuery("SELECT sum(newCount) FROM Update WHERE feed.id=:id")
 					.setParameter("id", id)

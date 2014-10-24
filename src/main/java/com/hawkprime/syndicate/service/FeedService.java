@@ -63,7 +63,7 @@ public class FeedService {
 		}
 		final LocalDateTime now = LocalDateTime.now();
 		final long minutesSinceOldestUpdate = Minutes.minutesBetween(oldestUpdate.getUpdated(), now).getMinutes();
-		return updateDao.countNewPosts(feed.getId()) / minutesSinceOldestUpdate;
+		return updateDao.countNewPostsByFeedId(feed.getId()) / minutesSinceOldestUpdate;
 	}
 
 	@Transactional(readOnly=true)

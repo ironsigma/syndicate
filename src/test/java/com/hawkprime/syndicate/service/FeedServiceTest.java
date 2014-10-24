@@ -37,7 +37,7 @@ public class FeedServiceTest {
 		final LocalDateTime now = LocalDateTime.now();
 		final Long totalPosts = 20L;
 
-		when(updateDao.countNewPosts(feed.getId()))
+		when(updateDao.countNewPostsByFeedId(feed.getId()))
 				.thenReturn(totalPosts);
 
 		when(updateDao.findOldestUpdateByFeedId(feed.getId()))
@@ -71,7 +71,7 @@ public class FeedServiceTest {
 		final LocalDateTime now = LocalDateTime.now();
 		final Long totalPosts = 40000000L;
 
-		when(updateDao.countNewPosts(feed.getId()))
+		when(updateDao.countNewPostsByFeedId(feed.getId()))
 				.thenReturn(totalPosts);
 
 		when(updateDao.findOldestUpdateByFeedId(feed.getId()))
