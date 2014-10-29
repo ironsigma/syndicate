@@ -10,16 +10,17 @@ import org.junit.Test;
  * Frequency Calculator Tests.
  */
 public class FrequencyCalculatorTest {
+	private final FrequencyCalculator frequencyCalculator = new FrequencyCalculator();
 
 	@Before
 	public void setUp() {
 		final int minRange = 70;
 		final int maxRange = 80;
-		FrequencyCalculator.setOptimalRange(minRange, maxRange);
+		frequencyCalculator.setOptimalRange(minRange, maxRange);
 
 		final int minUpdate = 2880;
 		final int maxUpdate = 1;
-		FrequencyCalculator.setUpdateFrequencyRange(minUpdate, maxUpdate);
+		frequencyCalculator.setUpdateFrequencyRange(minUpdate, maxUpdate);
 	}
 
 	@Test
@@ -27,16 +28,16 @@ public class FrequencyCalculatorTest {
 		final int minRange = 50;
 		final int maxRange = 60;
 
-		FrequencyCalculator.setOptimalRange(minRange, maxRange);
-		assertThat(FrequencyCalculator.getMinOptimalRange(), is(minRange));
-		assertThat(FrequencyCalculator.getMaxOptimalRange(), is(maxRange));
+		frequencyCalculator.setOptimalRange(minRange, maxRange);
+		assertThat(frequencyCalculator.getMinOptimalRange(), is(minRange));
+		assertThat(frequencyCalculator.getMaxOptimalRange(), is(maxRange));
 
 		final int minUpdate = 60;
 		final int maxUpdate = 1;
 
-		FrequencyCalculator.setUpdateFrequencyRange(minUpdate, maxUpdate);
-		assertThat(FrequencyCalculator.getMinUpdateFrequency(), is(minUpdate));
-		assertThat(FrequencyCalculator.getMaxUpdateFrequency(), is(maxUpdate));
+		frequencyCalculator.setUpdateFrequencyRange(minUpdate, maxUpdate);
+		assertThat(frequencyCalculator.getMinUpdateFrequency(), is(minUpdate));
+		assertThat(frequencyCalculator.getMaxUpdateFrequency(), is(maxUpdate));
 	}
 
 	@Test
@@ -45,7 +46,7 @@ public class FrequencyCalculatorTest {
 		final int currentFrequency = 120;
 		final int expectedNewFrequency = 146;
 
-		assertThat(FrequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
+		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
 	}
 
 	@Test
@@ -54,7 +55,7 @@ public class FrequencyCalculatorTest {
 		final int currentFrequency = 191;
 		final int expectedNewFrequency = 163;
 
-		assertThat(FrequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
+		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
 	}
 
 	@Test
@@ -62,7 +63,7 @@ public class FrequencyCalculatorTest {
 		final int percentNew = 75;
 		final int currentFrequency = 191;
 
-		assertThat(FrequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(currentFrequency));
+		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(currentFrequency));
 	}
 
 	@Test
@@ -71,7 +72,7 @@ public class FrequencyCalculatorTest {
 		final int currentFrequency = 2200;
 		final int expectedNewFrequency = 2880;
 
-		assertThat(FrequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
+		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
 	}
 
 	@Test
@@ -80,7 +81,7 @@ public class FrequencyCalculatorTest {
 		final int currentFrequency = 60;
 		final int expectedNewFrequency = 1;
 
-		assertThat(FrequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
+		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
 	}
 
 	@Test
@@ -88,7 +89,7 @@ public class FrequencyCalculatorTest {
 		final int percentNew = 29;
 		final int currentFrequency = 2;
 		final int expectedFrequency = 3;
-		assertThat(FrequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedFrequency));
+		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedFrequency));
 	}
 
 	@Test
@@ -96,6 +97,6 @@ public class FrequencyCalculatorTest {
 		final int percentNew = 81;
 		final int currentFrequency = 2;
 		final int expectedFrequency = 1;
-		assertThat(FrequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedFrequency));
+		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedFrequency));
 	}
 }

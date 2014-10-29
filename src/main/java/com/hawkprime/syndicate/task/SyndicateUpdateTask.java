@@ -54,7 +54,7 @@ public class SyndicateUpdateTask {
 	 */
 	@Scheduled(initialDelay=DELAY_30_SECONDS, fixedDelay=EVERY_60_SECONDS)
 	public void parseFeeds() {
-		LOG.info("--- Starting RSS Parse");
+		LOG.info("--- Starting Update Task");
 		final List<Feed> feedList = feedService.findActiveFeeds();
 
 		for (Feed feed: feedList) {
@@ -100,7 +100,5 @@ public class SyndicateUpdateTask {
 				LOG.debug(ExceptionUtils.getStackTrace(ex));
 			}
 		}
-
-		LOG.info("--- Done");
 	}
 }

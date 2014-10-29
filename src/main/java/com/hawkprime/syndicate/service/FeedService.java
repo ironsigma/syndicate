@@ -7,7 +7,7 @@ import org.joda.time.Minutes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hawkprime.syndicate.dao.FeedDao;
@@ -19,7 +19,7 @@ import com.hawkprime.syndicate.util.FrequencyCalculator;
 /**
  * Feed Service.
  */
-@Component
+@Service
 public class FeedService {
 	private static final Logger LOG = LoggerFactory.getLogger(FeedService.class);
 	@Autowired
@@ -27,6 +27,9 @@ public class FeedService {
 
 	@Autowired
 	private UpdateDao updateDao;
+
+	@Autowired
+	private FrequencyCalculator frequencyCalculator;
 
 	/**
 	 * Find all feeds.
@@ -49,7 +52,7 @@ public class FeedService {
 	@Transactional
 	public void updateFeedFrequency(final Feed feed) {
 		final int percentNewPosts = updateDao.percentNewByFeedId(feed.getId());
-		final int newUpdateFrequency = FrequencyCalculator.calculateNewFrequency(
+		final int newUpdateFrequency = frequencyCalculator.calculateNewFrequency(
 				feed.getUpdateFrequency(), percentNewPosts);
 
 		if (newUpdateFrequency != feed.getUpdateFrequency()) {
@@ -111,5 +114,9 @@ public class FeedService {
 
 	public void setFeedDao(final FeedDao feedDao) {
 		this.feedDao = feedDao;
+	}
+
+	public void setFrequencyCalculator(final FrequencyCalculator frequencyCalculator) {
+		this.frequencyCalculator = frequencyCalculator;
 	}
 }

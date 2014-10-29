@@ -2,57 +2,58 @@ package com.hawkprime.syndicate.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Calculate Frequencies.
  */
-public final class FrequencyCalculator {
+@Component
+public class FrequencyCalculator {
 	private static final Logger LOG = LoggerFactory.getLogger(FrequencyCalculator.class);
 
 	private static final double PERCENT = 100.00;
 	private static final int MINS_PER_HR = 60;
 
-	private static final int DEFAULT_MAX_OPTIMAL_RANGE = 80;
-	private static final int DEFAULT_MIN_OPTIMAL_RANGE = 70;
+	@Value("${syndicate.update.frequency.optimal.max}")
+	private int maxOptimalRange;
 
-	private static final int DEFAULT_MIN_FREQUENCY = 2880;
-	private static final int DEFAULT_MAX_FREQUENCY = 1;
+	@Value("${syndicate.update.frequency.optimal.min}")
+	private int minOptimalRange;
 
-	private static int maxOptimalRange = DEFAULT_MAX_OPTIMAL_RANGE;
-	private static int minOptimalRange = DEFAULT_MIN_OPTIMAL_RANGE;
+	@Value("${syndicate.update.frequency.min}")
+	private int minFrequency;
 
-	private static int minFrequency = DEFAULT_MIN_FREQUENCY;
-	private static int maxFrequency = DEFAULT_MAX_FREQUENCY;
+	@Value("${syndicate.update.frequency.max}")
+	private int maxFrequency;
 
-	private FrequencyCalculator() { }
-
-	public static void setOptimalRange(final int min, final int max) {
+	public void setOptimalRange(final int min, final int max) {
 		maxOptimalRange = max;
 		minOptimalRange = min;
 	}
 
-	public static void setUpdateFrequencyRange(final int min, final int max) {
+	public void setUpdateFrequencyRange(final int min, final int max) {
 		minFrequency = min;
 		maxFrequency = max;
 	}
 
-	public static int getMaxOptimalRange() {
+	public int getMaxOptimalRange() {
 		return maxOptimalRange;
 	}
 
-	public static int getMinOptimalRange() {
+	public int getMinOptimalRange() {
 		return minOptimalRange;
 	}
 
-	public static int getMaxUpdateFrequency() {
+	public int getMaxUpdateFrequency() {
 		return maxFrequency;
 	}
 
-	public static int getMinUpdateFrequency() {
+	public int getMinUpdateFrequency() {
 		return minFrequency;
 	}
 
-	public static int calculateNewFrequency(final int currentFrequency, final int percentNew) {
+	public int calculateNewFrequency(final int currentFrequency, final int percentNew) {
 		LOG.debug("Current frequency is every {} hours {} minutes, new posts are at {}%",
 				currentFrequency / MINS_PER_HR, currentFrequency % MINS_PER_HR, percentNew);
 

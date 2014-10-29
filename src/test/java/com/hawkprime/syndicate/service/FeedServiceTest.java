@@ -4,8 +4,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Update;
 import com.hawkprime.syndicate.model.builder.FeedBuilder;
 import com.hawkprime.syndicate.model.builder.UpdateBuilder;
+import com.hawkprime.syndicate.util.FrequencyCalculator;
 
 /**
  * Feed Service Tests.
@@ -204,6 +205,12 @@ public class FeedServiceTest {
 		when(updateDao.percentNewByFeedId(feed.getId()))
 				.thenReturn(percentNewPosts);
 
+		final int newCalculatedFrequency = 80;
+		final FrequencyCalculator frequencyCalculator = mock(FrequencyCalculator.class);
+		feedService.setFrequencyCalculator(frequencyCalculator);
+		when(frequencyCalculator.calculateNewFrequency(feedUpdateFrequency, percentNewPosts))
+				.thenReturn(newCalculatedFrequency);
+
 		feedService.updateFeedFrequency(feed);
 
 		verify(feedDao).update(feed);
@@ -225,6 +232,11 @@ public class FeedServiceTest {
 		final int percentNewPosts = 75;
 		when(updateDao.percentNewByFeedId(feed.getId()))
 				.thenReturn(percentNewPosts);
+
+		final FrequencyCalculator frequencyCalculator = mock(FrequencyCalculator.class);
+		feedService.setFrequencyCalculator(frequencyCalculator);
+		when(frequencyCalculator.calculateNewFrequency(feedUpdateFrequency, percentNewPosts))
+				.thenReturn(feedUpdateFrequency);
 
 		feedService.updateFeedFrequency(feed);
 
