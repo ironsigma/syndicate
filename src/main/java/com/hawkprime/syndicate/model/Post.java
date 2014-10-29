@@ -38,6 +38,10 @@ public class Post {
 	@Column(nullable=false)
 	private String guid;
 
+	@Column(nullable=false)
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+	private LocalDateTime fetched;
+
 	@ManyToOne
 	@JoinColumn(name="feed_id", nullable=false)
 	private Feed feed;
@@ -82,6 +86,20 @@ public class Post {
 	 */
 	public void setPublished(final LocalDateTime published) {
 		this.published = published;
+	}
+
+	/**
+	 * @return the fetched
+	 */
+	public LocalDateTime getFetched() {
+		return fetched;
+	}
+
+	/**
+	 * @param fetched the fetched to set
+	 */
+	public void setFetched(final LocalDateTime fetched) {
+		this.fetched = fetched;
 	}
 
 	/**

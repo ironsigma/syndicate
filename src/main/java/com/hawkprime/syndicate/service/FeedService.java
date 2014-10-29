@@ -67,7 +67,7 @@ public class FeedService {
 		update.setFeed(feed);
 		update.setTotalCount(totalCount);
 		update.setNewCount(newCount);
-		update.setUpdated(new LocalDateTime());
+		update.setUpdated(LocalDateTime.now());
 		updateDao.create(update);
 	}
 

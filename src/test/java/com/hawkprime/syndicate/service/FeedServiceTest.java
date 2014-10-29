@@ -158,7 +158,7 @@ public class FeedServiceTest {
 
 		final Update update = new UpdateBuilder()
 				.withFeed(feed)
-				.withUpdated(new LocalDateTime().minusMinutes(minutesSinceLastFeedUpdate))
+				.withUpdated(LocalDateTime.now().minusMinutes(minutesSinceLastFeedUpdate))
 				.build();
 
 		when(updateDao.findLatestUpdateByFeedId(feed.getId()))

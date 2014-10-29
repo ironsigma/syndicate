@@ -14,7 +14,8 @@ public class PostBuilder {
 	private String title = "Post";
 	private String link = "http://myfeed.com/post";
 	private String text = "My Post";
-	private LocalDateTime published = new LocalDateTime();
+	private LocalDateTime published = LocalDateTime.now();
+	private LocalDateTime fetched = LocalDateTime.now();
 	private Feed feed;
 	private String guid = published.toString();
 
@@ -26,6 +27,7 @@ public class PostBuilder {
 		post.setGuid(Sha1.digest(guid));
 		post.setText(text);
 		post.setPublished(published);
+		post.setFetched(fetched);
 		post.setFeed(feed);
 		return post;
 	}
@@ -57,6 +59,11 @@ public class PostBuilder {
 
 	public PostBuilder withPublished(final LocalDateTime published) {
 		this.published = published;
+		return this;
+	}
+
+	public PostBuilder withFetched(final LocalDateTime fetched) {
+		this.fetched = fetched;
 		return this;
 	}
 

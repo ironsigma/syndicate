@@ -15,7 +15,7 @@ public class UpdateBuilder {
 	private Long id;
 	private Long totalCount = DEFAULT_TOTAL;
 	private Long newCount = DEFAULT_NEW;
-	private LocalDateTime updated = new LocalDateTime();
+	private LocalDateTime updated = LocalDateTime.now();
 	private Feed feed;
 
 	public Update build() {

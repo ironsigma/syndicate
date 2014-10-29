@@ -1,6 +1,7 @@
 package com.hawkprime.syndicate.adapter;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import org.joda.time.LocalDateTime;
@@ -52,6 +53,7 @@ public class SyndEntryToPostAdapterTest {
 		assertThat(post.getLink(), is(entry.getLink()));
 		assertThat(post.getPublished(), is(new LocalDateTime(entry.getPublishedDate())));
 		assertThat(post.getText(), is(entry.getDescription().getValue()));
+		assertThat(post.getFetched(), is(not(nullValue())));
 	}
 
 	@Test

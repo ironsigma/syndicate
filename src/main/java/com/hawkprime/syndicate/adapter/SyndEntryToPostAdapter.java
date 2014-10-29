@@ -33,6 +33,7 @@ public final class SyndEntryToPostAdapter {
 		post.setGuid(generateGuid(entry));
 		post.setLink(entry.getLink());
 		post.setPublished(new LocalDateTime(entry.getPublishedDate()));
+		post.setFetched(LocalDateTime.now());
 		if (content != null) {
 			post.setText(content.getValue());
 		}

@@ -38,6 +38,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post.getText(), is("This is my first post!"));
 		assertThat(post.getGuid(), is("2048a082fd924a742f9d92b83c24092af8309a72"));
 		assertThat(post.getPublished(), is(LocalDateTime.parse("2014-10-17T14:39:00")));
+		assertThat(post.getFetched(), is(LocalDateTime.parse("2014-10-29T14:08:00")));
 		assertThat(post.getFeed().getId(), is(1L));
 	}
 
@@ -57,6 +58,7 @@ public class PostDaoTest extends AbstractDaoTest {
 
 		final String guid = post.getGuid();
 		final LocalDateTime published = post.getPublished();
+		final LocalDateTime fetched = post.getFetched();
 
 		postDao.create(post);
 
@@ -70,6 +72,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post.getGuid(), is(guid));
 		assertThat(post.getText(), is(text));
 		assertThat(post.getPublished(), is(published));
+		assertThat(post.getFetched(), is(fetched));
 	}
 
 	@Test
@@ -94,7 +97,8 @@ public class PostDaoTest extends AbstractDaoTest {
 		final String link = "http://myfeed.com/awsome_post";
 		final String guid = "1a0fa0829d924a741f9d92383c34032af8303a72";
 		final String text = "Everything is awsome!";
-		final LocalDateTime published = new LocalDateTime();
+		final LocalDateTime published = LocalDateTime.now();
+		final LocalDateTime fetched = LocalDateTime.now();
 
 		// update post
 		post.setTitle(title);
@@ -102,6 +106,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		post.setGuid(guid);
 		post.setText(text);
 		post.setPublished(published);
+		post.setFetched(fetched);
 
 		// persist
 		postDao.update(post);
@@ -118,6 +123,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post.getGuid(), is(guid));
 		assertThat(post.getText(), is(text));
 		assertThat(post.getPublished(), is(published));
+		assertThat(post.getFetched(), is(fetched));
 	}
 
 	@Test
