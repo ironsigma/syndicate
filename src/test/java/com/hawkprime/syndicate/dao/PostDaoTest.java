@@ -50,7 +50,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		final String text = "My next Post";
 
 		Post post = new PostBuilder()
-				.withTitle("Another Post")
+				.withTitle(title)
 				.withLink(link)
 				.withText(text)
 				.withFeed(feedDao.findById(1L))

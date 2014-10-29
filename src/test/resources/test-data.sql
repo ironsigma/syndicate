@@ -1,3 +1,9 @@
+-- Users
+INSERT INTO user (user_id, name)
+VALUES (1, 'Joe Hawk');
+INSERT INTO user (user_id, name)
+VALUES (2, 'Jane Hawk');
+
 -- Feeds
 INSERT INTO feed (feed_id, name, url, update_frequency, active)
 VALUES (1, 'MyFeed', 'http://myfeed.com/rss', 60, 1);
@@ -11,6 +17,10 @@ INSERT INTO post (post_id, title, published, fetched, link, guid, text, feed_id)
 VALUES (1, 'My First Post', '2014-10-17 14:39:00', '2014-10-29 14:08:00',
 		'http://myfeed.com/my_first_post', '2048a082fd924a742f9d92b83c24092af8309a72',
 		'This is my first post!', 1);
+
+-- States
+INSERT INTO post_state (post_state_id, read, stared, post_id, user_id)
+VALUES(1, 1, 1, 1, 1);
 
 -- Updates
 INSERT INTO feed_update (feed_update_id, total_count, new_count, updated, feed_id)

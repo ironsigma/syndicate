@@ -45,7 +45,7 @@ public class FeedDaoTest extends AbstractDaoTest {
 		final Integer updateFrequency = 30;
 
 		Feed feed = new FeedBuilder()
-				.withName("Another Feed")
+				.withName(name)
 				.withUrl(url)
 				.withUpdateFrequency(updateFrequency)
 				.withIsActive(active)
