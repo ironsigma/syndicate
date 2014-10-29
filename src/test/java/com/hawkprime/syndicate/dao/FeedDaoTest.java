@@ -117,7 +117,7 @@ public class FeedDaoTest extends AbstractDaoTest {
 		final Long id = feed.getId();
 		feed = null;
 
-		feedDao.delete(id);
+		feedDao.deleteById(id);
 
 		feed = feedDao.findById(id);
 		assertThat(feed, is(nullValue()));

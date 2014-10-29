@@ -138,7 +138,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		final Long id = post.getId();
 		post = null;
 
-		postDao.delete(id);
+		postDao.deleteById(id);
 
 		post = postDao.findById(id);
 		assertThat(post, is(nullValue()));

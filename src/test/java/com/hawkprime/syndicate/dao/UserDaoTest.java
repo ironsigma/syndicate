@@ -95,7 +95,7 @@ public class UserDaoTest extends AbstractDaoTest {
 		final Long id = user.getId();
 		user = null;
 
-		userDao.delete(id);
+		userDao.deleteById(id);
 
 		user = userDao.findById(id);
 		assertThat(user, is(nullValue()));

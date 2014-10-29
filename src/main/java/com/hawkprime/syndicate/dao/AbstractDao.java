@@ -29,7 +29,7 @@ public abstract class AbstractDao<T> {
 		return t;
 	}
 
-	public void delete(final Object id) {
+	public void deleteById(final Object id) {
 		entityManager.remove(entityManager.getReference(entityType, id));
 	}
 

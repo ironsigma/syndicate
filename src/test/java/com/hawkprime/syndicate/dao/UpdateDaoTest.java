@@ -146,7 +146,7 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		final Long id = update.getId();
 		update = null;
 
-		updateDao.delete(id);
+		updateDao.deleteById(id);
 
 		update = updateDao.findById(id);
 		assertThat(update, is(nullValue()));

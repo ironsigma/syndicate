@@ -1,11 +1,15 @@
 package com.hawkprime.syndicate.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -45,6 +49,9 @@ public class Post {
 	@ManyToOne
 	@JoinColumn(name="feed_id", nullable=false)
 	private Feed feed;
+
+	@OneToMany(mappedBy="post", cascade={ CascadeType.DETACH, CascadeType.REMOVE })
+	private List<State> state;
 
 	/**
 	 * @return the id

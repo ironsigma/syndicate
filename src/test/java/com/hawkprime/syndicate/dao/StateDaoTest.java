@@ -6,17 +6,27 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hawkprime.syndicate.model.Post;
 import com.hawkprime.syndicate.model.State;
+import com.hawkprime.syndicate.model.User;
+import com.hawkprime.syndicate.model.builder.PostBuilder;
 import com.hawkprime.syndicate.model.builder.StateBuilder;
+import com.hawkprime.syndicate.model.builder.UserBuilder;
 
 /**
  * State DAO Tests.
  */
 public class StateDaoTest extends AbstractDaoTest {
+	@PersistenceContext
+	private EntityManager entityManager;
+
 	@Autowired
 	private StateDao stateDao;
 
@@ -25,6 +35,9 @@ public class StateDaoTest extends AbstractDaoTest {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private FeedDao feedDao;
 
 	@Test
 	public void findAllTest() {
@@ -115,9 +128,67 @@ public class StateDaoTest extends AbstractDaoTest {
 		final Long id = state.getId();
 		state = null;
 
-		stateDao.delete(id);
+		stateDao.deleteById(id);
 
 		state = stateDao.findById(id);
+		assertThat(state, is(nullValue()));
+	}
+
+	@Test
+	@Transactional
+	public void deletePostCascade() {
+		Post post = new PostBuilder()
+			.withFeed(feedDao.findById(1L))
+			.build();
+
+		postDao.create(post);
+		final long postId = post.getId();
+
+		State state = new StateBuilder()
+			.withPost(postDao.findById(postId))
+			.withUser(userDao.findById(2L))
+			.build();
+
+		stateDao.create(state);
+		entityManager.refresh(post);
+
+		final long stateId = state.getId();
+		post = null;
+		state = null;
+
+		postDao.deleteById(postId);
+		post = postDao.findById(postId);
+		assertThat(post, is(nullValue()));
+
+		state = stateDao.findById(stateId);
+		assertThat(state, is(nullValue()));
+	}
+
+	@Test
+	@Transactional
+	public void deleteUser() {
+		User user = new UserBuilder().build();
+
+		userDao.create(user);
+		final long userId = user.getId();
+
+		State state = new StateBuilder()
+			.withPost(postDao.findById(1L))
+			.withUser(userDao.findById(userId))
+			.build();
+
+		stateDao.create(state);
+		entityManager.refresh(user);
+
+		final long stateId = state.getId();
+		user = null;
+		state = null;
+
+		userDao.deleteById(userId);
+		user = userDao.findById(userId);
+		assertThat(user, is(nullValue()));
+
+		state = stateDao.findById(stateId);
 		assertThat(state, is(nullValue()));
 	}
 }
