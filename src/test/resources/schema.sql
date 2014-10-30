@@ -32,8 +32,8 @@ CREATE TABLE post_state (
 	stared BOOLEAN NOT NULL,
 	post_id INTEGER NOT NULL,
 	user_id INTEGER NOT NULL,
-	FOREIGN KEY (post_id) REFERENCES post (post_id),
-	FOREIGN KEY (user_id) REFERENCES user (user_id),
+	FOREIGN KEY (post_id) REFERENCES post (post_id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE,
 );
 
 CREATE TABLE feed_update (
