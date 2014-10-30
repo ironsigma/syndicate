@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Post;
 import com.hawkprime.syndicate.model.State;
 import com.hawkprime.syndicate.model.builder.PostBuilder;
@@ -153,10 +154,10 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post, is(nullValue()));
 	}
 
-	private Post createPost(final int fetched, final int published,
+	private Post createPost(final Feed feed, final int fetched, final int published,
 			final boolean withState, final Boolean read, final Boolean stared) {
 		final Post post = new PostBuilder()
-			.withFeed(feedDao.findById(1L))
+			.withFeed(feed)
 			.withFetched(LocalDateTime.now().minusDays(fetched))
 			.withPublished(LocalDateTime.now().minusDays(published))
 			.build();
@@ -180,27 +181,33 @@ public class PostDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void deleteOldUnreadPostsTest() {
+		final Feed feed = feedDao.findById(1L);
+		final Feed otherFeed = feedDao.findById(2L);
 		final int recent = 29;
 		final int published = 90;
 		final int fetched = 30;
-		final long postNoStateId = createPost(fetched, published, false, null, null).getId();
-		final long postWithStateUnreadId = createPost(fetched, published, true, false, false).getId();
-		final long postWithStateUnreadStaredId = createPost(fetched, published, true, false, true).getId();
-		final long postWithStateReadStaredId = createPost(fetched, published, true, true, true).getId();
-		final long postWithStateReadId = createPost(fetched, published, true, true, false).getId();
-		final long postRecentNoStateId = createPost(recent, published, false, null, null).getId();
-		final long postRecentWithStateUnreadId = createPost(recent, published, true, false, false).getId();
-		final long postRecentWithStateUnreadStaredId = createPost(recent, published, true, false, true).getId();
-		final long postRecentWithStateReadStaredId = createPost(recent, published, true, true, true).getId();
-		final long postRecentWithStateReadId = createPost(recent, published, true, true, false).getId();
+		final long postNoStateId = createPost(feed, fetched, published, false, null, null).getId();
+		final long postWithStateUnreadId = createPost(feed, fetched, published, true, false, false).getId();
+		final long postWithStateUnreadStaredId = createPost(feed, fetched, published, true, false, true).getId();
+		final long postWithStateReadStaredId = createPost(feed, fetched, published, true, true, true).getId();
+		final long postWithStateReadId = createPost(feed, fetched, published, true, true, false).getId();
+		final long postRecentNoStateId = createPost(feed, recent, published, false, null, null).getId();
+		final long postRecentWithStateUnreadId = createPost(feed, recent, published, true, false, false).getId();
+		final long postRecentWithStateUnreadStaredId = createPost(feed, recent, published, true, false, true).getId();
+		final long postRecentWithStateReadStaredId = createPost(feed, recent, published, true, true, true).getId();
+		final long postRecentWithStateReadId = createPost(feed, recent, published, true, true, false).getId();
+		final long postOtherNoStateId = createPost(otherFeed, fetched, published, false, null, null).getId();
+		final long postOtherWithStateUnreadId = createPost(otherFeed, fetched, published, true, false, false).getId();
 
-		postDao.deleteUnreadNotStaredOlderThan(fetched);
+		postDao.deleteUnreadNotStaredOlderThan(feed.getId(), fetched);
 		postDao.getEntityManager().clear();
 		postDao.getEntityManager().flush();
 
 		assertThat(postDao.findById(postNoStateId), is(nullValue()));
 		assertThat(postDao.findById(postWithStateUnreadId), is(nullValue()));
 
+		assertThat(postDao.findById(postOtherNoStateId), is(not(nullValue())));
+		assertThat(postDao.findById(postOtherWithStateUnreadId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateUnreadStaredId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateReadStaredId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateReadId), is(not(nullValue())));
@@ -214,26 +221,30 @@ public class PostDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void deleteOldReadPostsTest() {
+		final Feed feed = feedDao.findById(1L);
+		final Feed otherFeed = feedDao.findById(2L);
 		final int recent = 44;
 		final int published = 90;
 		final int fetched = 45;
-		final long postNoStateId = createPost(fetched, published, false, null, null).getId();
-		final long postWithStateUnreadId = createPost(fetched, published, true, false, false).getId();
-		final long postWithStateUnreadStaredId = createPost(fetched, published, true, false, true).getId();
-		final long postWithStateReadStaredId = createPost(fetched, published, true, true, true).getId();
-		final long postWithStateReadId = createPost(fetched, published, true, true, false).getId();
-		final long postRecentNoStateId = createPost(recent, published, false, null, null).getId();
-		final long postRecentWithStateUnreadId = createPost(recent, published, true, false, false).getId();
-		final long postRecentWithStateUnreadStaredId = createPost(recent, published, true, false, true).getId();
-		final long postRecentWithStateReadStaredId = createPost(recent, published, true, true, true).getId();
-		final long postRecentWithStateReadId = createPost(recent, published, true, true, false).getId();
+		final long postNoStateId = createPost(feed, fetched, published, false, null, null).getId();
+		final long postWithStateUnreadId = createPost(feed, fetched, published, true, false, false).getId();
+		final long postWithStateUnreadStaredId = createPost(feed, fetched, published, true, false, true).getId();
+		final long postWithStateReadStaredId = createPost(feed, fetched, published, true, true, true).getId();
+		final long postWithStateReadId = createPost(feed, fetched, published, true, true, false).getId();
+		final long postRecentNoStateId = createPost(feed, recent, published, false, null, null).getId();
+		final long postRecentWithStateUnreadId = createPost(feed, recent, published, true, false, false).getId();
+		final long postRecentWithStateUnreadStaredId = createPost(feed, recent, published, true, false, true).getId();
+		final long postRecentWithStateReadStaredId = createPost(feed, recent, published, true, true, true).getId();
+		final long postRecentWithStateReadId = createPost(feed, recent, published, true, true, false).getId();
+		final long postOtherWithStateReadId = createPost(otherFeed, fetched, published, true, true, false).getId();
 
-		postDao.deleteReadNotStaredOlderThan(fetched);
+		postDao.deleteReadNotStaredOlderThan(feed.getId(), fetched);
 		postDao.getEntityManager().clear();
 		postDao.getEntityManager().flush();
 
 		assertThat(postDao.findById(postWithStateReadId), is(nullValue()));
 
+		assertThat(postDao.findById(postOtherWithStateReadId), is(not(nullValue())));
 		assertThat(postDao.findById(postNoStateId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateUnreadId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateUnreadStaredId), is(not(nullValue())));
@@ -248,21 +259,26 @@ public class PostDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void deleteOldPublishedPostsTest() {
+		final Feed feed = feedDao.findById(1L);
+		final Feed otherFeed = feedDao.findById(2L);
 		final int recent = 89;
 		final int published = 90;
 		final int fetched = 60;
-		final long postNoStateId = createPost(fetched, published, false, null, null).getId();
-		final long postWithStateUnreadId = createPost(fetched, published, true, false, false).getId();
-		final long postWithStateUnreadStaredId = createPost(fetched, published, true, false, true).getId();
-		final long postWithStateReadStaredId = createPost(fetched, published, true, true, true).getId();
-		final long postWithStateReadId = createPost(fetched, published, true, true, false).getId();
-		final long postRecentNoStateId = createPost(fetched, recent, false, null, null).getId();
-		final long postRecentWithStateUnreadId = createPost(fetched, recent, true, false, false).getId();
-		final long postRecentWithStateUnreadStaredId = createPost(fetched, recent, true, false, true).getId();
-		final long postRecentWithStateReadStaredId = createPost(fetched, recent, true, true, true).getId();
-		final long postRecentWithStateReadId = createPost(fetched, recent, true, true, false).getId();
+		final long postNoStateId = createPost(feed, fetched, published, false, null, null).getId();
+		final long postWithStateUnreadId = createPost(feed, fetched, published, true, false, false).getId();
+		final long postWithStateUnreadStaredId = createPost(feed, fetched, published, true, false, true).getId();
+		final long postWithStateReadStaredId = createPost(feed, fetched, published, true, true, true).getId();
+		final long postWithStateReadId = createPost(feed, fetched, published, true, true, false).getId();
+		final long postRecentNoStateId = createPost(feed, fetched, recent, false, null, null).getId();
+		final long postRecentWithStateUnreadId = createPost(feed, fetched, recent, true, false, false).getId();
+		final long postRecentWithStateUnreadStaredId = createPost(feed, fetched, recent, true, false, true).getId();
+		final long postRecentWithStateReadStaredId = createPost(feed, fetched, recent, true, true, true).getId();
+		final long postRecentWithStateReadId = createPost(feed, fetched, recent, true, true, false).getId();
+		final long postOtherNoStateId = createPost(otherFeed, fetched, published, false, null, null).getId();
+		final long postOtherWithStateUnreadId = createPost(otherFeed, fetched, published, true, false, false).getId();
+		final long postOtherWithStateReadId = createPost(otherFeed, fetched, published, true, true, false).getId();
 
-		postDao.deletePublishedNotStaredOlderThan(published);
+		postDao.deletePublishedNotStaredOlderThan(feed.getId(), published);
 		postDao.getEntityManager().clear();
 		postDao.getEntityManager().flush();
 
@@ -270,6 +286,9 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(postDao.findById(postWithStateUnreadId), is(nullValue()));
 		assertThat(postDao.findById(postWithStateReadId), is(nullValue()));
 
+		assertThat(postDao.findById(postOtherNoStateId), is(not(nullValue())));
+		assertThat(postDao.findById(postOtherWithStateUnreadId), is(not(nullValue())));
+		assertThat(postDao.findById(postOtherWithStateReadId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateUnreadStaredId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateReadStaredId), is(not(nullValue())));
 		assertThat(postDao.findById(postRecentNoStateId), is(not(nullValue())));

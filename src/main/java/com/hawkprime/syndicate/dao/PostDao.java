@@ -3,8 +3,6 @@ package com.hawkprime.syndicate.dao;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.hawkprime.syndicate.model.Post;
@@ -21,13 +19,15 @@ public class PostDao extends AbstractDao<Post> {
 				.getSingleResult();
 	}
 
-	public int deleteUnreadNotStaredOlderThan(final int days) {
+	public int deleteUnreadNotStaredOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
 				.createQuery("SELECT p.id "
 						+ "FROM Post p LEFT JOIN p.states s "
-						+ "WHERE (s is NULL OR (s.read = false AND s.stared = false)) "
+						+ "WHERE p.feed.id = :id "
+						+ "AND (s is NULL OR (s.read = false AND s.stared = false)) "
 						+ "AND p.fetched <= :date")
+				.setParameter("id", feedId)
 				.setParameter("date", LocalDateTime.now().minusDays(days))
 				.getResultList();
 
@@ -41,14 +41,16 @@ public class PostDao extends AbstractDao<Post> {
 		return postIdList.size();
 	}
 
-	public int deleteReadNotStaredOlderThan(final int days) {
+	public int deleteReadNotStaredOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
 				.createQuery("SELECT p.id "
 						+ "FROM Post p JOIN p.states s "
-						+ "WHERE s.read = true "
+						+ "WHERE p.feed.id = :id "
+						+ "AND s.read = true "
 						+ "AND s.stared = false "
 						+ "AND p.fetched <= :date")
+				.setParameter("id", feedId)
 				.setParameter("date", LocalDateTime.now().minusDays(days))
 				.getResultList();
 
@@ -62,13 +64,15 @@ public class PostDao extends AbstractDao<Post> {
 		return postIdList.size();
 	}
 
-	public int deletePublishedNotStaredOlderThan(final int days) {
+	public int deletePublishedNotStaredOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
 				.createQuery("SELECT p.id "
 						+ "FROM Post p LEFT JOIN p.states s "
-						+ "WHERE (s is NULL OR s.stared = false) "
+						+ "WHERE p.feed.id = :id "
+						+ "AND (s is NULL OR s.stared = false) "
 						+ "AND p.published <= :date")
+				.setParameter("id", feedId)
 				.setParameter("date", LocalDateTime.now().minusDays(days))
 				.getResultList();
 
