@@ -28,4 +28,16 @@ public class PostService {
 	public void setPostDao(final PostDao postDao) {
 		this.postDao = postDao;
 	}
+
+	public int deleteUnreadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
+		return postDao.deleteUnreadNotStaredByFeedIdOlderThan(feedId, days);
+	}
+
+	public int deleteReadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
+		return postDao.deleteReadNotStaredByFeedIdOlderThan(feedId, days);
+	}
+
+	public int deletePublishedNotStaredByFeedIdOlderThan(final long feedId, final int days) {
+		return postDao.deletePublishedNotStaredByFeedIdOlderThan(feedId, days);
+	}
 }

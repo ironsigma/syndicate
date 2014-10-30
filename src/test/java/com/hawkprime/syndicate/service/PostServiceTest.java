@@ -47,4 +47,40 @@ public class PostServiceTest {
 
 		assertThat(postService.save(post), is(0));
 	}
+
+	@Test
+	public void deletePublishedNotStaredByFeedIdOlderThanTest() {
+		final PostDao postDao = mock(PostDao.class);
+		postService.setPostDao(postDao);
+
+		final long feedId = 1L;
+		final int days = 30;
+		postService.deletePublishedNotStaredByFeedIdOlderThan(feedId, days);
+
+		verify(postDao).deletePublishedNotStaredByFeedIdOlderThan(feedId, days);
+	}
+
+	@Test
+	public void deleteReadNotStaredByFeedIdOlderThanTest() {
+		final PostDao postDao = mock(PostDao.class);
+		postService.setPostDao(postDao);
+
+		final long feedId = 1L;
+		final int days = 30;
+		postService.deleteReadNotStaredByFeedIdOlderThan(feedId, days);
+
+		verify(postDao).deleteReadNotStaredByFeedIdOlderThan(feedId, days);
+	}
+
+	@Test
+	public void deleteUnreadNotStaredByFeedIdOlderThanTest() {
+		final PostDao postDao = mock(PostDao.class);
+		postService.setPostDao(postDao);
+
+		final long feedId = 1L;
+		final int days = 30;
+		postService.deleteUnreadNotStaredByFeedIdOlderThan(feedId, days);
+
+		verify(postDao).deleteUnreadNotStaredByFeedIdOlderThan(feedId, days);
+	}
 }
