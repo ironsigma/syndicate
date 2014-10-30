@@ -199,7 +199,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		final long postOtherNoStateId = createPost(otherFeed, fetched, published, false, null, null).getId();
 		final long postOtherWithStateUnreadId = createPost(otherFeed, fetched, published, true, false, false).getId();
 
-		postDao.deleteUnreadNotStaredOlderThan(feed.getId(), fetched);
+		postDao.deleteUnreadNotStaredByFeedIdOlderThan(feed.getId(), fetched);
 		postDao.getEntityManager().clear();
 		postDao.getEntityManager().flush();
 
@@ -238,7 +238,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		final long postRecentWithStateReadId = createPost(feed, recent, published, true, true, false).getId();
 		final long postOtherWithStateReadId = createPost(otherFeed, fetched, published, true, true, false).getId();
 
-		postDao.deleteReadNotStaredOlderThan(feed.getId(), fetched);
+		postDao.deleteReadNotStaredByFeedIdOlderThan(feed.getId(), fetched);
 		postDao.getEntityManager().clear();
 		postDao.getEntityManager().flush();
 
@@ -278,7 +278,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		final long postOtherWithStateUnreadId = createPost(otherFeed, fetched, published, true, false, false).getId();
 		final long postOtherWithStateReadId = createPost(otherFeed, fetched, published, true, true, false).getId();
 
-		postDao.deletePublishedNotStaredOlderThan(feed.getId(), published);
+		postDao.deletePublishedNotStaredByFeedIdOlderThan(feed.getId(), published);
 		postDao.getEntityManager().clear();
 		postDao.getEntityManager().flush();
 

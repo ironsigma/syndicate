@@ -19,7 +19,7 @@ public class PostDao extends AbstractDao<Post> {
 				.getSingleResult();
 	}
 
-	public int deleteUnreadNotStaredOlderThan(final long feedId, final int days) {
+	public int deleteUnreadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
 				.createQuery("SELECT p.id "
@@ -41,7 +41,7 @@ public class PostDao extends AbstractDao<Post> {
 		return postIdList.size();
 	}
 
-	public int deleteReadNotStaredOlderThan(final long feedId, final int days) {
+	public int deleteReadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
 				.createQuery("SELECT p.id "
@@ -64,7 +64,7 @@ public class PostDao extends AbstractDao<Post> {
 		return postIdList.size();
 	}
 
-	public int deletePublishedNotStaredOlderThan(final long feedId, final int days) {
+	public int deletePublishedNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
 				.createQuery("SELECT p.id "
