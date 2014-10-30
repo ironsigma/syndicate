@@ -57,7 +57,7 @@ public class SyndEntryToPostAdapterTest {
 	}
 
 	@Test
-	public void emptyContent() throws SyndEntryToPostAdapterException {
+	public void emptyContentTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
 		final SyndEntry entry = new SyndEntryBuilder()
 				.withText(null)
@@ -68,7 +68,7 @@ public class SyndEntryToPostAdapterTest {
 	}
 
 	@Test
-	public void emptyGuid() throws SyndEntryToPostAdapterException {
+	public void emptyGuidTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
 		final SyndEntry entry = new SyndEntryBuilder()
 				.withUri("     ")
@@ -80,7 +80,7 @@ public class SyndEntryToPostAdapterTest {
 	}
 
 	@Test
-	public void titleGuid() throws SyndEntryToPostAdapterException {
+	public void titleGuidTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
 		final SyndEntry entry = new SyndEntryBuilder()
 				.withUri(null)
@@ -92,7 +92,7 @@ public class SyndEntryToPostAdapterTest {
 	}
 
 	@Test
-	public void titleAndPublishedGuid() throws SyndEntryToPostAdapterException {
+	public void titleAndPublishedGuidTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
 		final SyndEntry entry = new SyndEntryBuilder()
 				.withUri(null)

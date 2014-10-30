@@ -51,7 +51,7 @@ public class Post {
 	private Feed feed;
 
 	@OneToMany(mappedBy="post", cascade={ CascadeType.DETACH, CascadeType.REMOVE })
-	private List<State> state;
+	private List<State> states;
 
 	/**
 	 * @return the id

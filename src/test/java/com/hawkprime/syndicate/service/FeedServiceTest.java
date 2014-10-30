@@ -117,7 +117,7 @@ public class FeedServiceTest {
 	}
 
 	@Test
-	public void badUpdateFrequency() {
+	public void badUpdateFrequencyTest() {
 		Feed feed = new FeedBuilder()
 				.withUpdateFrequency(0)
 				.build();
@@ -132,7 +132,7 @@ public class FeedServiceTest {
 	}
 
 	@Test
-	public void noUpdateFound() {
+	public void noUpdateFoundTest() {
 		final UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 

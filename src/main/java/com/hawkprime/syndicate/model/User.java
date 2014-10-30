@@ -25,7 +25,7 @@ public class User {
 	private String name;
 
 	@OneToMany(mappedBy="user", cascade={ CascadeType.DETACH, CascadeType.REMOVE })
-	private List<State> state;
+	private List<State> states;
 
 	/**
 	 * @return the id

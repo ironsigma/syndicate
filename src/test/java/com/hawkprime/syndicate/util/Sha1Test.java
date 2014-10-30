@@ -11,7 +11,7 @@ import org.junit.Test;
 public class Sha1Test {
 
 	@Test
-	public void testSha1() {
+	public void sha1Test() {
 		assertThat(Sha1.digest(""), is("da39a3ee5e6b4b0d3255bfef95601890afd80709"));
 
 		assertThat(Sha1.digest("The quick brown fox jumps over the lazy dog"),

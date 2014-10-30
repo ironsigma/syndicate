@@ -20,7 +20,7 @@ public class PostServiceTest {
 	private final PostService postService = new PostService();
 
 	@Test
-	public void testSave() {
+	public void saveTest() {
 		final Post post = new PostBuilder().build();
 		final PostDao postDao = mock(PostDao.class);
 		postService.setPostDao(postDao);
@@ -37,7 +37,7 @@ public class PostServiceTest {
 	}
 
 	@Test
-	public void testSaveExisting() {
+	public void saveExistingTest() {
 		final Post post = new PostBuilder().build();
 		final PostDao postDao = mock(PostDao.class);
 		postService.setPostDao(postDao);

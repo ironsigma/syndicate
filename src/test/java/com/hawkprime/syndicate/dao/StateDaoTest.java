@@ -6,9 +6,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +21,6 @@ import com.hawkprime.syndicate.model.builder.UserBuilder;
  * State DAO Tests.
  */
 public class StateDaoTest extends AbstractDaoTest {
-	@PersistenceContext
-	private EntityManager entityManager;
-
 	@Autowired
 	private StateDao stateDao;
 
@@ -136,7 +130,7 @@ public class StateDaoTest extends AbstractDaoTest {
 
 	@Test
 	@Transactional
-	public void deletePostCascade() {
+	public void deletePostCascadeTest() {
 		Post post = new PostBuilder()
 			.withFeed(feedDao.findById(1L))
 			.build();
@@ -150,7 +144,8 @@ public class StateDaoTest extends AbstractDaoTest {
 			.build();
 
 		stateDao.create(state);
-		entityManager.refresh(post);
+		postDao.getEntityManager().clear();
+		postDao.getEntityManager().flush();
 
 		final long stateId = state.getId();
 		post = null;
@@ -166,7 +161,7 @@ public class StateDaoTest extends AbstractDaoTest {
 
 	@Test
 	@Transactional
-	public void deleteUser() {
+	public void deleteUserTest() {
 		User user = new UserBuilder().build();
 
 		userDao.create(user);
@@ -178,7 +173,8 @@ public class StateDaoTest extends AbstractDaoTest {
 			.build();
 
 		stateDao.create(state);
-		entityManager.refresh(user);
+		postDao.getEntityManager().clear();
+		postDao.getEntityManager().flush();
 
 		final long stateId = state.getId();
 		user = null;

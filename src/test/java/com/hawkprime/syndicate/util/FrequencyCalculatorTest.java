@@ -41,7 +41,7 @@ public class FrequencyCalculatorTest {
 	}
 
 	@Test
-	public void tooManyUpdates() {
+	public void tooManyUpdatesTest() {
 		final int percentNew = 48;
 		final int currentFrequency = 120;
 		final int expectedNewFrequency = 146;
@@ -50,7 +50,7 @@ public class FrequencyCalculatorTest {
 	}
 
 	@Test
-	public void tooFewUpdates() {
+	public void tooFewUpdatesTest() {
 		final int percentNew = 95;
 		final int currentFrequency = 191;
 		final int expectedNewFrequency = 163;
@@ -59,7 +59,7 @@ public class FrequencyCalculatorTest {
 	}
 
 	@Test
-	public void goodUpdates() {
+	public void goodUpdatesTest() {
 		final int percentNew = 75;
 		final int currentFrequency = 191;
 
@@ -67,7 +67,7 @@ public class FrequencyCalculatorTest {
 	}
 
 	@Test
-	public void minUpdates() {
+	public void minUpdatesTest() {
 		final int percentNew = 1;
 		final int currentFrequency = 2200;
 		final int expectedNewFrequency = 2880;
@@ -76,7 +76,7 @@ public class FrequencyCalculatorTest {
 	}
 
 	@Test
-	public void maxUpdates() {
+	public void maxUpdatesTest() {
 		final int percentNew = 1000;
 		final int currentFrequency = 60;
 		final int expectedNewFrequency = 1;
@@ -85,7 +85,7 @@ public class FrequencyCalculatorTest {
 	}
 
 	@Test
-	public void minAdjustmentTooSmall() {
+	public void minAdjustmentTooSmallTest() {
 		final int percentNew = 29;
 		final int currentFrequency = 2;
 		final int expectedFrequency = 3;
@@ -93,7 +93,7 @@ public class FrequencyCalculatorTest {
 	}
 
 	@Test
-	public void maxAdjustmentTooSmall() {
+	public void maxAdjustmentTooSmallTest() {
 		final int percentNew = 81;
 		final int currentFrequency = 2;
 		final int expectedFrequency = 1;

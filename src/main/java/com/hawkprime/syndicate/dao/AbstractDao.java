@@ -24,9 +24,9 @@ public abstract class AbstractDao<T> {
 				.getActualTypeArguments()[0];
 	}
 
-	public T create(final T t) {
-		entityManager.persist(t);
-		return t;
+	public T create(final T entity) {
+		entityManager.persist(entity);
+		return entity;
 	}
 
 	public void deleteById(final Object id) {
@@ -44,8 +44,8 @@ public abstract class AbstractDao<T> {
 		return entityManager.createQuery(queryString.toString()).getResultList();
 	}
 
-	public T update(final T t) {
-		return entityManager.merge(t);
+	public T update(final T entity) {
+		return entityManager.merge(entity);
 	}
 
 	protected EntityManager getEntityManager() {
