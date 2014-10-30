@@ -1,3 +1,7 @@
+-- Config
+INSERT INTO config (config_id, value_type, string_value)
+VALUES ('user.01.name', 'STRING', 'Joe Hawk');
+
 -- Users
 INSERT INTO user (user_id, name)
 VALUES (1, 'Joe Hawk');

@@ -1,3 +1,14 @@
+CREATE TABLE config (
+	config_id VARCHAR(1024) NOT NULL,
+	value_type VARCHAR(16) NOT NULL,
+	string_value VARCHAR(4096),
+	boolean_value BOOLEAN,
+	numeric_value INTEGER,
+	decimal_value DECIMAL,
+	date_value TIMESTAMP WITH TIME ZONE,
+	CONSTRAINT uc_config_id UNIQUE (config_id),
+);
+
 CREATE TABLE user (
 	user_id INTEGER IDENTITY,
 	name VARCHAR(128) NOT NULL,
