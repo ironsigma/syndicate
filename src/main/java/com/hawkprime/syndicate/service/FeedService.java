@@ -49,6 +49,11 @@ public class FeedService {
 		return feedDao.findActive();
 	}
 
+	/**
+	 * Update feed frequency.
+	 * Recalculate new feed frequency update from historical updates.
+	 * @param feed Feed to update
+	 */
 	@Transactional
 	public void updateFeedFrequency(final Feed feed) {
 		final int percentNewPosts = updateDao.percentNewByFeedId(feed.getId());
@@ -61,6 +66,12 @@ public class FeedService {
 		}
 	}
 
+	/**
+	 * Save feed update totals.
+	 * @param feed Feed to update
+	 * @param totalCount Total entries in feed
+	 * @param newCount Total new entries in feed
+	 */
 	@Transactional
 	public void saveTotals(final Feed feed, final long totalCount, final long newCount) {
 		final Update update = new Update();
@@ -71,6 +82,11 @@ public class FeedService {
 		updateDao.create(update);
 	}
 
+	/**
+	 * Get post per minute.
+	 * @param feed Feed
+	 * @return Post per minute or zero if no updates found
+	 */
 	@Transactional(readOnly=true)
 	public long postPerMinute(final Feed feed) {
 		final Update oldestUpdate = updateDao.findOldestUpdateByFeedId(feed.getId());
@@ -82,6 +98,11 @@ public class FeedService {
 		return updateDao.countNewPostsByFeedId(feed.getId()) / minutesSinceOldestUpdate;
 	}
 
+	/**
+	 * Determine if a feed needs update.
+	 * @param feed Feed to check
+	 * @return true if updated needed, false otherwise
+	 */
 	@Transactional(readOnly=true)
 	public boolean needsUpdate(final Feed feed) {
 		if (feed.getUpdateFrequency() <= 0) {
@@ -108,14 +129,26 @@ public class FeedService {
 		return false;
 	}
 
+	/**
+	 * Set Update DAO.
+	 * @param updateDao dao
+	 */
 	public void setUpdateDao(final UpdateDao updateDao) {
 		this.updateDao = updateDao;
 	}
 
+	/**
+	 * Set Feed DAO.
+	 * @param feedDao dao
+	 */
 	public void setFeedDao(final FeedDao feedDao) {
 		this.feedDao = feedDao;
 	}
 
+	/**
+	 * Set Frequency Calculator.
+	 * @param frequencyCalculator frequency calculator object
+	 */
 	public void setFrequencyCalculator(final FrequencyCalculator frequencyCalculator) {
 		this.frequencyCalculator = frequencyCalculator;
 	}

@@ -19,6 +19,9 @@ public class PostServiceTest {
 
 	private final PostService postService = new PostService();
 
+	/**
+	 * Save test.
+	 */
 	@Test
 	public void saveTest() {
 		final Post post = new PostBuilder().build();
@@ -36,6 +39,9 @@ public class PostServiceTest {
 		verify(postDao).create(post);
 	}
 
+	/**
+	 * Save existing test.
+	 */
 	@Test
 	public void saveExistingTest() {
 		final Post post = new PostBuilder().build();
@@ -48,6 +54,9 @@ public class PostServiceTest {
 		assertThat(postService.save(post), is(0));
 	}
 
+	/**
+	 * Delete published not stared by feed id older than test.
+	 */
 	@Test
 	public void deletePublishedNotStaredByFeedIdOlderThanTest() {
 		final PostDao postDao = mock(PostDao.class);
@@ -60,6 +69,9 @@ public class PostServiceTest {
 		verify(postDao).deletePublishedNotStaredByFeedIdOlderThan(feedId, days);
 	}
 
+	/**
+	 * Delete read not stared by feed id older than test.
+	 */
 	@Test
 	public void deleteReadNotStaredByFeedIdOlderThanTest() {
 		final PostDao postDao = mock(PostDao.class);
@@ -72,6 +84,9 @@ public class PostServiceTest {
 		verify(postDao).deleteReadNotStaredByFeedIdOlderThan(feedId, days);
 	}
 
+	/**
+	 * Delete unread not stared by feed id older than test.
+	 */
 	@Test
 	public void deleteUnreadNotStaredByFeedIdOlderThanTest() {
 		final PostDao postDao = mock(PostDao.class);

@@ -15,8 +15,16 @@ public final class Sha1 {
 	private static final Logger LOG = LoggerFactory.getLogger(Sha1.class);
 	private static MessageDigest messageDigest;
 
+	/**
+	 * No instances.
+	 */
 	private Sha1() { /* empty */ }
 
+	/**
+	 * Digest a string.
+	 * @param string String to digest
+	 * @return SHA1 digest as a HEX string
+	 */
 	public static String digest(final String string) {
 		try {
 			if (messageDigest == null) {

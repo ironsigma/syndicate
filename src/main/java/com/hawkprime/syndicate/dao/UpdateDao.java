@@ -11,6 +11,12 @@ import com.hawkprime.syndicate.model.Update;
  */
 @Repository
 public class UpdateDao extends AbstractDao<Update> {
+
+	/**
+	 * Return the percent new posts.
+	 * @param id Feed id
+	 * @return percentage as an integer from 0 to 100
+	 */
 	public int percentNewByFeedId(final Long id) {
 		final Object[] counts = (Object[]) getEntityManager()
 					.createQuery("SELECT sum(totalCount), sum(newCount) FROM Update WHERE feed.id=:id")
@@ -31,6 +37,12 @@ public class UpdateDao extends AbstractDao<Update> {
 		return (int) (Math.round(newCount * percent / totalCount));
 	}
 
+	/**
+	 * Count new posts by feed id.
+	 *
+	 * @param id the id
+	 * @return the long
+	 */
 	public long countNewPostsByFeedId(final Long id) {
 		return ((Number) getEntityManager()
 					.createQuery("SELECT sum(newCount) FROM Update WHERE feed.id=:id")
@@ -39,6 +51,12 @@ public class UpdateDao extends AbstractDao<Update> {
 					.longValue();
 	}
 
+	/**
+	 * Find oldest update by feed id.
+	 *
+	 * @param id the id
+	 * @return the update
+	 */
 	public Update findOldestUpdateByFeedId(final Long id) {
 		try {
 			return (Update) getEntityManager()
@@ -46,11 +64,17 @@ public class UpdateDao extends AbstractDao<Update> {
 					.setParameter("id", id)
 					.setMaxResults(1)
 					.getSingleResult();
-		} catch (NoResultException ex) {
+		} catch (final NoResultException ex) {
 			return null;
 		}
 	}
 
+	/**
+	 * Find latest update by feed id.
+	 *
+	 * @param id the id
+	 * @return the update
+	 */
 	public Update findLatestUpdateByFeedId(final Long id) {
 		try {
 			return (Update) getEntityManager()
@@ -58,7 +82,7 @@ public class UpdateDao extends AbstractDao<Update> {
 					.setParameter("id", id)
 					.setMaxResults(1)
 					.getSingleResult();
-		} catch (NoResultException ex) {
+		} catch (final NoResultException ex) {
 			return null;
 		}
 	}

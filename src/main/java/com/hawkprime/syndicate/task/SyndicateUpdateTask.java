@@ -43,8 +43,11 @@ public class SyndicateUpdateTask {
 	private FeedFetcherCache feedInfoCache;
 	private FeedFetcher feedFetcher;
 
+	/**
+	 * Initialize feed fetcher.
+	 */
 	@PostConstruct
-	public void init() {
+	public void initializeFeedFetcher() {
 		feedInfoCache = HashMapFeedInfoCache.getInstance();
 		feedFetcher = new HttpURLFeedFetcher(feedInfoCache);
 	}

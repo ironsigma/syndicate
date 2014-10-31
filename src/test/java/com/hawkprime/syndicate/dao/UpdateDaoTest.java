@@ -24,6 +24,9 @@ public class UpdateDaoTest extends AbstractDaoTest {
 	@Autowired
 	private UpdateDao updateDao;
 
+	/**
+	 * Test new post percentage.
+	 */
 	@Test
 	public void percentTest() {
 		final int expectedPercentNewFeed1 = 8;
@@ -34,12 +37,19 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		assertThat(updateDao.percentNewByFeedId(3L), is(0));
 	}
 
+	/**
+	 * Find all entities in table.
+	 */
 	@Test
 	public void findAllTest() {
 		final int expectedUpdateCount = 6;
 		final List<Update> allUpdates = updateDao.findAll();
 		assertThat(allUpdates.size(), is(expectedUpdateCount));
 	}
+
+	/**
+	 * Find oldest update.
+	 */
 	@Test
 	public void findOldestUpdateTest() {
 		assertThat(updateDao.findOldestUpdateByFeedId(0L), is(nullValue()));
@@ -51,6 +61,9 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		assertThat(update.getId(), is(5L));
 	}
 
+	/**
+	 * Count new posts.
+	 */
 	@Test
 	public void coutNewPostTest() {
 		final long expectedCountFeed1 = 18L;
@@ -60,6 +73,9 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		assertThat(updateDao.countNewPostsByFeedId(2L), is(expectedCountFeed2));
 	}
 
+	/**
+	 * Read entities.
+	 */
 	@Test
 	public void readUpdateTest() {
 		final Long expectedTotal = 120L;
@@ -72,6 +88,9 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		assertThat(update.getFeed().getId(), is(1L));
 	}
 
+	/**
+	 * Create entities.
+	 */
 	@Test
 	@Transactional
 	public void createUpdateTest() {
@@ -95,6 +114,9 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		assertThat(update.getNewCount(), is(newCount));
 	}
 
+	/**
+	 * Update entities.
+	 */
 	@Test
 	@Transactional
 	public void updateUpdateTest() {
@@ -134,6 +156,9 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		assertThat(update.getNewCount(), is(newCount));
 	}
 
+	/**
+	 * Delete entities.
+	 */
 	@Test
 	@Transactional
 	public void deleteUpdateTest() {
@@ -152,6 +177,9 @@ public class UpdateDaoTest extends AbstractDaoTest {
 		assertThat(update, is(nullValue()));
 	}
 
+	/**
+	 * Find latest update.
+	 */
 	@Test
 	@Transactional
 	public void findLatestTest() {

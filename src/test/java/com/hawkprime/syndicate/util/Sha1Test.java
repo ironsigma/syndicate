@@ -10,6 +10,9 @@ import org.junit.Test;
  */
 public class Sha1Test {
 
+	/**
+	 * SHA1 test.
+	 */
 	@Test
 	public void sha1Test() {
 		assertThat(Sha1.digest(""), is("da39a3ee5e6b4b0d3255bfef95601890afd80709"));

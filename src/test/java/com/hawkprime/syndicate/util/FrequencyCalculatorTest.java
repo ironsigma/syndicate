@@ -12,6 +12,9 @@ import org.junit.Test;
 public class FrequencyCalculatorTest {
 	private final FrequencyCalculator frequencyCalculator = new FrequencyCalculator();
 
+	/**
+	 * Set-up.
+	 */
 	@Before
 	public void setUp() {
 		final int minRange = 70;
@@ -23,6 +26,9 @@ public class FrequencyCalculatorTest {
 		frequencyCalculator.setUpdateFrequencyRange(minUpdate, maxUpdate);
 	}
 
+	/**
+	 * Getters Setters test.
+	 */
 	@Test
 	public void gettersSettersTest() {
 		final int minRange = 50;
@@ -40,6 +46,9 @@ public class FrequencyCalculatorTest {
 		assertThat(frequencyCalculator.getMaxUpdateFrequency(), is(maxUpdate));
 	}
 
+	/**
+	 * Too many updates test.
+	 */
 	@Test
 	public void tooManyUpdatesTest() {
 		final int percentNew = 48;
@@ -49,6 +58,9 @@ public class FrequencyCalculatorTest {
 		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
 	}
 
+	/**
+	 * Too few updates test.
+	 */
 	@Test
 	public void tooFewUpdatesTest() {
 		final int percentNew = 95;
@@ -58,6 +70,9 @@ public class FrequencyCalculatorTest {
 		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
 	}
 
+	/**
+	 * Good updates test.
+	 */
 	@Test
 	public void goodUpdatesTest() {
 		final int percentNew = 75;
@@ -66,6 +81,9 @@ public class FrequencyCalculatorTest {
 		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(currentFrequency));
 	}
 
+	/**
+	 * Min updates test.
+	 */
 	@Test
 	public void minUpdatesTest() {
 		final int percentNew = 1;
@@ -75,6 +93,9 @@ public class FrequencyCalculatorTest {
 		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
 	}
 
+	/**
+	 * Max updates test.
+	 */
 	@Test
 	public void maxUpdatesTest() {
 		final int percentNew = 1000;
@@ -84,6 +105,9 @@ public class FrequencyCalculatorTest {
 		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedNewFrequency));
 	}
 
+	/**
+	 * Min adjustment too small test.
+	 */
 	@Test
 	public void minAdjustmentTooSmallTest() {
 		final int percentNew = 29;
@@ -92,6 +116,9 @@ public class FrequencyCalculatorTest {
 		assertThat(frequencyCalculator.calculateNewFrequency(currentFrequency, percentNew), is(expectedFrequency));
 	}
 
+	/**
+	 * Max adjustment too small test.
+	 */
 	@Test
 	public void maxAdjustmentTooSmallTest() {
 		final int percentNew = 81;

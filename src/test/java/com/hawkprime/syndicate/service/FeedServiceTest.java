@@ -29,6 +29,9 @@ public class FeedServiceTest {
 
 	private final FeedService feedService = new FeedService();
 
+	/**
+	 * Post per minute test.
+	 */
 	@Test
 	public void postPerMinuteTest() {
 		final Feed feed = new FeedBuilder().build();
@@ -50,6 +53,9 @@ public class FeedServiceTest {
 		assertThat(feedService.postPerMinute(feed), is(4L));
 	}
 
+	/**
+	 * Post per minute no updates test.
+	 */
 	@Test
 	public void postPerMinuteNoUpdatesTest() {
 		final Feed feed = new FeedBuilder().build();
@@ -63,6 +69,9 @@ public class FeedServiceTest {
 		assertThat(feedService.postPerMinute(feed), is(0L));
 	}
 
+	/**
+	 * Years of post per minute test.
+	 */
 	@Test
 	public void yearsOfPostPerMinuteTest() {
 		final Feed feed = new FeedBuilder().build();
@@ -85,6 +94,9 @@ public class FeedServiceTest {
 		assertThat(feedService.postPerMinute(feed), is(expectedPostsPerMinute));
 	}
 
+	/**
+	 * Save totals test.
+	 */
 	@Test
 	public void saveTotalsTest() {
 		final UpdateDao updateDao = mock(UpdateDao.class);
@@ -96,6 +108,9 @@ public class FeedServiceTest {
 		verify(updateDao).create(any(Update.class));
 	}
 
+	/**
+	 * Find all test.
+	 */
 	@Test
 	public void findAllTest() {
 		final FeedDao feedDao = mock(FeedDao.class);
@@ -106,6 +121,9 @@ public class FeedServiceTest {
 		assertThat(feedService.findAll(), is(allFeeds));
 	}
 
+	/**
+	 * Find active test.
+	 */
 	@Test
 	public void findActiveTest() {
 		final FeedDao feedDao = mock(FeedDao.class);
@@ -116,6 +134,9 @@ public class FeedServiceTest {
 		assertThat(feedService.findActiveFeeds(), is(activeFeeds));
 	}
 
+	/**
+	 * Bad update frequency test.
+	 */
 	@Test
 	public void badUpdateFrequencyTest() {
 		Feed feed = new FeedBuilder()
@@ -131,6 +152,9 @@ public class FeedServiceTest {
 		assertThat(feedService.needsUpdate(feed), is(false));
 	}
 
+	/**
+	 * No update found test.
+	 */
 	@Test
 	public void noUpdateFoundTest() {
 		final UpdateDao updateDao = mock(UpdateDao.class);
@@ -146,6 +170,12 @@ public class FeedServiceTest {
 		assertThat(feedService.needsUpdate(feed), is(true));
 	}
 
+	/**
+	 * Update test setup.
+	 *
+	 * @param feedUpdateFrequency the feed update frequency
+	 * @return the feed
+	 */
 	private Feed updateTestSetup(final int feedUpdateFrequency) {
 		final int minutesSinceLastFeedUpdate = 15;
 
@@ -167,6 +197,9 @@ public class FeedServiceTest {
 		return feed;
 	}
 
+	/**
+	 * Needs update test.
+	 */
 	@Test
 	public void needsUpdateTest() {
 		final int feedUpdateFrequency = 10;
@@ -174,6 +207,9 @@ public class FeedServiceTest {
 		assertThat(feedService.needsUpdate(feed), is(true));
 	}
 
+	/**
+	 * Needs no update test.
+	 */
 	@Test
 	public void needsNoUpdateTest() {
 		final int feedUpdateFrequency = 20;
@@ -181,6 +217,9 @@ public class FeedServiceTest {
 		assertThat(feedService.needsUpdate(feed), is(false));
 	}
 
+	/**
+	 * Right at update test.
+	 */
 	@Test
 	public void rightAtUpdateTest() {
 		final int feedUpdateFrequency = 15;
@@ -188,6 +227,9 @@ public class FeedServiceTest {
 		assertThat(feedService.needsUpdate(feed), is(true));
 	}
 
+	/**
+	 * Update frequency test.
+	 */
 	@Test
 	public void updateFrequencyTest() {
 		final UpdateDao updateDao = mock(UpdateDao.class);
@@ -216,6 +258,9 @@ public class FeedServiceTest {
 		verify(feedDao).update(feed);
 	}
 
+	/**
+	 * Unchanged frequency test.
+	 */
 	@Test
 	public void unchangedFrequencyTest() {
 		final UpdateDao updateDao = mock(UpdateDao.class);

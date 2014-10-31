@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
@@ -19,6 +20,11 @@ import com.sun.syndication.feed.synd.SyndEntry;
  */
 public class SyndEntryToPostAdapterTest {
 
+	/**
+	 * Empty title test.
+	 *
+	 * @throws SyndEntryToPostAdapterException the synd entry to post adapter exception
+	 */
 	@Test(expected=SyndEntryToPostAdapterException.class)
 	public void emptyTitleTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
@@ -30,6 +36,11 @@ public class SyndEntryToPostAdapterTest {
 		SyndEntryToPostAdapter.convert(entry, feed);
 	}
 
+	/**
+	 * Blank title test.
+	 *
+	 * @throws SyndEntryToPostAdapterException the synd entry to post adapter exception
+	 */
 	@Test(expected=SyndEntryToPostAdapterException.class)
 	public void blankTitleTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
@@ -41,6 +52,11 @@ public class SyndEntryToPostAdapterTest {
 		SyndEntryToPostAdapter.convert(entry, feed);
 	}
 
+	/**
+	 * Convert test.
+	 *
+	 * @throws SyndEntryToPostAdapterException the synd entry to post adapter exception
+	 */
 	@Test
 	public void convertTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
@@ -56,6 +72,11 @@ public class SyndEntryToPostAdapterTest {
 		assertThat(post.getFetched(), is(not(nullValue())));
 	}
 
+	/**
+	 * Empty content test.
+	 *
+	 * @throws SyndEntryToPostAdapterException the synd entry to post adapter exception
+	 */
 	@Test
 	public void emptyContentTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
@@ -67,6 +88,11 @@ public class SyndEntryToPostAdapterTest {
 		assertThat(post.getText(), is(nullValue()));
 	}
 
+	/**
+	 * Empty GUID test.
+	 *
+	 * @throws SyndEntryToPostAdapterException the synd entry to post adapter exception
+	 */
 	@Test
 	public void emptyGuidTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
@@ -79,6 +105,11 @@ public class SyndEntryToPostAdapterTest {
 		assertThat(post.getGuid(), is(Sha1.digest(entry.getTitle())));
 	}
 
+	/**
+	 * Title GUID test.
+	 *
+	 * @throws SyndEntryToPostAdapterException the synd entry to post adapter exception
+	 */
 	@Test
 	public void titleGuidTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();
@@ -91,6 +122,11 @@ public class SyndEntryToPostAdapterTest {
 		assertThat(post.getGuid(), is(Sha1.digest(entry.getTitle())));
 	}
 
+	/**
+	 * Title and published GUID test.
+	 *
+	 * @throws SyndEntryToPostAdapterException the synd entry to post adapter exception
+	 */
 	@Test
 	public void titleAndPublishedGuidTest() throws SyndEntryToPostAdapterException {
 		final Feed feed = new FeedBuilder().build();

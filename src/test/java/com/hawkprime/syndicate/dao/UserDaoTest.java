@@ -17,21 +17,31 @@ import com.hawkprime.syndicate.model.builder.UserBuilder;
  * User DAO Tests.
  */
 public class UserDaoTest extends AbstractDaoTest {
+
 	@Autowired
 	private UserDao userDao;
 
+	/**
+	 * Find all entities in table.
+	 */
 	@Test
 	public void findAllTest() {
 		final List<User> allUsers = userDao.findAll();
 		assertThat(allUsers.size(), is(2));
 	}
 
+	/**
+	 * Read entities.
+	 */
 	@Test
 	public void readUserTest() {
 		final User user = userDao.findById(1L);
 		assertThat(user.getName(), is("Joe Hawk"));
 	}
 
+	/**
+	 * Create entities.
+	 */
 	@Test
 	@Transactional
 	public void createUserTest() {
@@ -51,6 +61,9 @@ public class UserDaoTest extends AbstractDaoTest {
 		assertThat(user.getName(), is(name));
 	}
 
+	/**
+	 * Update entities.
+	 */
 	@Test
 	@Transactional
 	public void updateUserTest() {
@@ -85,6 +98,9 @@ public class UserDaoTest extends AbstractDaoTest {
 		assertThat(user.getName(), is(name));
 	}
 
+	/**
+	 * Delete entities.
+	 */
 	@Test
 	@Transactional
 	public void deleteUserTest() {

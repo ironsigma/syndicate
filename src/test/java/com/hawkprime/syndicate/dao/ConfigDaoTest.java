@@ -19,18 +19,27 @@ public class ConfigDaoTest extends AbstractDaoTest {
 	@Autowired
 	private ConfigDao configDao;
 
+	/**
+	 * Find all entities in table.
+	 */
 	@Test
 	public void findAllTest() {
 		final List<Config> allConfigs = configDao.findAll();
 		assertThat(allConfigs.size(), is(1));
 	}
 
+	/**
+	 * Read entities.
+	 */
 	@Test
 	public void readConfigTest() {
 		final Config config = configDao.findById("user.01.name");
 		assertThat(config.getStringValue(), is("Joe Hawk"));
 	}
 
+	/**
+	 * Create entities.
+	 */
 	@Test
 	@Transactional
 	public void createConfigTest() {
@@ -47,6 +56,9 @@ public class ConfigDaoTest extends AbstractDaoTest {
 		assertThat(config.getStringValue(), is(value));
 	}
 
+	/**
+	 * Update entities.
+	 */
 	@Test
 	@Transactional
 	public void updateConfigTest() {
@@ -81,6 +93,9 @@ public class ConfigDaoTest extends AbstractDaoTest {
 		assertThat(config.getStringValue(), is(value));
 	}
 
+	/**
+	 * Delete entities.
+	 */
 	@Test
 	@Transactional
 	public void deleteConfigTest() {

@@ -27,32 +27,64 @@ public class FrequencyCalculator {
 	@Value("${syndicate.update.frequency.max}")
 	private int maxFrequency;
 
+	/**
+	 * Set optimal range.
+	 * @param min Minimum post per update percentage
+	 * @param max Max post per update percentage
+	 */
 	public void setOptimalRange(final int min, final int max) {
 		maxOptimalRange = max;
 		minOptimalRange = min;
 	}
 
+	/**
+	 * Set update frequency range.
+	 * @param min Minimum number of minutes to check (max wait time)
+	 * @param max Maxinum numbe of minutes to check (min wait time)
+	 */
 	public void setUpdateFrequencyRange(final int min, final int max) {
 		minFrequency = min;
 		maxFrequency = max;
 	}
 
+	/**
+	 * Get maximum optimal percent range.
+	 * @return integer range from 0 to 100
+	 */
 	public int getMaxOptimalRange() {
 		return maxOptimalRange;
 	}
 
+	/**
+	 * Get mininum optimal percent range.
+	 * @return integer range from 0 to 100
+	 */
 	public int getMinOptimalRange() {
 		return minOptimalRange;
 	}
 
+	/**
+	 * Get maximum update frequency.
+	 * @return maxium number of minutes to wait before update
+	 */
 	public int getMaxUpdateFrequency() {
 		return maxFrequency;
 	}
 
+	/**
+	 * Get mininum update frequency.
+	 * @return minimum number of minutes to wait before update
+	 */
 	public int getMinUpdateFrequency() {
 		return minFrequency;
 	}
 
+	/**
+	 * Calculate new frequency to update.
+	 * @param currentFrequency current number of minutes between updates
+	 * @param percentNew percent number of new post in feed from 0 to 100
+	 * @return new number of minutes to wait before updates
+	 */
 	public int calculateNewFrequency(final int currentFrequency, final int percentNew) {
 		LOG.debug("Current frequency is every {} hours {} minutes, new posts are at {}%",
 				currentFrequency / MINS_PER_HR, currentFrequency % MINS_PER_HR, percentNew);

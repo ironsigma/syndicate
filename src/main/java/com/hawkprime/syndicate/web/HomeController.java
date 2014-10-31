@@ -22,6 +22,10 @@ public class HomeController {
 	@Autowired
 	private FeedService feedService;
 
+	/**
+	 * Home view.
+	 * @return Model and view
+	 */
 	@RequestMapping({ "/", "/home" })
 	public ModelAndView home() {
 		LOG.info("handling: /home");

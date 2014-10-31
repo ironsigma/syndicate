@@ -13,6 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class AboutController {
 	private static final Logger LOG = LoggerFactory.getLogger(AboutController.class);
 
+	/**
+	 * About page.
+	 * @return model and view
+	 */
 	@RequestMapping("/about")
 	public ModelAndView about() {
 		LOG.info("handling: /about");

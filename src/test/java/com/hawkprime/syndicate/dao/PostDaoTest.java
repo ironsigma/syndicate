@@ -34,12 +34,18 @@ public class PostDaoTest extends AbstractDaoTest {
 	@Autowired
 	private StateDao stateDao;
 
+	/**
+	 * Find all entities in table.
+	 */
 	@Test
 	public void findAllTest() {
 		final List<Post> allPosts = postDao.findAll();
 		assertThat(allPosts.size(), is(1));
 	}
 
+	/**
+	 * Read entities.
+	 */
 	@Test
 	public void readPostTest() {
 		final Post post = postDao.findById(1L);
@@ -52,6 +58,9 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post.getFeed().getId(), is(1L));
 	}
 
+	/**
+	 * Create entities.
+	 */
 	@Test
 	@Transactional
 	public void createPostTest() {
@@ -85,6 +94,9 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post.getFetched(), is(fetched));
 	}
 
+	/**
+	 * Update entities.
+	 */
 	@Test
 	@Transactional
 	public void updatePostTest() {
@@ -136,6 +148,9 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post.getFetched(), is(fetched));
 	}
 
+	/**
+	 * Delete entities.
+	 */
 	@Test
 	@Transactional
 	public void deletePostTest() {
@@ -154,6 +169,16 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post, is(nullValue()));
 	}
 
+	/**
+	 * Create a post.
+	 * @param feed Feed
+	 * @param fetched fetched date
+	 * @param published published date
+	 * @param withState true to create state object
+	 * @param read true to mark read
+	 * @param stared true to mark starred
+	 * @return the post
+	 */
 	private Post createPost(final Feed feed, final int fetched, final int published,
 			final boolean withState, final Boolean read, final Boolean stared) {
 		final Post post = new PostBuilder()
@@ -178,6 +203,9 @@ public class PostDaoTest extends AbstractDaoTest {
 		return post;
 	}
 
+	/**
+	 * Delete old unread posts.
+	 */
 	@Test
 	@Transactional
 	public void deleteOldUnreadPostsTest() {
@@ -218,6 +246,9 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(postDao.findById(postRecentWithStateReadId), is(not(nullValue())));
 	}
 
+	/**
+	 * Delete old read posts.
+	 */
 	@Test
 	@Transactional
 	public void deleteOldReadPostsTest() {
@@ -256,6 +287,9 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(postDao.findById(postRecentWithStateReadId), is(not(nullValue())));
 	}
 
+	/**
+	 * Delete old published posts.
+	 */
 	@Test
 	@Transactional
 	public void deleteOldPublishedPostsTest() {
@@ -298,6 +332,9 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(postDao.findById(postRecentWithStateReadId), is(not(nullValue())));
 	}
 
+	/**
+	 * Test if a post exists.
+	 */
 	@Test
 	@Transactional
 	public void postExistsTest() {

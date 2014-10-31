@@ -11,6 +11,10 @@ import com.hawkprime.syndicate.model.Feed;
  */
 @Repository
 public class FeedDao extends AbstractDao<Feed> {
+	/**
+	 * Find active feeds.
+	 * @return List of active feeds, empty list if no results
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Feed> findActive() {
 		return getEntityManager()

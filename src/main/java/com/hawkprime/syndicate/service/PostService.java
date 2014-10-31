@@ -16,6 +16,11 @@ public class PostService {
 	@Autowired
 	private PostDao postDao;
 
+	/**
+	 * Save post.
+	 * @param post post
+	 * @return 1 if post was saved, 0 if post already exists
+	 */
 	@Transactional
 	public int save(final Post post) {
 		if (postDao.doesPosExistsWithGuid(post.getGuid())) {
@@ -25,18 +30,40 @@ public class PostService {
 		return 1;
 	}
 
+	/**
+	 * Set post DAO.
+	 * @param postDao dao
+	 */
 	public void setPostDao(final PostDao postDao) {
 		this.postDao = postDao;
 	}
 
+	/**
+	 * Delete unread not stared posts.
+	 * @param feedId feed id
+	 * @param days anything prior to this will be deleted
+	 * @return number of posts deleted
+	 */
 	public int deleteUnreadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		return postDao.deleteUnreadNotStaredByFeedIdOlderThan(feedId, days);
 	}
 
+	/**
+	 * Delete read not stared posts.
+	 * @param feedId feed id
+	 * @param days anything prior to this will be deleted
+	 * @return number of posts deleted
+	 */
 	public int deleteReadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		return postDao.deleteReadNotStaredByFeedIdOlderThan(feedId, days);
 	}
 
+	/**
+	 * Delete published not stared posts.
+	 * @param feedId feed id
+	 * @param days anything prior to this will be deleted
+	 * @return number of posts deleted
+	 */
 	public int deletePublishedNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		return postDao.deletePublishedNotStaredByFeedIdOlderThan(feedId, days);
 	}

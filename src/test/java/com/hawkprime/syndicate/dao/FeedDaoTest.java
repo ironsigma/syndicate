@@ -20,12 +20,18 @@ public class FeedDaoTest extends AbstractDaoTest {
 	@Autowired
 	private FeedDao feedDao;
 
+	/**
+	 * Find all entities in table.
+	 */
 	@Test
 	public void findAllTest() {
 		final List<Feed> allFeeds = feedDao.findAll();
 		assertThat(allFeeds.size(), is(3));
 	}
 
+	/**
+	 * Read entities.
+	 */
 	@Test
 	public void readFeedTest() {
 		final Integer expectedUpdateFrequency = 60;
@@ -36,6 +42,9 @@ public class FeedDaoTest extends AbstractDaoTest {
 		assertThat(feed.getUpdateFrequency(), is(expectedUpdateFrequency));
 	}
 
+	/**
+	 * Create entities.
+	 */
 	@Test
 	@Transactional
 	public void createFeedTest() {
@@ -64,6 +73,9 @@ public class FeedDaoTest extends AbstractDaoTest {
 		assertThat(feed.getUpdateFrequency(), is(updateFrequency));
 	}
 
+	/**
+	 * Update entities.
+	 */
 	@Test
 	@Transactional
 	public void updateFeedTest() {
@@ -107,6 +119,9 @@ public class FeedDaoTest extends AbstractDaoTest {
 		assertThat(feed.getUpdateFrequency(), is(updateFrequency));
 	}
 
+	/**
+	 * Delete entities.
+	 */
 	@Test
 	@Transactional
 	public void deleteFeedTest() {
@@ -123,6 +138,9 @@ public class FeedDaoTest extends AbstractDaoTest {
 		assertThat(feed, is(nullValue()));
 	}
 
+	/**
+	 * find active feeds.
+	 */
 	@Test
 	@Transactional
 	public void findActiveFeedsTest() {

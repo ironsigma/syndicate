@@ -12,6 +12,11 @@ public class FeedBuilder {
 	private Integer updateFrequency = 1;
 	private Boolean active = true;
 
+	/**
+	 * Builds the feed.
+	 *
+	 * @return the feed
+	 */
 	public Feed build() {
 		final Feed feed = new Feed();
 		feed.setId(id);
@@ -22,26 +27,56 @@ public class FeedBuilder {
 		return feed;
 	}
 
+	/**
+	 * With id.
+	 *
+	 * @param id the id
+	 * @return the feed builder
+	 */
 	public FeedBuilder withId(final Long id) {
 		this.id = id;
 		return this;
 	}
 
+	/**
+	 * With name.
+	 *
+	 * @param name the name
+	 * @return the feed builder
+	 */
 	public FeedBuilder withName(final String name) {
 		this.name = name;
 		return this;
 	}
 
+	/**
+	 * With url.
+	 *
+	 * @param url the url
+	 * @return the feed builder
+	 */
 	public FeedBuilder withUrl(final String url) {
 		this.url = url;
 		return this;
 	}
 
+	/**
+	 * With update frequency.
+	 *
+	 * @param updateFrequency the update frequency
+	 * @return the feed builder
+	 */
 	public FeedBuilder withUpdateFrequency(final Integer updateFrequency) {
 		this.updateFrequency = updateFrequency;
 		return this;
 	}
 
+	/**
+	 * With is active.
+	 *
+	 * @param active the active
+	 * @return the feed builder
+	 */
 	public FeedBuilder withIsActive(final Boolean active) {
 		this.active = active;
 		return this;

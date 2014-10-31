@@ -13,6 +13,9 @@ import com.sun.syndication.feed.synd.SyndEntry;
  */
 public final class SyndEntryToPostAdapter {
 
+	/**
+	 * No instances.
+	 */
 	private SyndEntryToPostAdapter() { }
 
 	/**
@@ -20,7 +23,7 @@ public final class SyndEntryToPostAdapter {
 	 * @param entry Syndicate entry.
 	 * @param feed Parent feed.
 	 * @return The post object.
-	 * @throws Exception
+	 * @throws SyndEntryToPostAdapterException conversion errors
 	 */
 	public static Post convert(final SyndEntry entry, final Feed feed) throws SyndEntryToPostAdapterException {
 		if (entry.getTitle() == null || entry.getTitle().trim().isEmpty()) {

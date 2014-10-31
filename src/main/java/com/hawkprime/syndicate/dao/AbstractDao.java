@@ -17,6 +17,9 @@ public abstract class AbstractDao<T> {
 
 	private final Class<T> entityType;
 
+	/**
+	 * Get entity type.
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AbstractDao() {
 		entityType = (Class) ((ParameterizedType) getClass()
@@ -24,19 +27,37 @@ public abstract class AbstractDao<T> {
 				.getActualTypeArguments()[0];
 	}
 
+	/**
+	 * Create entity.
+	 * @param entity Entity
+	 * @return Persisted entity
+	 */
 	public T create(final T entity) {
 		entityManager.persist(entity);
 		return entity;
 	}
 
+	/**
+	 * Delete entity.
+	 * @param id Entity id
+	 */
 	public void deleteById(final Object id) {
 		entityManager.remove(entityManager.getReference(entityType, id));
 	}
 
+	/**
+	 * Find by id.
+	 * @param id Entity id
+	 * @return Entity found, null otherwise
+	 */
 	public T findById(final Object id) {
 		return entityManager.find(entityType, id);
 	}
 
+	/**
+	 * Find all entities.
+	 * @return List of entities found, empty list if none found
+	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		final StringBuffer queryString = new StringBuffer("SELECT e FROM ");
@@ -44,10 +65,19 @@ public abstract class AbstractDao<T> {
 		return entityManager.createQuery(queryString.toString()).getResultList();
 	}
 
+	/**
+	 * Update entity.
+	 * @param entity Entity to update
+	 * @return Entity updated
+	 */
 	public T update(final T entity) {
 		return entityManager.merge(entity);
 	}
 
+	/**
+	 * Get entity manager.
+	 * @return entity manager
+	 */
 	protected EntityManager getEntityManager() {
 		return entityManager;
 	}

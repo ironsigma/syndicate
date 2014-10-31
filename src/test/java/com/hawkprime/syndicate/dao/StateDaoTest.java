@@ -33,12 +33,18 @@ public class StateDaoTest extends AbstractDaoTest {
 	@Autowired
 	private FeedDao feedDao;
 
+	/**
+	 * Find all entities in table.
+	 */
 	@Test
 	public void findAllTest() {
 		final List<State> allStates = stateDao.findAll();
 		assertThat(allStates.size(), is(1));
 	}
 
+	/**
+	 * Read entities.
+	 */
 	@Test
 	public void readStateTest() {
 		final State state = stateDao.findById(1L);
@@ -48,6 +54,9 @@ public class StateDaoTest extends AbstractDaoTest {
 		assertThat(state.getUser().getId(), is(1L));
 	}
 
+	/**
+	 * Create entities.
+	 */
 	@Test
 	@Transactional
 	public void createStateTest() {
@@ -71,6 +80,9 @@ public class StateDaoTest extends AbstractDaoTest {
 		assertThat(state.getUser().getId(), is(1L));
 	}
 
+	/**
+	 * Update entities.
+	 */
 	@Test
 	@Transactional
 	public void updateStateTest() {
@@ -109,6 +121,9 @@ public class StateDaoTest extends AbstractDaoTest {
 		assertThat(state.isStared(), is(false));
 	}
 
+	/**
+	 * Delete entities.
+	 */
 	@Test
 	@Transactional
 	public void deleteStateTest() {
@@ -128,6 +143,9 @@ public class StateDaoTest extends AbstractDaoTest {
 		assertThat(state, is(nullValue()));
 	}
 
+	/**
+	 * Delete post with state cascade.
+	 */
 	@Test
 	@Transactional
 	public void deletePostCascadeTest() {
@@ -159,6 +177,9 @@ public class StateDaoTest extends AbstractDaoTest {
 		assertThat(state, is(nullValue()));
 	}
 
+	/**
+	 * Delete User with state cascade.
+	 */
 	@Test
 	@Transactional
 	public void deleteUserTest() {

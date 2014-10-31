@@ -24,7 +24,7 @@ import com.hawkprime.syndicate.util.ConfigType;
 public class Config {
 	@Id
 	@Column(name="config_id")
-	private String id;
+	private String key;
 
 	@Column(nullable=false, name="value_type")
 	@Enumerated(EnumType.STRING)
@@ -46,66 +46,110 @@ public class Config {
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
 	private LocalDateTime dateValue;
 
+	/**
+	 * Default constructor.
+	 * Needed for JPA hydration
+	 */
 	@SuppressWarnings("unused")
 	private Config() {
 		/* empty */
 	}
 
-	public Config(final String id, final String value) {
-		setId(id);
+	/**
+	 * Create string value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final String value) {
+		setId(key);
 		setStringValue(value);
 	}
 
-	public Config(final String id, final boolean value) {
-		setId(id);
+	/**
+	 * Create boolean value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final boolean value) {
+		setId(key);
 		setBooleanValue(value);
 	}
 
-	public Config(final String id, final int value) {
-		setId(id);
+	/**
+	 * Create int value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final int value) {
+		setId(key);
 		setNumericValue(new Long(value));
 	}
 
-	public Config(final String id, final long value) {
-		setId(id);
+	/**
+	 * Create long value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final long value) {
+		setId(key);
 		setNumericValue(value);
 	}
 
-	public Config(final String id, final double value) {
-		setId(id);
+	/**
+	 * Create double value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final double value) {
+		setId(key);
 		setDecimalValue(new BigDecimal(value));
 	}
 
-	public Config(final String id, final float value) {
-		setId(id);
+	/**
+	 * Create float value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final float value) {
+		setId(key);
 		setDecimalValue(new BigDecimal(value));
 	}
 
-	public Config(final String id, final Date value) {
-		setId(id);
+	/**
+	 * Create date value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final Date value) {
+		setId(key);
 		setDateValue(new LocalDateTime(value));
 	}
 
-	public Config(final String id, final LocalDateTime value) {
-		setId(id);
+	/**
+	 * Create local date time value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final LocalDateTime value) {
+		setId(key);
 		setDateValue(value);
 	}
 
 	/**
-	 * @return the id
+	 * @return the key
 	 */
 	public String getId() {
-		return id;
+		return key;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param key the key to set
 	 */
-	private void setId(final String id) {
-		if (id == null) {
-			throw new NullPointerException("Config id cannot be null");
+	private void setId(final String key) {
+		if (key == null) {
+			throw new NullPointerException("Config key cannot be null");
 		}
-		this.id = id;
+		this.key = key;
 	}
 
 	/**
@@ -115,6 +159,10 @@ public class Config {
 		return type;
 	}
 
+	/**
+	 * Get value.
+	 * @return object value
+	 */
 	public Object getValue() {
 		switch (type) {
 		case BOOLEAN:

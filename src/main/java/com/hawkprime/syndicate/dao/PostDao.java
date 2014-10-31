@@ -12,6 +12,12 @@ import com.hawkprime.syndicate.model.Post;
  */
 @Repository
 public class PostDao extends AbstractDao<Post> {
+
+	/**
+	 * Check if a post exist.
+	 * @param guid GUI of post to check
+	 * @return true if post exists, false otherwise
+	 */
 	public boolean doesPosExistsWithGuid(final String guid) {
 		return 0 != (Long) getEntityManager()
 				.createQuery("SELECT COUNT(guid) FROM Post WHERE guid=:guid")
@@ -19,6 +25,12 @@ public class PostDao extends AbstractDao<Post> {
 				.getSingleResult();
 	}
 
+	/**
+	 * Delete posts that are unread and not stared.
+	 * @param feedId Feed id to delete from
+	 * @param days Any post at or before days will be deleted
+	 * @return number of post deleted
+	 */
 	public int deleteUnreadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
@@ -41,6 +53,12 @@ public class PostDao extends AbstractDao<Post> {
 		return postIdList.size();
 	}
 
+	/**
+	 * Delete posts that are read and not stared.
+	 * @param feedId Feed id to delete from
+	 * @param days Any post at or before days will be deleted
+	 * @return number of post deleted
+	 */
 	public int deleteReadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
@@ -64,6 +82,12 @@ public class PostDao extends AbstractDao<Post> {
 		return postIdList.size();
 	}
 
+	/**
+	 * Delete posts that are published and not stared.
+	 * @param feedId Feed id to delete from
+	 * @param days Any post at or before days will be deleted
+	 * @return number of post deleted
+	 */
 	public int deletePublishedNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		@SuppressWarnings("unchecked")
 		final List<Long> postIdList = getEntityManager()
