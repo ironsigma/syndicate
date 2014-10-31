@@ -10,7 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -116,6 +115,16 @@ public class Config {
 	}
 
 	/**
+	 * Create big decimal value.
+	 * @param key Key
+	 * @param value Value
+	 */
+	public Config(final String key, final BigDecimal value) {
+		setId(key);
+		setDecimalValue(value);
+	}
+
+	/**
 	 * Create date value.
 	 * @param key Key
 	 * @param value Value
@@ -146,7 +155,7 @@ public class Config {
 	 * @param key the key to set
 	 */
 	private void setId(final String key) {
-		if (key == null) {
+		if (key == null || key.isEmpty() || key.trim().isEmpty()) {
 			throw new NullPointerException("Config key cannot be null");
 		}
 		this.key = key;
@@ -176,7 +185,7 @@ public class Config {
 		case STRING:
 			return getStringValue();
 		default:
-			throw new NotImplementedException("Unknown config type: " + type.toString());
+			throw new IllegalStateException("Unknown config type: " + type.toString());
 		}
 	}
 
