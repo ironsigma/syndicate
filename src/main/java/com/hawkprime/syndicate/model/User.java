@@ -27,6 +27,9 @@ public class User {
 	@OneToMany(mappedBy="user", cascade={ CascadeType.DETACH, CascadeType.REMOVE })
 	private List<State> states;
 
+	@OneToMany(mappedBy="user")
+	private List<UserConfig> config;
+
 	/**
 	 * @return the id
 	 */

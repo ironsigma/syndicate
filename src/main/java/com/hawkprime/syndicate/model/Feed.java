@@ -1,9 +1,12 @@
 package com.hawkprime.syndicate.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -29,6 +32,9 @@ public class Feed {
 
 	@Column(nullable=false, name="update_frequency")
 	private Integer updateFrequency;
+
+	@OneToMany(mappedBy="feed")
+	private List<FeedConfig> config;
 
 	/**
 	 * @return the id

@@ -7,9 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import org.joda.time.LocalDateTime;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.internal.util.reflection.Whitebox;
 
 import com.hawkprime.syndicate.util.ConfigType;
 
@@ -17,19 +15,6 @@ import com.hawkprime.syndicate.util.ConfigType;
  * Configuration Tests.
  */
 public class ConfigTest {
-
-	@Before
-	public void setUp() {
-		final ConfigType[] values = ConfigType.values();
-		final ConfigType[] valuesAndWannabe = new ConfigType[values.length + 1];
-		System.arraycopy(values, 0, valuesAndWannabe, 0, values.length);
-
-		final ConfigType configType = ConfigType.STRING;
-		Whitebox.setInternalState(configType, "name", "XXXTYPE");
-		Whitebox.setInternalState(configType, "ordinal", values.length);
-
-		valuesAndWannabe[values.length] = configType;
-	}
 
 	/**
 	 * Null key test.

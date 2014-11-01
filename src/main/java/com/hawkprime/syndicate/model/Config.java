@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -19,6 +21,8 @@ import com.hawkprime.syndicate.util.ConfigType;
  * Configuration Value.
  */
 @Entity
+@Inheritance
+@DiscriminatorColumn(name="entity_type")
 @Table(name="config")
 public class Config {
 	@Id
@@ -50,7 +54,7 @@ public class Config {
 	 * Needed for JPA hydration
 	 */
 	@SuppressWarnings("unused")
-	private Config() {
+	protected Config() {
 		/* empty */
 	}
 

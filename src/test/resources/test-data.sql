@@ -1,6 +1,6 @@
 -- Config
-INSERT INTO config (config_id, value_type, string_value)
-VALUES ('user.01.name', 'STRING', 'Joe Hawk');
+INSERT INTO config (config_id, value_type, string_value, entity_type, entity_id)
+VALUES ('user.01.name', 'STRING', 'Joe Hawk', 'User', 1);
 
 -- Users
 INSERT INTO user (user_id, name)

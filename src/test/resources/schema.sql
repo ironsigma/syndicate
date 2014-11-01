@@ -6,6 +6,8 @@ CREATE TABLE config (
 	numeric_value INTEGER,
 	decimal_value DECIMAL,
 	date_value TIMESTAMP WITH TIME ZONE,
+	entity_type VARCHAR(64) NOT NULL,
+	entity_id NUMERIC NOT NULL,
 	CONSTRAINT uc_config_id UNIQUE (config_id),
 );
 
