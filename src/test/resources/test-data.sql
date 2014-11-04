@@ -1,6 +1,18 @@
 -- Config
-INSERT INTO config (config_id, value_type, string_value, entity_type, entity_id)
-VALUES ('user.01.name', 'STRING', 'Joe Hawk', 'User', 1);
+INSERT INTO config (config_id, section, key, value_type, string_value, reference_id)
+VALUES (1, 'User', 'name', 'STRING', 'Joe Hawk', 1);
+INSERT INTO config (config_id, section, key, value_type, string_value, reference_id)
+VALUES (2, 'User', 'name', 'STRING', 'Joe Hawk 2', null);
+INSERT INTO config (config_id, section, key, value_type, string_value, reference_id)
+VALUES (3, 'User', 'name', 'STRING', 'Joe Hawk 3', 2);
+INSERT INTO config (config_id, section, key, value_type, numeric_value, reference_id)
+VALUES (4, 'Feed', 'max-update', 'NUMERIC', 1, 1);
+INSERT INTO config (config_id, section, key, value_type, numeric_value, reference_id)
+VALUES (5, 'Feed', 'min-update', 'NUMERIC', 2880, 1);
+INSERT INTO config (config_id, section, key, value_type, numeric_value, reference_id)
+VALUES (6, 'Feed', 'max-optimal', 'NUMERIC', 80, 1);
+INSERT INTO config (config_id, section, key, value_type, numeric_value, reference_id)
+VALUES (7, 'Feed', 'min-optimal', 'NUMERIC', 70, 1);
 
 -- Users
 INSERT INTO user (user_id, name)

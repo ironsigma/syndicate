@@ -1,13 +1,12 @@
 package com.hawkprime.syndicate.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.hawkprime.syndicate.service.Configurable;
 
 
 /**
@@ -15,7 +14,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="feed")
-public class Feed {
+public class Feed implements Configurable {
+	private static final String CONFIG_SECTION = "Feed";
+
 	@Id
 	@GeneratedValue
 	@Column(name="feed_id")
@@ -32,9 +33,6 @@ public class Feed {
 
 	@Column(nullable=false, name="update_frequency")
 	private Integer updateFrequency;
-
-	@OneToMany(mappedBy="feed")
-	private List<FeedConfig> config;
 
 	/**
 	 * @return the id
@@ -95,5 +93,15 @@ public class Feed {
 	 */
 	public void setUpdateFrequency(final Integer updateFrequency) {
 		this.updateFrequency = updateFrequency;
+	}
+
+	@Override
+	public String getSection() {
+		return CONFIG_SECTION;
+	}
+
+	@Override
+	public Long getReferenceId() {
+		return getId();
 	}
 }

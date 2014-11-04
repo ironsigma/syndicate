@@ -4,15 +4,15 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.jdom.IllegalDataException;
 import org.joda.time.LocalDateTime;
 
 import com.hawkprime.syndicate.util.ConfigType;
@@ -21,15 +21,20 @@ import com.hawkprime.syndicate.util.ConfigType;
  * Configuration Value.
  */
 @Entity
-@Inheritance
-@DiscriminatorColumn(name="entity_type")
 @Table(name="config")
 public class Config {
 	@Id
+	@GeneratedValue
 	@Column(name="config_id")
+	private Long id;
+
+	@Column(name="section", nullable=false)
+	private String section;
+
+	@Column(name="key", nullable=false)
 	private String key;
 
-	@Column(nullable=false, name="value_type")
+	@Column(name="value_type", nullable=false)
 	@Enumerated(EnumType.STRING)
 	private ConfigType type;
 
@@ -49,116 +54,58 @@ public class Config {
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
 	private LocalDateTime dateValue;
 
+	@Column(name="reference_id")
+	private Long referenceId;
+
 	/**
-	 * Default constructor.
-	 * Needed for JPA hydration
+	 * Default Constructor.
 	 */
-	@SuppressWarnings("unused")
-	protected Config() {
-		/* empty */
+	public Config() {
+		/* Empty */
 	}
 
 	/**
-	 * Create string value.
-	 * @param key Key
-	 * @param value Value
+	 * @return the id
 	 */
-	public Config(final String key, final String value) {
-		setId(key);
-		setStringValue(value);
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * Create boolean value.
-	 * @param key Key
-	 * @param value Value
+	 * @param id the id to set
 	 */
-	public Config(final String key, final boolean value) {
-		setId(key);
-		setBooleanValue(value);
+	public void setId(final Long id) {
+		this.id = id;
 	}
 
 	/**
-	 * Create int value.
-	 * @param key Key
-	 * @param value Value
+	 * @return the section
 	 */
-	public Config(final String key, final int value) {
-		setId(key);
-		setNumericValue(new Long(value));
+	public String getSection() {
+		return section;
 	}
 
 	/**
-	 * Create long value.
-	 * @param key Key
-	 * @param value Value
+	 * @param section the section to set
 	 */
-	public Config(final String key, final long value) {
-		setId(key);
-		setNumericValue(value);
-	}
-
-	/**
-	 * Create double value.
-	 * @param key Key
-	 * @param value Value
-	 */
-	public Config(final String key, final double value) {
-		setId(key);
-		setDecimalValue(new BigDecimal(value));
-	}
-
-	/**
-	 * Create float value.
-	 * @param key Key
-	 * @param value Value
-	 */
-	public Config(final String key, final float value) {
-		setId(key);
-		setDecimalValue(new BigDecimal(value));
-	}
-
-	/**
-	 * Create big decimal value.
-	 * @param key Key
-	 * @param value Value
-	 */
-	public Config(final String key, final BigDecimal value) {
-		setId(key);
-		setDecimalValue(value);
-	}
-
-	/**
-	 * Create date value.
-	 * @param key Key
-	 * @param value Value
-	 */
-	public Config(final String key, final Date value) {
-		setId(key);
-		setDateValue(new LocalDateTime(value));
-	}
-
-	/**
-	 * Create local date time value.
-	 * @param key Key
-	 * @param value Value
-	 */
-	public Config(final String key, final LocalDateTime value) {
-		setId(key);
-		setDateValue(value);
+	public void setSection(final String section) {
+		if (section == null || section.isEmpty() || section.trim().isEmpty()) {
+			throw new NullPointerException("Config section cannot be null");
+		}
+		this.section = section;
 	}
 
 	/**
 	 * @return the key
 	 */
-	public String getId() {
+	public String getKey() {
 		return key;
 	}
 
 	/**
 	 * @param key the key to set
 	 */
-	private void setId(final String key) {
+	public void setKey(final String key) {
 		if (key == null || key.isEmpty() || key.trim().isEmpty()) {
 			throw new NullPointerException("Config key cannot be null");
 		}
@@ -173,26 +120,18 @@ public class Config {
 	}
 
 	/**
-	 * Get value.
-	 * @return object value
+	 * @return Configuration value
 	 */
 	public Object getValue() {
 		switch (type) {
-		case BOOLEAN:
-			return getBooleanValue();
-		case DATE:
-			return getDateValue();
-		case DECIMAL:
-			return getDecimalValue();
-		case NUMERIC:
-			return getNumericValue();
-		case STRING:
-			return getStringValue();
-		default:
-			throw new IllegalStateException("Unknown config type: " + type.toString());
+		case BOOLEAN:	return getBooleanValue();
+		case DATE:		return getDateValue();
+		case DECIMAL:	return getDecimalValue();
+		case NUMERIC:	return getNumericValue();
+		case STRING:	return getStringValue();
+		default:		return null;
 		}
 	}
-
 	/**
 	 * @return the stringValue
 	 */
@@ -206,7 +145,7 @@ public class Config {
 	/**
 	 * @param stringValue the stringValue to set
 	 */
-	public void setStringValue(final String stringValue) {
+	public void setValue(final String stringValue) {
 		if (stringValue == null) {
 			throw new NullPointerException("Config string value cannot be null");
 		}
@@ -231,13 +170,26 @@ public class Config {
 	/**
 	 * @param booleanValue the booleanValue to set
 	 */
-	public void setBooleanValue(final boolean booleanValue) {
+	public void setValue(final boolean booleanValue) {
 		this.booleanValue = booleanValue;
 		stringValue = null;
 		decimalValue = null;
 		numericValue = null;
 		dateValue = null;
 		type = ConfigType.BOOLEAN;
+	}
+
+	/**
+	 * @return the integer value
+	 */
+	public Integer getIntegerValue() {
+		if (type != ConfigType.NUMERIC) {
+			throw new IllegalArgumentException("Cannot get Config value, value is of type: " + type.toString());
+		}
+		if (numericValue > Integer.MAX_VALUE || numericValue < Integer.MIN_VALUE) {
+			throw new IllegalDataException("Value cannot be represented as an integer.");
+		}
+		return (int) (long) numericValue;
 	}
 
 	/**
@@ -253,7 +205,7 @@ public class Config {
 	/**
 	 * @param numericValue the numericValue to set
 	 */
-	public void setNumericValue(final long numericValue) {
+	public void setValue(final long numericValue) {
 		this.numericValue = numericValue;
 		stringValue = null;
 		decimalValue = null;
@@ -280,6 +232,13 @@ public class Config {
 	}
 
 	/**
+	 * @param doubleValue the new value
+	 */
+	public void setValue(final double doubleValue) {
+		setValue(new BigDecimal(doubleValue));
+	}
+
+	/**
 	 * @return the floatValue
 	 */
 	public Float getFloatValue() {
@@ -287,9 +246,16 @@ public class Config {
 	}
 
 	/**
+	 * @param floatValue the new value
+	 */
+	public void setValue(final float floatValue) {
+		setValue(new BigDecimal(floatValue));
+	}
+
+	/**
 	 * @param decimalValue the decimalValue to set
 	 */
-	public void setDecimalValue(final BigDecimal decimalValue) {
+	public void setValue(final BigDecimal decimalValue) {
 		if (decimalValue == null) {
 			throw new NullPointerException("Config decimal value cannot be null");
 		}
@@ -314,7 +280,14 @@ public class Config {
 	/**
 	 * @param dateValue the dateValue to set
 	 */
-	public void setDateValue(final LocalDateTime dateValue) {
+	public void setValue(final Date dateValue) {
+		setValue(new LocalDateTime(dateValue));
+	}
+
+	/**
+	 * @param dateValue the dateValue to set
+	 */
+	public void setValue(final LocalDateTime dateValue) {
 		if (dateValue == null) {
 			throw new NullPointerException("Config date value cannot be null");
 		}
@@ -324,5 +297,19 @@ public class Config {
 		booleanValue = null;
 		decimalValue = null;
 		type = ConfigType.DATE;
+	}
+
+	/**
+	 * @return the referenceId
+	 */
+	public Long getReferenceId() {
+		return referenceId;
+	}
+
+	/**
+	 * @param referenceId the referenceId to set
+	 */
+	public void setReferenceId(final Long referenceId) {
+		this.referenceId = referenceId;
 	}
 }

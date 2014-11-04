@@ -1,14 +1,15 @@
 CREATE TABLE config (
-	config_id VARCHAR(1024) NOT NULL,
+	config_id INTEGER IDENTITY,
+	section varchar(1024) NOT NULL,
+	key VARCHAR(1024) NOT NULL,
 	value_type VARCHAR(16) NOT NULL,
 	string_value VARCHAR(4096),
 	boolean_value BOOLEAN,
 	numeric_value INTEGER,
 	decimal_value DECIMAL,
 	date_value TIMESTAMP WITH TIME ZONE,
-	entity_type VARCHAR(64) NOT NULL,
-	entity_id NUMERIC NOT NULL,
-	CONSTRAINT uc_config_id UNIQUE (config_id),
+	reference_id INTEGER,
+	CONSTRAINT uc_config_value UNIQUE (section, key, value_type, reference_id),
 );
 
 CREATE TABLE user (
