@@ -27,7 +27,6 @@ public class Value {
 
 	@Id
 	@GeneratedValue
-	@Column(name="value_id")
 	private Long id;
 
 	@Column(name="value_type", nullable=false)

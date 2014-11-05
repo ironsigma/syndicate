@@ -19,7 +19,6 @@ import org.joda.time.LocalDateTime;
 public class Update {
 	@Id
 	@GeneratedValue
-	@Column(name="feed_update_id")
 	private Long id;
 
 	@Column(name="total_count", nullable=false)

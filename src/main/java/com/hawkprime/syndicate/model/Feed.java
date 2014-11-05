@@ -15,7 +15,6 @@ import javax.persistence.Table;
 public class Feed {
 	@Id
 	@GeneratedValue
-	@Column(name="feed_id")
 	private Long id;
 
 	@Column(nullable=false)

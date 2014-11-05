@@ -16,7 +16,6 @@ import javax.persistence.Table;
 public class State {
 	@Id
 	@GeneratedValue
-	@Column(name="post_state_id")
 	private Long id;
 
 	@Column(nullable=false)

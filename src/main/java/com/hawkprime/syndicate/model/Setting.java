@@ -15,7 +15,6 @@ public class Setting {
 
 	@Id
 	@GeneratedValue
-	@Column(name="setting_id")
 	private Long id;
 
 	@Column(nullable=false)

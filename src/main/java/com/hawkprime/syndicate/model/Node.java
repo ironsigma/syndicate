@@ -20,7 +20,6 @@ public class Node {
 
 	@Id
 	@GeneratedValue
-	@Column(name="node_id")
 	private Long id;
 
 	@Column(nullable=false)

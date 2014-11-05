@@ -23,7 +23,6 @@ import org.joda.time.LocalDateTime;
 public class Post {
 	@Id
 	@GeneratedValue
-	@Column(name="post_id")
 	private Long id;
 
 	@Column(nullable=false)
