@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.hawkprime.syndicate.model.Value;
 
 /**
- * Configuration DAO.
+ * Value DAO.
  */
 @Repository
 public class ValueDao extends AbstractDao<Value> {

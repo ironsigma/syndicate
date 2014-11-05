@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.hawkprime.syndicate.model.Setting;
 
 /**
- * Configuration DAO.
+ * Setting DAO.
  */
 @Repository
 public class SettingDao extends AbstractDao<Setting> {

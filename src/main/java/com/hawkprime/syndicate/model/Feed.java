@@ -6,17 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.hawkprime.syndicate.service.Configurable;
-
 
 /**
  * Feed.
  */
 @Entity
 @Table(name="feed")
-public class Feed implements Configurable {
-	private static final String CONFIG_SECTION = "Feed";
-
+public class Feed {
 	@Id
 	@GeneratedValue
 	@Column(name="feed_id")
@@ -93,15 +89,5 @@ public class Feed implements Configurable {
 	 */
 	public void setUpdateFrequency(final Integer updateFrequency) {
 		this.updateFrequency = updateFrequency;
-	}
-
-	@Override
-	public String getSection() {
-		return CONFIG_SECTION;
-	}
-
-	@Override
-	public Long getReferenceId() {
-		return getId();
 	}
 }

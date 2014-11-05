@@ -1,12 +1,22 @@
 package com.hawkprime.syndicate.model;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
+
+import com.hawkprime.syndicate.util.ValueType;
 
 /**
  * Setting Value.
@@ -20,11 +30,25 @@ public class Value {
 	@Column(name="value_id")
 	private Long id;
 
-	@Column(nullable=false)
-	private String type;
+	@Column(name="value_type", nullable=false)
+	@Enumerated(EnumType.STRING)
+	private ValueType type;
 
-	@Column(nullable=false)
-	private String value;
+	@Column(name="string_value")
+	private String stringValue;
+
+	@Column(name="boolean_value")
+	private Boolean booleanValue;
+
+	@Column(name="numeric_value")
+	private Long numericValue;
+
+	@Column(name="decimal_value")
+	private BigDecimal decimalValue;
+
+	@Column(name="date_value")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+	private LocalDateTime dateValue;
 
 	@ManyToOne
 	@JoinColumn(name="node_id")
@@ -53,39 +77,200 @@ public class Value {
 	}
 
 	/**
-	 * Gets the type.
-	 *
 	 * @return the type
 	 */
-	public String getType() {
+	public ValueType getType() {
 		return type;
 	}
 
 	/**
-	 * Sets the type.
-	 *
-	 * @param type the new type
+	 * @return value
 	 */
-	public void setType(final String type) {
-		this.type = type;
+	public Object getValue() {
+		switch (type) {
+		case BOOLEAN:	return getBoolean();
+		case DATE:		return getDate();
+		case DECIMAL:	return getDecimal();
+		case INTEGER:	return getInteger();
+		case LONG:		return getLong();
+		case STRING:	return getString();
+		default:		return null;
+		}
 	}
 
 	/**
-	 * Gets the value.
-	 *
-	 * @return the value
+	 * @param stringValue the stringValue to set
 	 */
-	public String getValue() {
-		return value;
+	public void setValue(final String stringValue) {
+		if (stringValue == null) {
+			throw new NullPointerException("String value cannot be null");
+		}
+		this.stringValue = stringValue;
+		booleanValue = null;
+		decimalValue = null;
+		numericValue = null;
+		dateValue = null;
+		type = ValueType.STRING;
 	}
 
 	/**
-	 * Sets the value.
-	 *
-	 * @param value the new value
+	 * @param booleanValue the booleanValue to set
 	 */
-	public void setValue(final String value) {
-		this.value = value;
+	public void setValue(final boolean booleanValue) {
+		this.booleanValue = booleanValue;
+		stringValue = null;
+		decimalValue = null;
+		numericValue = null;
+		dateValue = null;
+		type = ValueType.BOOLEAN;
+	}
+
+	/**
+	 * @param numericValue the intValue to set
+	 */
+	public void setValue(final int intValue) {
+		this.numericValue = (long) intValue;
+		stringValue = null;
+		decimalValue = null;
+		booleanValue = null;
+		dateValue = null;
+		type = ValueType.INTEGER;
+	}
+
+	/**
+	 * @param numericValue the longValue to set
+	 */
+	public void setValue(final long longValue) {
+		this.numericValue = longValue;
+		stringValue = null;
+		decimalValue = null;
+		booleanValue = null;
+		dateValue = null;
+		type = ValueType.LONG;
+	}
+
+	/**
+	 * @param decimalValue the decimalValue to set
+	 */
+	public void setValue(final BigDecimal decimalValue) {
+		if (decimalValue == null) {
+			throw new NullPointerException("Decimal value cannot be null");
+		}
+		this.decimalValue = decimalValue;
+		stringValue = null;
+		numericValue = null;
+		booleanValue = null;
+		dateValue = null;
+		type = ValueType.DECIMAL;
+	}
+
+	/**
+	 * @param dateValue the dateValue to set
+	 */
+	public void setValue(final LocalDateTime dateValue) {
+		if (dateValue == null) {
+			throw new NullPointerException("Date value cannot be null");
+		}
+		this.dateValue = dateValue;
+		stringValue = null;
+		numericValue = null;
+		booleanValue = null;
+		decimalValue = null;
+		type = ValueType.DATE;
+	}
+
+	/**
+	 * @param doubleValue the new value
+	 */
+	public void setValue(final double doubleValue) {
+		setValue(new BigDecimal(doubleValue));
+	}
+
+	/**
+	 * @param floatValue the new value
+	 */
+	public void setValue(final float floatValue) {
+		setValue(new BigDecimal(floatValue));
+	}
+
+	/**
+	 * @param dateValue the dateValue to set
+	 */
+	public void setValue(final Date dateValue) {
+		setValue(new LocalDateTime(dateValue));
+	}
+
+	/**
+	 * @return the stringValue
+	 */
+	public String getString() {
+		if (type != ValueType.STRING) {
+			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+		}
+		return stringValue;
+	}
+
+	/**
+	 * @return the booleanValue
+	 */
+	public Boolean getBoolean() {
+		if (type != ValueType.BOOLEAN) {
+			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+		}
+		return booleanValue;
+	}
+	/**
+	 * @return the integer value
+	 */
+	public Integer getInteger() {
+		if (type != ValueType.INTEGER) {
+			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+		}
+		return (int) (long) numericValue;
+	}
+
+	/**
+	 * @return the numericValue
+	 */
+	public Long getLong() {
+		if (type != ValueType.LONG) {
+			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+		}
+		return numericValue;
+	}
+
+	/**
+	 * @return the decimalValue
+	 */
+	public BigDecimal getDecimal() {
+		if (type != ValueType.DECIMAL) {
+			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+		}
+		return decimalValue;
+	}
+
+	/**
+	 * @return the dateValue
+	 */
+	public LocalDateTime getDate() {
+		if (type != ValueType.DATE) {
+			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+		}
+		return dateValue;
+	}
+
+	/**
+	 * @return the doubleValue
+	 */
+	public Double getDouble() {
+		return getDecimal().doubleValue();
+	}
+
+	/**
+	 * @return the floatValue
+	 */
+	public Float getFloat() {
+		return getDecimal().floatValue();
 	}
 
 	/**

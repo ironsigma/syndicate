@@ -1,10 +1,8 @@
--- Setting
 CREATE TABLE setting (
 	setting_id INTEGER IDENTITY,
 	name VARCHAR(512),
 );
 
--- Node
 CREATE TABLE node (
 	node_id INTEGER IDENTITY,
 	parent_id INTEGER,
@@ -12,29 +10,18 @@ CREATE TABLE node (
 	FOREIGN KEY (parent_id) REFERENCES node (node_id) ON DELETE CASCADE,
 );
 
--- Value
 CREATE TABLE value (
 	value_id INTEGER IDENTITY,
 	node_id INTEGER,
 	setting_id INTEGER,
-	type VARCHAR(64),
-	value VARCHAR(4096),
-	FOREIGN KEY (node_id) REFERENCES node (node_id) ON DELETE CASCADE,
-	FOREIGN KEY (setting_id) REFERENCES setting (setting_id) ON DELETE CASCADE,
-);
-
-CREATE TABLE config (
-	config_id INTEGER IDENTITY,
-	section varchar(1024) NOT NULL,
-	key VARCHAR(1024) NOT NULL,
 	value_type VARCHAR(16) NOT NULL,
 	string_value VARCHAR(4096),
 	boolean_value BOOLEAN,
 	numeric_value INTEGER,
 	decimal_value DECIMAL,
 	date_value TIMESTAMP WITH TIME ZONE,
-	reference_id INTEGER,
-	CONSTRAINT uc_config_value UNIQUE (section, key, value_type, reference_id),
+	FOREIGN KEY (node_id) REFERENCES node (node_id) ON DELETE CASCADE,
+	FOREIGN KEY (setting_id) REFERENCES setting (setting_id) ON DELETE CASCADE,
 );
 
 CREATE TABLE user (

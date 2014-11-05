@@ -27,7 +27,7 @@ public class Node {
 	private String path;
 
 	@ManyToOne
-	@JoinColumn(name="node_id")
+	@JoinColumn(name="parent_id")
 	private Node parent;
 
 	@OneToMany(mappedBy="parent")
@@ -94,14 +94,5 @@ public class Node {
 	 */
 	public List<Node> getChildren() {
 		return children;
-	}
-
-	/**
-	 * Sets the children.
-	 *
-	 * @param children the new children
-	 */
-	public void setChildren(final List<Node> children) {
-		this.children = children;
 	}
 }
