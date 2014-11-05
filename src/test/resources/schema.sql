@@ -1,3 +1,42 @@
+-- Nodes                 NodeSettings
+-- =============         ============      Settings
+-- NodeID   (PK) <--.--  NodeID  (FK)      =========
+-- ParentID (FK) ---'    Name    (FK) ---> Name (PK)
+-- FullPath              Value
+-- OtherProp1
+-- OtherProp2
+
+-- SELECT n.*, ns.*, length(n.full_path) AS path_len, s.*
+-- FROM value ns
+-- JOIN node n ON ns.node_id = n.node_id
+-- JOIN setting s ON ns.setting_id = s.setting_id
+-- WHERE '/App/Feed/2' LIKE concat(n.full_path, '%')
+-- AND s.name = 'UpdateInterval'
+-- ORDER BY path_len DESC
+-- LIMIT 1;
+
+CREATE TABLE setting (
+	setting_id INTEGER IDENTITY,
+	name VARCHAR(512),
+);
+
+CREATE TABLE node (
+	node_id INTEGER IDENTITY,
+	parent_id INTEGER,
+	path VARCHAR(2048),
+	FOREIGN KEY (parent_id) REFERENCES node (node_id) ON DELETE CASCADE,
+);
+
+CREATE TABLE value (
+	value_id INTEGER IDENTITY,
+	node_id INTEGER,
+	setting_id INTEGER,
+	type VARCHAR(64),
+	value VARCHAR(4096),
+	FOREIGN KEY (node_id) REFERENCES node (node_id) ON DELETE CASCADE,
+	FOREIGN KEY (setting_id) REFERENCES setting (setting_id) ON DELETE CASCADE,
+);
+
 CREATE TABLE config (
 	config_id INTEGER IDENTITY,
 	section varchar(1024) NOT NULL,

@@ -1,3 +1,41 @@
+-- Setting
+INSERT INTO setting (setting_id, name)
+VALUES ('1', 'MaxUpdate');
+INSERT INTO setting (setting_id, name)
+VALUES ('2', 'MinUpdate');
+INSERT INTO setting (setting_id, name)
+VALUES ('3', 'MinOptimalRange');
+INSERT INTO setting (setting_id, name)
+VALUES ('4', 'MaxOptimalRange');
+INSERT INTO setting (setting_id, name)
+VALUES ('5', 'UpdateInterval');
+
+-- Node
+INSERT INTO node (node_id, parent_id, path)
+VALUES ('1', NULL, '/');
+INSERT INTO node (node_id, parent_id, path)
+VALUES ('2', '1', '/App');
+INSERT INTO node (node_id, parent_id, path)
+VALUES ('3', '2', '/App/Feed');
+INSERT INTO node (node_id, parent_id, path)
+VALUES ('4', '3', '/App/Feed/1');
+INSERT INTO node (node_id, parent_id, path)
+VALUES ('5', '3', '/App/Feed/2');
+
+-- Node-Setting
+INSERT INTO value (node_id, setting_id, type, value)
+VALUES ('3', '1', 'integer', '1');		-- MaxUpdate /App/feed
+INSERT INTO value (node_id, setting_id, type, value)
+VALUES ('3', '2', 'integer', '2880');	-- MinUpdate /App/feed
+INSERT INTO value (node_id, setting_id, type, value)
+VALUES ('3', '3', 'integer', '70');		-- MinOptimalRange /App/feed
+INSERT INTO value (node_id, setting_id, type, value)
+VALUES ('3', '4', 'integer', '80');		-- MaxOptimalRange /App/feed
+INSERT INTO value (node_id, setting_id, type, value)
+VALUES ('3', '5', 'integer', '15');		-- UpdateInterval /App/feed
+INSERT INTO value (node_id, setting_id, type, value)
+VALUES ('4', '5', 'integer', '60');		-- UpdateInterval /App/Feed/1
+
 -- Config
 INSERT INTO config (config_id, section, key, value_type, string_value, reference_id)
 VALUES (1, 'User', 'name', 'STRING', 'Joe Hawk', 1);
