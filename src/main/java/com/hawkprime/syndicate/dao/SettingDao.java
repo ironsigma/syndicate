@@ -9,8 +9,4 @@ import com.hawkprime.syndicate.model.Setting;
  */
 @Repository
 public class SettingDao extends AbstractDao<Setting> {
-
-	public Setting findByPath(final String path) {
-		return null;
-	}
 }

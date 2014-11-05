@@ -1,25 +1,10 @@
--- Nodes                 NodeSettings
--- =============         ============      Settings
--- NodeID   (PK) <--.--  NodeID  (FK)      =========
--- ParentID (FK) ---'    Name    (FK) ---> Name (PK)
--- FullPath              Value
--- OtherProp1
--- OtherProp2
-
--- SELECT n.*, ns.*, length(n.full_path) AS path_len, s.*
--- FROM value ns
--- JOIN node n ON ns.node_id = n.node_id
--- JOIN setting s ON ns.setting_id = s.setting_id
--- WHERE '/App/Feed/2' LIKE concat(n.full_path, '%')
--- AND s.name = 'UpdateInterval'
--- ORDER BY path_len DESC
--- LIMIT 1;
-
+-- Setting
 CREATE TABLE setting (
 	setting_id INTEGER IDENTITY,
 	name VARCHAR(512),
 );
 
+-- Node
 CREATE TABLE node (
 	node_id INTEGER IDENTITY,
 	parent_id INTEGER,
@@ -27,6 +12,7 @@ CREATE TABLE node (
 	FOREIGN KEY (parent_id) REFERENCES node (node_id) ON DELETE CASCADE,
 );
 
+-- Value
 CREATE TABLE value (
 	value_id INTEGER IDENTITY,
 	node_id INTEGER,
