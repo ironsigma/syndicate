@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.joda.time.LocalDateTime;
 
+import com.hawkprime.syndicate.model.Node;
+import com.hawkprime.syndicate.model.Setting;
 import com.hawkprime.syndicate.model.Value;
 
 /**
@@ -38,6 +40,26 @@ public class ValueBuilder {
 	 */
 	public ValueBuilder withId(final Long aValue) {
 		instance.setId(aValue);
+		return this;
+	}
+
+	/**
+	 * With setting.
+	 * @param node setting.
+	 * @return the value builder
+	 */
+	public ValueBuilder withSetting(final Setting setting) {
+		instance.setSetting(setting);
+		return this;
+	}
+
+	/**
+	 * With Node.
+	 * @param node node.
+	 * @return the value builder
+	 */
+	public ValueBuilder withNode(final Node node) {
+		instance.setNode(node);
 		return this;
 	}
 

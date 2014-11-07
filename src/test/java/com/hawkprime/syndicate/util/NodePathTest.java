@@ -13,45 +13,45 @@ public class NodePathTest {
 
 	@Test(expected=IllegalArgumentException.class)
 	public void noSlashTest() {
-		new NodePath("Foo");
+		NodePath.at("Foo");
 	}
 
 	@Test
 	public void testCopy() {
-		final NodePath aPath = new NodePath("/foo");
+		final NodePath aPath = NodePath.at("/foo");
 		final NodePath copyPath = (NodePath) aPath.clone();
 		assertThat(aPath, is(copyPath));
 	}
 
 	@Test
 	public void rootNodeTest() {
-		final NodePath path = new NodePath("/");
+		final NodePath path = NodePath.at("/");
 		assertThat(path.toString(), is("/"));
 	}
 
 	@Test
 	public void noEndingSlashTest() {
-		final NodePath path = new NodePath("/foo");
+		final NodePath path = NodePath.at("/foo");
 		assertThat(path.toString(), is("/foo"));
 	}
 
 	@Test
 	public void endingSlashTest() {
-		final NodePath path = new NodePath("/foo/");
+		final NodePath path = NodePath.at("/foo/");
 		assertThat(path.toString(), is("/foo"));
 	}
 
 	@Test
 	public void appendTest() {
-		NodePath path = new NodePath("/foo");
+		NodePath path = NodePath.at("/foo");
 		NodePath newPath = path.append("/");
 		assertThat(newPath.toString(), is("/foo"));
 
-		path = new NodePath("/foo/bar");
+		path = NodePath.at("/foo/bar");
 		newPath = path.append("/");
 		assertThat(newPath.toString(), is("/foo/bar"));
 
-		path = new NodePath("/");
+		path = NodePath.at("/");
 		newPath = path.append("/");
 		assertThat(newPath.toString(), is("/"));
 
@@ -79,7 +79,7 @@ public class NodePathTest {
 		newPath = path.append("/foo/bar/");
 		assertThat(newPath.toString(), is("/foo/bar"));
 
-		path = new NodePath("/fi/fum");
+		path = NodePath.at("/fi/fum");
 		newPath = path.append("foo");
 		assertThat(newPath.toString(), is("/fi/fum/foo"));
 
@@ -107,91 +107,91 @@ public class NodePathTest {
 
 	@Test
 	public void appendNodeTest() {
-		NodePath path = new NodePath("/foo");
-		NodePath newPath = path.append(new NodePath("/"));
+		NodePath path = NodePath.at("/foo");
+		NodePath newPath = path.append(NodePath.at("/"));
 		assertThat(newPath.toString(), is("/foo"));
 
-		path = new NodePath("/foo/bar");
-		newPath = path.append(new NodePath("/"));
+		path = NodePath.at("/foo/bar");
+		newPath = path.append(NodePath.at("/"));
 		assertThat(newPath.toString(), is("/foo/bar"));
 
-		path = new NodePath("/");
-		newPath = path.append(new NodePath("/"));
+		path = NodePath.at("/");
+		newPath = path.append(NodePath.at("/"));
 		assertThat(newPath.toString(), is("/"));
 
-		newPath = path.append(new NodePath("/foo"));
+		newPath = path.append(NodePath.at("/foo"));
 		assertThat(newPath.toString(), is("/foo"));
 
-		newPath = path.append(new NodePath("/foo/"));
+		newPath = path.append(NodePath.at("/foo/"));
 		assertThat(newPath.toString(), is("/foo"));
 
-		newPath = path.append(new NodePath("/foo/bar"));
+		newPath = path.append(NodePath.at("/foo/bar"));
 		assertThat(newPath.toString(), is("/foo/bar"));
 
-		newPath = path.append(new NodePath("/foo/bar/"));
+		newPath = path.append(NodePath.at("/foo/bar/"));
 		assertThat(newPath.toString(), is("/foo/bar"));
 
-		path = new NodePath("/fi/fum");
-		newPath = path.append(new NodePath("/foo/"));
+		path = NodePath.at("/fi/fum");
+		newPath = path.append(NodePath.at("/foo/"));
 		assertThat(newPath.toString(), is("/fi/fum/foo"));
 
-		newPath = path.append(new NodePath("/foo/bar"));
+		newPath = path.append(NodePath.at("/foo/bar"));
 		assertThat(newPath.toString(), is("/fi/fum/foo/bar"));
 
-		newPath = path.append(new NodePath("/foo/bar/"));
+		newPath = path.append(NodePath.at("/foo/bar/"));
 		assertThat(newPath.toString(), is("/fi/fum/foo/bar"));
 	}
 
 	@Test
 	public void getNodeTest() {
-		NodePath path = new NodePath("/");
+		NodePath path = NodePath.at("/");
 		assertThat(path.getNode(), is(""));
 
-		path = new NodePath("/foo");
+		path = NodePath.at("/foo");
 		assertThat(path.getNode(), is("foo"));
 
-		path = new NodePath("/foo/bar/bin");
+		path = NodePath.at("/foo/bar/bin");
 		assertThat(path.getNode(), is("bin"));
 	}
 
 	@Test
 	public void getParent() {
-		NodePath path = new NodePath("/");
+		NodePath path = NodePath.at("/");
 		NodePath parent = path.getParent();
 		assertThat(parent, is(nullValue()));
 
-		path = new NodePath("/foo");
+		path = NodePath.at("/foo");
 		parent = path.getParent();
 		assertThat(parent.toString(), is("/"));
 
-		path = new NodePath("/foo/bar");
+		path = NodePath.at("/foo/bar");
 		parent = path.getParent();
 		assertThat(parent.toString(), is("/foo"));
 
-		path = new NodePath("/foo/bar/bin/get");
+		path = NodePath.at("/foo/bar/bin/get");
 		parent = path.getParent();
 		assertThat(parent.toString(), is("/foo/bar/bin"));
 	}
 
 	@Test
 	public void equalsTest() {
-		final NodePath n = new NodePath("/");
+		final NodePath n = NodePath.at("/");
 		assertThat(n.equals(n), is(true));
-		assertThat(new NodePath("/foo/bar").equals(null), is(false));
-		assertThat(new NodePath("/foo/bar").equals("/foo/bar"), is(false));
-		assertThat(new NodePath("/foo/bar").equals(new NodePath("/foo/bar")), is(true));
-		assertThat(new NodePath("/foo").equals(new NodePath("/foo/bar")), is(false));
+		assertThat(NodePath.at("/foo/bar").equals(null), is(false));
+		assertThat(NodePath.at("/foo/bar").equals("/foo/bar"), is(false));
+		assertThat(NodePath.at("/foo/bar").equals(NodePath.at("/foo/bar")), is(true));
+		assertThat(NodePath.at("/foo").equals(NodePath.at("/foo/bar")), is(false));
 	}
 
 	@Test
 	public void hashTest() {
-		assertThat(new NodePath("/").hashCode(), is(new NodePath("/").hashCode()));
-		assertThat(new NodePath("/foo/bar").hashCode(), is(new NodePath("/foo/bar").hashCode()));
-		assertThat(new NodePath("/").hashCode(), is(not(new NodePath("/foo/bar").hashCode())));
+		assertThat(NodePath.at("/").hashCode(), is(NodePath.at("/").hashCode()));
+		assertThat(NodePath.at("/foo/bar").hashCode(), is(NodePath.at("/foo/bar").hashCode()));
+		assertThat(NodePath.at("/").hashCode(), is(not(NodePath.at("/foo/bar").hashCode())));
 	}
 
 	@Test
 	public void toStringTest() {
-		assertThat(new NodePath("/foo/bar").toString(), is("/foo/bar"));
+		assertThat(NodePath.at("/foo/bar").toString(), is("/foo/bar"));
 	}
 }

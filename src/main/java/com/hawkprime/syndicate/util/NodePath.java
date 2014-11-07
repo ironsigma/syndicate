@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public final class NodePath {
 	private final String path;
 
-	public NodePath(final String path) {
+	private NodePath(final String path) {
 		if (!path.startsWith("/")) {
 			throw new IllegalArgumentException("Path must start with slash");
 		}
@@ -18,6 +18,10 @@ public final class NodePath {
 		} else {
 			this.path = path;
 		}
+	}
+
+	public static NodePath at(final String path) {
+		return new NodePath(path);
 	}
 
 	public NodePath append(final NodePath path) {

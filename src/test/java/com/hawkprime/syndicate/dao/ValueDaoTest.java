@@ -19,15 +19,18 @@ public class ValueDaoTest extends AbstractDaoTest {
 	@Autowired
 	private ValueDao valueDao;
 
+	@Autowired
+	private SettingDao settingDao;
+
 	@Test
 	public void findByPath() {
 		final int expectedValue = 60;
-		Value value = valueDao.findByPath(new NodePath("/App/Feed/1/UpdateInterval"));
+		Value value = valueDao.findByPath(NodePath.at("/App/Feed/1/UpdateInterval"));
 		assertThat(value, is(not(nullValue())));
 		assertThat(value.getType(), is(ValueType.INTEGER));
 		assertThat((Integer) value.getValue(), is(expectedValue));
 
-		value = valueDao.findByPath(new NodePath("/xxx/UpdateInterval"));
+		value = valueDao.findByPath(NodePath.at("/xxx/UpdateInterval"));
 		assertThat(value, is(nullValue()));
 	}
 }

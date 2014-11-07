@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hawkprime.syndicate.dao.NodeDao;
 import com.hawkprime.syndicate.dao.SettingDao;
 import com.hawkprime.syndicate.dao.ValueDao;
+import com.hawkprime.syndicate.model.Setting;
 import com.hawkprime.syndicate.model.Value;
 import com.hawkprime.syndicate.util.NodePath;
 
@@ -26,8 +27,11 @@ public class SettingService {
 	@Autowired
 	private NodeDao nodeDao;
 
-	public Map<String, Object> getSettings(final String path) {
+	public Map<String, Object> getSettings(final NodePath path) {
 		final Map<String, Object> map = new HashMap<String, Object>();
+		for (Setting setting : settingDao.findByPath(path)) {
+			map.put(setting.getName(), valueDao.findByPath(path.append(setting.getName())).getValue());
+		}
 		return map;
 	}
 
@@ -42,5 +46,9 @@ public class SettingService {
 
 	public void setValueDao(final ValueDao valueDao) {
 		this.valueDao = valueDao;
+	}
+
+	public void setSettingDao(final SettingDao settingDao) {
+		this.settingDao = settingDao;
 	}
 }
