@@ -13,7 +13,6 @@ public class FrequencyCalculator {
 	private static final Logger LOG = LoggerFactory.getLogger(FrequencyCalculator.class);
 
 	private static final double PERCENT = 100.00;
-	private static final int MINS_PER_HR = 60;
 
 	@Value("${syndicate.update.frequency.optimal.max}")
 	private int maxOptimalRange;
@@ -86,8 +85,8 @@ public class FrequencyCalculator {
 	 * @return new number of minutes to wait before updates
 	 */
 	public int calculateNewFrequency(final int currentFrequency, final int percentNew) {
-		LOG.debug("Current frequency is every {} hours {} minutes, new posts are at {}%",
-				currentFrequency / MINS_PER_HR, currentFrequency % MINS_PER_HR, percentNew);
+		LOG.debug("Current frequency is every {}, new posts are at {}%",
+				TimeFormat.formatMinutes(currentFrequency), percentNew);
 
 		if (percentNew < minOptimalRange) {
 			LOG.debug("Too few posts, less updates needed, adjusting");
@@ -96,8 +95,7 @@ public class FrequencyCalculator {
 			if (adjustment < 1) {
 				adjustment = 1;
 			}
-			LOG.debug("Decresing update times by {} hours {} minutes",
-					adjustment / MINS_PER_HR, adjustment % MINS_PER_HR);
+			LOG.debug("Decresing update times by {}", TimeFormat.formatMinutes(adjustment));
 
 			adjustment = currentFrequency + adjustment;
 			if (adjustment > minFrequency) {
@@ -105,8 +103,7 @@ public class FrequencyCalculator {
 				adjustment = minFrequency;
 			}
 
-			LOG.debug("Adjusting to {} hours {} minute updates",
-					adjustment / MINS_PER_HR, adjustment % MINS_PER_HR);
+			LOG.debug("Adjusting to {}", TimeFormat.formatMinutes(adjustment));
 
 			return adjustment;
 
@@ -117,16 +114,14 @@ public class FrequencyCalculator {
 			if (adjustment < 1) {
 				adjustment = 1;
 			}
-			LOG.debug("Increasing update times by {} hours {} minutes",
-					adjustment / MINS_PER_HR, adjustment % MINS_PER_HR);
+			LOG.debug("Increasing update times by {}", TimeFormat.formatMinutes(adjustment));
 
 			adjustment = currentFrequency - adjustment;
 			if (adjustment < maxFrequency) {
 				LOG.debug("Adjustment would be above maximum update threshold, using maximum update");
 				adjustment = maxFrequency;
 			}
-			LOG.debug("Adjusting to {} hours {} minute updates",
-					adjustment / MINS_PER_HR, adjustment % MINS_PER_HR);
+			LOG.debug("Adjusting to {}", TimeFormat.formatMinutes(adjustment));
 
 			return adjustment;
 

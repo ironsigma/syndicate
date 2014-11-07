@@ -14,6 +14,7 @@ import com.hawkprime.syndicate.dao.FeedDao;
 import com.hawkprime.syndicate.dao.UpdateDao;
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Update;
+import com.hawkprime.syndicate.util.TimeFormat;
 import com.hawkprime.syndicate.util.FrequencyCalculator;
 
 /**
@@ -107,7 +108,7 @@ public class FeedService {
 	public boolean needsUpdate(final Feed feed) {
 		if (feed.getUpdateFrequency() <= 0) {
 			LOG.warn("Feed \"{}\" update frequency is {}, not updating",
-					feed.getName(), feed.getUpdateFrequency());
+					feed.getName(), TimeFormat.formatMinutes(feed.getUpdateFrequency()));
 			return false;
 		}
 		final Update feedUpdate = updateDao.findLatestUpdateByFeedId(feed.getId());
@@ -118,14 +119,16 @@ public class FeedService {
 		final LocalDateTime now = LocalDateTime.now();
 		final int minutesSinceUpdate = Minutes.minutesBetween(feedUpdate.getUpdated(), now).getMinutes();
 		if (feed.getUpdateFrequency() <= minutesSinceUpdate) {
-			LOG.debug("Feed \"{}\" updates every {} minutes, "
-					+ "it's been {} minutes since lasts update, update required",
-					feed.getName(), feed.getUpdateFrequency(), minutesSinceUpdate);
+			LOG.debug("Feed \"{}\" updates every {}, "
+					+ "it's been {} since lasts update, update required",
+					feed.getName(), TimeFormat.formatMinutes(feed.getUpdateFrequency()),
+							TimeFormat.formatMinutes(minutesSinceUpdate));
 			return true;
 		}
-		LOG.debug("Feed \"{}\" updates every {} minutes, "
-				+ "it's been {} minutes since lasts update, no update required",
-				feed.getName(), feed.getUpdateFrequency(), minutesSinceUpdate);
+		LOG.debug("Feed \"{}\" updates every {}, "
+				+ "it's been {} since lasts update, no update required",
+				feed.getName(), TimeFormat.formatMinutes(feed.getUpdateFrequency()),
+						TimeFormat.formatMinutes(minutesSinceUpdate));
 		return false;
 	}
 
