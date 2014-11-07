@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * The Class Node.
  */
@@ -93,5 +95,13 @@ public class Node {
 	 */
 	public List<Node> getChildren() {
 		return children;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)
+				.append("id", id)
+				.append("path", path)
+				.toString();
 	}
 }

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -162,5 +163,13 @@ public class Post {
 	 */
 	public void setFeed(final Feed feed) {
 		this.feed = feed;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)
+				.append("id", id)
+				.append("title", title)
+				.toString();
 	}
 }

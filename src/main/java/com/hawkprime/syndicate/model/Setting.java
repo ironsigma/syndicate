@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * The Class Setting.
  */
@@ -56,4 +58,11 @@ public class Setting {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)
+				.append("id", id)
+				.append("name", name)
+				.toString();
+	}
 }

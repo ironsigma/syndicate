@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -50,11 +51,11 @@ public class Value {
 	private LocalDateTime dateValue;
 
 	@ManyToOne
-	@JoinColumn(name="node_id")
+	@JoinColumn(name="node_id", nullable=false)
 	private Node node;
 
 	@ManyToOne
-	@JoinColumn(name="setting_id")
+	@JoinColumn(name="setting_id", nullable=false)
 	private Setting setting;
 
 	/**
@@ -306,5 +307,16 @@ public class Value {
 	 */
 	public void setSetting(final Setting setting) {
 		this.setting = setting;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)
+				.append("id", id)
+				.append("node", node.getPath())
+				.append("setting", setting.getName())
+				.append("type", type)
+				.append("value", getValue())
+				.toString();
 	}
 }

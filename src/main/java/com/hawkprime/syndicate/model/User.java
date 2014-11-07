@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * User Entity.
  */
@@ -52,5 +54,13 @@ public class User {
 	 */
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)
+				.append("id", id)
+				.append("name", name)
+				.toString();
 	}
 }

@@ -9,6 +9,10 @@ INSERT INTO setting (id, name)
 VALUES (4, 'MaxOptimalRange');
 INSERT INTO setting (id, name)
 VALUES (5, 'UpdateInterval');
+INSERT INTO setting (id, name)
+VALUES (6, 'SortOrder');
+INSERT INTO setting (id, name)
+VALUES (7, 'SortField');
 
 -- Node
 INSERT INTO node (id, parent_id, path)
@@ -21,20 +25,34 @@ INSERT INTO node (id, parent_id, path)
 VALUES (4, 3, '/App/Feed/1');
 INSERT INTO node (id, parent_id, path)
 VALUES (5, 3, '/App/Feed/2');
+INSERT INTO node (id, parent_id, path)
+VALUES (6, 2, '/App/User');
+INSERT INTO node (id, parent_id, path)
+VALUES (7, 6, '/App/User/1');
+INSERT INTO node (id, parent_id, path)
+VALUES (8, 7, '/App/User/1/Feed');
+INSERT INTO node (id, parent_id, path)
+VALUES (9, 8, '/App/User/1/Feed/2');
 
 -- Value
 INSERT INTO value (id, node_id, setting_id, value_type, numeric_value)
-VALUES (1, 3, 1, 'INTEGER', 1);		-- MaxUpdate /App/feed
+VALUES (1, 3, 1, 'INTEGER', 1);
 INSERT INTO value (id, node_id, setting_id, value_type, numeric_value)
-VALUES (2, 3, 2, 'INTEGER', 2880);	-- MinUpdate /App/feed
+VALUES (2, 3, 2, 'INTEGER', 2880);
 INSERT INTO value (id, node_id, setting_id, value_type, numeric_value)
-VALUES (3, 3, 3, 'INTEGER', 70);	-- MinOptimalRange /App/feed
+VALUES (3, 3, 3, 'INTEGER', 70);
 INSERT INTO value (id, node_id, setting_id, value_type, numeric_value)
-VALUES (4, 3, 4, 'INTEGER', 80);	-- MaxOptimalRange /App/feed
+VALUES (4, 3, 4, 'INTEGER', 80);
 INSERT INTO value (id, node_id, setting_id, value_type, numeric_value)
-VALUES (5, 3, 5, 'INTEGER', 15);	-- UpdateInterval /App/feed
+VALUES (5, 3, 5, 'INTEGER', 15);
 INSERT INTO value (id, node_id, setting_id, value_type, numeric_value)
-VALUES (6, 4, 5, 'INTEGER', 60);	-- UpdateInterval /App/Feed/1
+VALUES (6, 4, 5, 'INTEGER', 60);
+INSERT INTO value (id, node_id, setting_id, value_type, string_value)
+VALUES (7, 6, 6, 'STRING', 'ASC');
+INSERT INTO value (id, node_id, setting_id, value_type, string_value)
+VALUES (8, 6, 7, 'STRING', 'PUBLISHED');
+INSERT INTO value (id, node_id, setting_id, value_type, string_value)
+VALUES (9, 9, 5, 'STRING', 'DESC');
 
 -- Users
 INSERT INTO user (id, name)

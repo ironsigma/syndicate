@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * State Entity.
  */
@@ -100,5 +102,16 @@ public class State {
 	 */
 	public void setPost(final Post post) {
 		this.post = post;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)
+				.append("id", id)
+				.append("read", read)
+				.append("stared", stared)
+				.append("user", user.getName())
+				.append("post", post.getTitle())
+				.toString();
 	}
 }
