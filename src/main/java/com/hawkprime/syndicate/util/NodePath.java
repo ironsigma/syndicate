@@ -6,14 +6,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Node Path.
  */
-public class NodePath {
-	private String path;
+public final class NodePath {
+	private final String path;
 
 	public NodePath(final String path) {
-		setPath(path);
-	}
-
-	public void setPath(final String path) {
 		if (!path.startsWith("/")) {
 			throw new IllegalArgumentException("Path must start with slash");
 		}
@@ -25,8 +21,7 @@ public class NodePath {
 	}
 
 	public NodePath append(final NodePath path) {
-		append(path.path);
-		return this;
+		return append(path.path);
 	}
 
 	public NodePath append(final String appendPath) {
@@ -41,18 +36,17 @@ public class NodePath {
 		}
 		if ("/".equals(path)) {
 			if (suffix.startsWith("/")) {
-				path = suffix;
+				return new NodePath(suffix);
 			} else {
-				path += suffix;
+				return new NodePath(path + suffix);
 			}
 		} else {
 			if (suffix.startsWith("/")) {
-				path += suffix;
+				return new NodePath(path + suffix);
 			} else {
-				path += "/" + suffix;
+				return new NodePath(path + "/" + suffix);
 			}
 		}
-		return this;
 	}
 
 	public String getNode() {
@@ -78,6 +72,11 @@ public class NodePath {
 		return new EqualsBuilder()
 				.append(path, rhs.path)
 				.isEquals();
+	}
+
+	@Override
+	public Object clone() {
+		return this;
 	}
 
 	@Override
