@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hawkprime.syndicate.model.Value;
+import com.hawkprime.syndicate.util.NodePath;
 import com.hawkprime.syndicate.util.ValueType;
 
 /**
@@ -21,12 +22,12 @@ public class ValueDaoTest extends AbstractDaoTest {
 	@Test
 	public void findByPath() {
 		final int expectedValue = 60;
-		Value value = valueDao.findByPath("/App/Feed/1", "UpdateInterval");
+		Value value = valueDao.findByPath(new NodePath("/App/Feed/1/UpdateInterval"));
 		assertThat(value, is(not(nullValue())));
 		assertThat(value.getType(), is(ValueType.INTEGER));
 		assertThat((Integer) value.getValue(), is(expectedValue));
 
-		value = valueDao.findByPath("/xxx", "UpdateInterval");
+		value = valueDao.findByPath(new NodePath("/xxx/UpdateInterval"));
 		assertThat(value, is(nullValue()));
 	}
 }
