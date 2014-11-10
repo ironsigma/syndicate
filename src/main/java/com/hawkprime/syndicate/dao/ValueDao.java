@@ -30,7 +30,7 @@ public class ValueDao extends AbstractDao<Value> {
 							+ "AND s.name = :name "
 							+ "ORDER BY LENGTH(n.path) DESC")
 					.setParameter("path", path.getParent().toString())
-					.setParameter("name", path.getNode())
+					.setParameter("name", path.getLastComponent())
 					.setMaxResults(1)
 					.getSingleResult();
 		} catch (final NoResultException ex) {

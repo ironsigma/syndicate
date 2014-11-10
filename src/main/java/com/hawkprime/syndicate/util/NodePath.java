@@ -1,5 +1,6 @@
 package com.hawkprime.syndicate.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -7,21 +8,88 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * Node Path.
  */
 public final class NodePath {
+	private static final NodePath NODE_PATH_AT_ROOT = new NodePath("/");
+
 	private final String path;
+	private final int length;
 
 	private NodePath(final String path) {
 		if (!path.startsWith("/")) {
 			throw new IllegalArgumentException("Path must start with slash");
 		}
-		if (!"/".equals(path) && path.endsWith("/")) {
-			this.path = path.substring(0, path.length() - 1);
+		final String normalized = path.replaceAll("/+", "/");
+		if (!"/".equals(normalized) && normalized.endsWith("/")) {
+			this.path = normalized.substring(0, normalized.length() - 1);
 		} else {
-			this.path = path;
+			this.path = normalized;
+		}
+		if (this.path.equals("/")) {
+			length = 1;
+		} else {
+			length = StringUtils.countMatches(this.path, "/") + 1;
 		}
 	}
 
 	public static NodePath at(final String path) {
 		return new NodePath(path);
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	public static NodePath root() {
+		return NODE_PATH_AT_ROOT;
+	}
+
+	public NodePath getPathDifferences(final NodePath otherNode) {
+		final NodePathIterator shortNodePathIterator;
+		final NodePathIterator longNodePathIterator;
+		if (this.getLength() < otherNode.getLength()) {
+			shortNodePathIterator = new NodePathIterator(this);
+			longNodePathIterator = new NodePathIterator(otherNode);
+		} else {
+			shortNodePathIterator = new NodePathIterator(otherNode);
+			longNodePathIterator = new NodePathIterator(this);
+		}
+		NodePath currentPath;
+		NodePath pathDifference = NodePath.root();
+		while (longNodePathIterator.hasNext()) {
+			currentPath = longNodePathIterator.next();
+			if (!shortNodePathIterator.hasNext()) {
+				pathDifference = pathDifference.append(currentPath.getLastComponent());
+				continue;
+			}
+			if (!currentPath.equals(shortNodePathIterator.next())) {
+				pathDifference = pathDifference.append(currentPath.getLastComponent());
+			}
+		}
+		if (pathDifference.equals(NodePath.root())) {
+			return null;
+		}
+		return pathDifference;
+	}
+
+	public NodePath getCommonPath(final NodePath otherNode) {
+		final NodePathIterator shortNodePathIterator;
+		final NodePathIterator longNodePathIterator;
+		if (path.length() < otherNode.path.length()) {
+			shortNodePathIterator = new NodePathIterator(this);
+			longNodePathIterator = new NodePathIterator(otherNode);
+		} else {
+			shortNodePathIterator = new NodePathIterator(otherNode);
+			longNodePathIterator = new NodePathIterator(this);
+		}
+		NodePath currentPath;
+		NodePath oldPath = NodePath.root();
+		while (shortNodePathIterator.hasNext()) {
+			currentPath = shortNodePathIterator.next();
+			if (!currentPath.equals(longNodePathIterator.next())) {
+				return oldPath;
+			}
+			oldPath = currentPath;
+		}
+		return oldPath;
 	}
 
 	public NodePath append(final NodePath path) {
@@ -53,7 +121,7 @@ public final class NodePath {
 		}
 	}
 
-	public String getNode() {
+	public String getLastComponent() {
 		return path.substring(path.lastIndexOf('/') + 1);
 	}
 
