@@ -11,8 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
+import com.hawkprime.syndicate.dao.NodeDao;
 import com.hawkprime.syndicate.dao.SettingDao;
 import com.hawkprime.syndicate.dao.ValueDao;
 import com.hawkprime.syndicate.model.Setting;
@@ -27,6 +29,108 @@ import com.hawkprime.syndicate.util.NodePath;
  */
 public class SettingServiceTest {
 	private final SettingService settingService = new SettingService();
+
+	/**
+	 * New setting, deep existing sub levels, multiple non existing path.
+	 * TODO: Finish mocks
+	 */
+	@Test
+	@Ignore
+	public void newSettingDeepExistingSubLevelsMultipleNonExistingPathTest() {
+		SettingDao settingDao = mock(SettingDao.class);
+		ValueDao valueDao = mock(ValueDao.class);
+		NodeDao nodeDao = mock(NodeDao.class);
+
+		settingDao.create(new SettingBuilder()
+				.withName("version")
+				.build());
+
+		final SettingService service = new SettingService();
+		service.setSettingDao(settingDao);
+		service.setValueDao(valueDao);
+		service.setNodeDao(nodeDao);
+
+		service.setValue(NodePath.at("/App/User/1/Feed/Meta/Build/version"), "1.0.0");
+	}
+
+	/**
+	 * New setting, multiple non existing path.
+	 * TODO: Finish mocks
+	 */
+	@Test
+	@Ignore
+	public void newSettingMultipleNonExistingPathTest() {
+		SettingDao settingDao = mock(SettingDao.class);
+		ValueDao valueDao = mock(ValueDao.class);
+		NodeDao nodeDao = mock(NodeDao.class);
+
+		settingDao.create(new SettingBuilder()
+				.withName("version")
+				.build());
+
+		final SettingService service = new SettingService();
+		service.setSettingDao(settingDao);
+		service.setValueDao(valueDao);
+		service.setNodeDao(nodeDao);
+
+		service.setValue(NodePath.at("/App/Meta/Internal/Build/version"), "1.0.0");
+	}
+
+	/**
+	 * New setting, one non existing path.
+	 * TODO: Finish mocks
+	 */
+	@Test
+	@Ignore
+	public void newSettingOneNonExistingPathTest() {
+		SettingDao settingDao = mock(SettingDao.class);
+		ValueDao valueDao = mock(ValueDao.class);
+		NodeDao nodeDao = mock(NodeDao.class);
+
+		settingDao.create(new SettingBuilder()
+				.withName("version")
+				.build());
+
+		final SettingService service = new SettingService();
+		service.setSettingDao(settingDao);
+		service.setValueDao(valueDao);
+		service.setNodeDao(nodeDao);
+
+		service.setValue(NodePath.at("/App/Meta/version"), "1.0.0");
+	}
+
+	/**
+	 * New setting, existing path.
+	 * TODO: Finish mocks
+	 */
+	@Test
+	public void newSettingExistingPathTest() {
+		SettingDao settingDao = mock(SettingDao.class);
+		ValueDao valueDao = mock(ValueDao.class);
+		NodeDao nodeDao = mock(NodeDao.class);
+
+		when(valueDao.findByPath(NodePath.at("/App/version")))
+				.thenReturn(null);
+
+		Setting setting = new SettingBuilder()
+				.withName("version")
+				.build();
+
+		when(settingDao.findByName("version"))
+				.thenReturn(setting);
+
+		when(nodeDao.findClosestByPath(NodePath.at("/App")))
+				.thenReturn(new NodeBuilder()
+						.withPath("/App")
+						.build());
+
+		final SettingService service = new SettingService();
+		service.setSettingDao(settingDao);
+		service.setValueDao(valueDao);
+		service.setNodeDao(nodeDao);
+
+		service.setValue(NodePath.at("/App/version"), "1.0.0");
+	}
 
 	@Test
 	public void getSettingsTest() {

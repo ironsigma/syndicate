@@ -3,12 +3,16 @@ package com.hawkprime.syndicate.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jdom.IllegalDataException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hawkprime.syndicate.dao.NodeDao;
 import com.hawkprime.syndicate.dao.SettingDao;
 import com.hawkprime.syndicate.dao.ValueDao;
+import com.hawkprime.syndicate.model.Node;
 import com.hawkprime.syndicate.model.Setting;
 import com.hawkprime.syndicate.model.Value;
 import com.hawkprime.syndicate.util.NodePath;
@@ -18,6 +22,8 @@ import com.hawkprime.syndicate.util.NodePath;
  */
 @Service
 public class SettingService {
+	private static final Logger LOG = LoggerFactory.getLogger(SettingService.class);
+
 	@Autowired
 	private SettingDao settingDao;
 
@@ -26,6 +32,61 @@ public class SettingService {
 
 	@Autowired
 	private NodeDao nodeDao;
+
+	public void setValue(final NodePath settingPath, final String value) {
+		Value settingValue = valueDao.findByPath(settingPath);
+		if (settingValue != null) {
+			LOG.debug("Found setting \"{}\", updating value to \"{}\"", settingPath.toString(), value);
+			settingValue.setValue(value);
+			valueDao.update(settingValue);
+			return;
+		}
+
+		final Setting setting = settingDao.findByName(settingPath.getLastComponent());
+		if (setting == null) {
+			throw new IllegalDataException("Setting does not exist: " + settingPath.getLastComponent());
+		}
+
+		final NodePath nodePath = settingPath.getParent();
+		Node settingNode = nodeDao.findClosestByPath(nodePath);
+		if (settingNode == null || !settingNode.getPath().equals(nodePath.toString())) {
+			if (settingNode == null) {
+				LOG.debug("No closest setting match found");
+			} else {
+				LOG.debug("Closest setting match was \"{}\"", settingNode.getPath());
+			}
+			final NodePath nodePathToBuildOut = nodePath.getPathDifferences(NodePath.at(settingNode.getPath()));
+			LOG.debug("Will have to build out \"{}\"", nodePathToBuildOut.toString());
+			Node parentNode = settingNode;
+			Node newNode;
+			for (NodePath nodePathToCreate : nodePathToBuildOut) {
+				if (nodePathToCreate.equals(NodePath.root())) {
+					continue;
+				}
+				if (parentNode == null) {
+					LOG.debug("Creating node \"{}\"", nodePathToCreate.getLastComponent());
+				} else {
+					LOG.debug("Creating sub-node {}/[{}]", parentNode.getPath(),
+							nodePathToCreate.getLastComponent());
+				}
+				newNode = new Node();
+				newNode.setParent(parentNode);
+				newNode.setPath(NodePath.at(parentNode.getPath())
+						.append(nodePathToCreate.getLastComponent()).toString());
+				nodeDao.create(newNode);
+				parentNode = newNode;
+			}
+			settingNode = parentNode;
+			LOG.debug("Setting node is now \"{}\"", settingNode.getPath());
+		}
+
+		settingValue = new Value();
+		settingValue.setValue(value);
+		settingValue.setSetting(setting);
+		settingValue.setNode(settingNode);
+		LOG.debug("Creating new setting value: {}", settingValue.toString());
+		valueDao.create(settingValue);
+	}
 
 	public Map<String, Object> getSettings(final NodePath path) {
 		final Map<String, Object> map = new HashMap<String, Object>();
@@ -42,6 +103,10 @@ public class SettingService {
 			return null;
 		}
 		return (T) value.getValue();
+	}
+
+	public void setNodeDao(final NodeDao nodeDao) {
+		this.nodeDao = nodeDao;
 	}
 
 	public void setValueDao(final ValueDao valueDao) {

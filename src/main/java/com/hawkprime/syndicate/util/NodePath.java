@@ -1,5 +1,7 @@
 package com.hawkprime.syndicate.util;
 
+import java.util.Iterator;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -7,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Node Path.
  */
-public final class NodePath {
+public final class NodePath implements Iterable<NodePath> {
 	private static final NodePath NODE_PATH_AT_ROOT = new NodePath("/");
 
 	private final String path;
@@ -161,5 +163,10 @@ public final class NodePath {
 	@Override
 	public String toString() {
 		return path;
+	}
+
+	@Override
+	public Iterator<NodePath> iterator() {
+		return new NodePathIterator(this);
 	}
 }
