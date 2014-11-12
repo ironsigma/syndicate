@@ -50,29 +50,37 @@ public class SettingService {
 		final NodePath nodePath = settingPath.getParent();
 		Node settingNode = nodeDao.findClosestByPath(nodePath);
 		if (settingNode == null || !settingNode.getPath().equals(nodePath.toString())) {
+			final NodePath nodePathToBuildOut;
 			if (settingNode == null) {
 				LOG.debug("No closest setting match found");
+				nodePathToBuildOut = nodePath;
 			} else {
 				LOG.debug("Closest setting match was \"{}\"", settingNode.getPath());
+				nodePathToBuildOut = nodePath.getPathDifferences(NodePath.at(settingNode.getPath()));
 			}
-			final NodePath nodePathToBuildOut = nodePath.getPathDifferences(NodePath.at(settingNode.getPath()));
 			LOG.debug("Will have to build out \"{}\"", nodePathToBuildOut.toString());
 			Node parentNode = settingNode;
 			Node newNode;
 			for (NodePath nodePathToCreate : nodePathToBuildOut) {
+				String path;
 				if (nodePathToCreate.equals(NodePath.root())) {
-					continue;
-				}
-				if (parentNode == null) {
-					LOG.debug("Creating node \"{}\"", nodePathToCreate.getLastComponent());
+					if (settingNode != null) {
+						continue;
+					}
+					LOG.debug("Creating root node \"/\"");
+					path = NodePath.root().toString();
+
 				} else {
-					LOG.debug("Creating sub-node {}/[{}]", parentNode.getPath(),
+					LOG.debug("Creating node \"{}/{}\"", parentNode.getPath(),
 							nodePathToCreate.getLastComponent());
+
+					path = NodePath.at(parentNode.getPath())
+								.append(nodePathToCreate.getLastComponent()).toString();
 				}
+
 				newNode = new Node();
 				newNode.setParent(parentNode);
-				newNode.setPath(NodePath.at(parentNode.getPath())
-						.append(nodePathToCreate.getLastComponent()).toString());
+				newNode.setPath(path);
 				nodeDao.create(newNode);
 				parentNode = newNode;
 			}

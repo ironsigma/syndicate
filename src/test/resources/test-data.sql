@@ -52,7 +52,7 @@ VALUES (7, 6, 6, 'STRING', 'ASC');
 INSERT INTO value (id, node_id, setting_id, value_type, string_value)
 VALUES (8, 6, 7, 'STRING', 'PUBLISHED');
 INSERT INTO value (id, node_id, setting_id, value_type, string_value)
-VALUES (9, 9, 5, 'STRING', 'DESC');
+VALUES (9, 9, 6, 'STRING', 'DESC');
 
 -- Users
 INSERT INTO user (id, name)

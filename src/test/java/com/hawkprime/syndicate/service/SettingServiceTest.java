@@ -5,18 +5,20 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Ignore;
+import org.jdom.IllegalDataException;
 import org.junit.Test;
 
 import com.hawkprime.syndicate.dao.NodeDao;
 import com.hawkprime.syndicate.dao.SettingDao;
 import com.hawkprime.syndicate.dao.ValueDao;
+import com.hawkprime.syndicate.model.Node;
 import com.hawkprime.syndicate.model.Setting;
 import com.hawkprime.syndicate.model.Value;
 import com.hawkprime.syndicate.model.builder.NodeBuilder;
@@ -32,104 +34,293 @@ public class SettingServiceTest {
 
 	/**
 	 * New setting, deep existing sub levels, multiple non existing path.
-	 * TODO: Finish mocks
 	 */
 	@Test
-	@Ignore
 	public void newSettingDeepExistingSubLevelsMultipleNonExistingPathTest() {
-		SettingDao settingDao = mock(SettingDao.class);
-		ValueDao valueDao = mock(ValueDao.class);
-		NodeDao nodeDao = mock(NodeDao.class);
+		final SettingDao settingDao = mock(SettingDao.class);
+		final ValueDao valueDao = mock(ValueDao.class);
+		final NodeDao nodeDao = mock(NodeDao.class);
 
-		settingDao.create(new SettingBuilder()
-				.withName("version")
-				.build());
+		final NodePath versionPath = NodePath.at("/App/User/1/Feed/Meta/Internal/Build/version");
+		when(valueDao.findByPath(versionPath))
+				.thenReturn(null);
+
+		final Setting setting = new SettingBuilder()
+				.withName(versionPath.getLastComponent())
+				.build();
+
+		when(settingDao.findByName(versionPath.getLastComponent()))
+				.thenReturn(setting);
+
+		final Node partialNode = new NodeBuilder()
+						.withPath("/App/User/1/Feed")
+						.build();
+
+		when(nodeDao.findClosestByPath(versionPath.getParent()))
+				.thenReturn(partialNode);
 
 		final SettingService service = new SettingService();
 		service.setSettingDao(settingDao);
 		service.setValueDao(valueDao);
 		service.setNodeDao(nodeDao);
 
-		service.setValue(NodePath.at("/App/User/1/Feed/Meta/Build/version"), "1.0.0");
+		service.setValue(versionPath, "1.0.0");
+
+		final Node metaNode = new NodeBuilder()
+				.withParent(partialNode)
+				.withPath("/App/User/1/Feed/Meta")
+				.build();
+
+		final Node internalNode = new NodeBuilder()
+				.withParent(metaNode)
+				.withPath("/App/User/1/Feed/Meta/Internal")
+				.build();
+
+		final Node buildNode = new NodeBuilder()
+				.withParent(internalNode)
+				.withPath("/App/User/1/Feed/Meta/Internal/Build")
+				.build();
+
+		verify(nodeDao).create(metaNode);
+		verify(nodeDao).create(internalNode);
+		verify(nodeDao).create(buildNode);
+
+		verify(valueDao).create(new ValueBuilder()
+				.withValue("1.0.0")
+				.withSetting(setting)
+				.withNode(buildNode)
+				.build());
 	}
 
 	/**
 	 * New setting, multiple non existing path.
-	 * TODO: Finish mocks
 	 */
 	@Test
-	@Ignore
 	public void newSettingMultipleNonExistingPathTest() {
-		SettingDao settingDao = mock(SettingDao.class);
-		ValueDao valueDao = mock(ValueDao.class);
-		NodeDao nodeDao = mock(NodeDao.class);
+		final SettingDao settingDao = mock(SettingDao.class);
+		final ValueDao valueDao = mock(ValueDao.class);
+		final NodeDao nodeDao = mock(NodeDao.class);
 
-		settingDao.create(new SettingBuilder()
-				.withName("version")
-				.build());
+		final NodePath versionPath = NodePath.at("/App/Meta/Internal/Build/version");
+		when(valueDao.findByPath(versionPath))
+				.thenReturn(null);
+
+		final Setting setting = new SettingBuilder()
+				.withName(versionPath.getLastComponent())
+				.build();
+
+		when(settingDao.findByName(versionPath.getLastComponent()))
+				.thenReturn(setting);
+
+		final Node partialNode = new NodeBuilder()
+						.withPath("/App")
+						.build();
+
+		when(nodeDao.findClosestByPath(versionPath.getParent()))
+				.thenReturn(partialNode);
 
 		final SettingService service = new SettingService();
 		service.setSettingDao(settingDao);
 		service.setValueDao(valueDao);
 		service.setNodeDao(nodeDao);
 
-		service.setValue(NodePath.at("/App/Meta/Internal/Build/version"), "1.0.0");
+		service.setValue(versionPath, "1.0.0");
+
+		final Node metaNode = new NodeBuilder()
+				.withParent(partialNode)
+				.withPath("/App/Meta")
+				.build();
+
+		final Node internalNode = new NodeBuilder()
+				.withParent(metaNode)
+				.withPath("/App/Meta/Internal")
+				.build();
+
+		final Node buildNode = new NodeBuilder()
+				.withParent(internalNode)
+				.withPath("/App/Meta/Internal/Build")
+				.build();
+
+		verify(nodeDao).create(metaNode);
+		verify(nodeDao).create(internalNode);
+		verify(nodeDao).create(buildNode);
+
+		verify(valueDao).create(new ValueBuilder()
+				.withValue("1.0.0")
+				.withSetting(setting)
+				.withNode(buildNode)
+				.build());
 	}
 
 	/**
 	 * New setting, one non existing path.
-	 * TODO: Finish mocks
 	 */
 	@Test
-	@Ignore
 	public void newSettingOneNonExistingPathTest() {
-		SettingDao settingDao = mock(SettingDao.class);
-		ValueDao valueDao = mock(ValueDao.class);
-		NodeDao nodeDao = mock(NodeDao.class);
+		final SettingDao settingDao = mock(SettingDao.class);
+		final ValueDao valueDao = mock(ValueDao.class);
+		final NodeDao nodeDao = mock(NodeDao.class);
 
-		settingDao.create(new SettingBuilder()
-				.withName("version")
-				.build());
+		final NodePath versionPath = NodePath.at("/App/Meta/version");
+		when(valueDao.findByPath(versionPath))
+				.thenReturn(null);
+
+		final Setting setting = new SettingBuilder()
+				.withName(versionPath.getLastComponent())
+				.build();
+
+		when(settingDao.findByName(versionPath.getLastComponent()))
+				.thenReturn(setting);
+
+		final Node partialNode = new NodeBuilder()
+						.withPath("/App")
+						.build();
+
+		when(nodeDao.findClosestByPath(versionPath.getParent()))
+				.thenReturn(partialNode);
 
 		final SettingService service = new SettingService();
 		service.setSettingDao(settingDao);
 		service.setValueDao(valueDao);
 		service.setNodeDao(nodeDao);
 
-		service.setValue(NodePath.at("/App/Meta/version"), "1.0.0");
+		service.setValue(versionPath, "1.0.0");
+
+		final Node settingNode = new NodeBuilder()
+				.withParent(partialNode)
+				.withPath("/App/Meta")
+				.build();
+
+		verify(nodeDao).create(settingNode);
+
+		verify(valueDao).create(new ValueBuilder()
+				.withValue("1.0.0")
+				.withSetting(setting)
+				.withNode(settingNode)
+				.build());
 	}
 
 	/**
 	 * New setting, existing path.
-	 * TODO: Finish mocks
 	 */
 	@Test
 	public void newSettingExistingPathTest() {
-		SettingDao settingDao = mock(SettingDao.class);
-		ValueDao valueDao = mock(ValueDao.class);
-		NodeDao nodeDao = mock(NodeDao.class);
+		final SettingDao settingDao = mock(SettingDao.class);
+		final ValueDao valueDao = mock(ValueDao.class);
+		final NodeDao nodeDao = mock(NodeDao.class);
 
-		when(valueDao.findByPath(NodePath.at("/App/version")))
+		final NodePath versionPath = NodePath.at("/App/version");
+		when(valueDao.findByPath(versionPath))
 				.thenReturn(null);
 
-		Setting setting = new SettingBuilder()
-				.withName("version")
+		final Setting setting = new SettingBuilder()
+				.withName(versionPath.getLastComponent())
 				.build();
 
-		when(settingDao.findByName("version"))
+		when(settingDao.findByName(versionPath.getLastComponent()))
 				.thenReturn(setting);
 
-		when(nodeDao.findClosestByPath(NodePath.at("/App")))
-				.thenReturn(new NodeBuilder()
+		final Node settingNode = new NodeBuilder()
 						.withPath("/App")
-						.build());
+						.build();
+
+		when(nodeDao.findClosestByPath(versionPath.getParent()))
+				.thenReturn(settingNode);
 
 		final SettingService service = new SettingService();
 		service.setSettingDao(settingDao);
 		service.setValueDao(valueDao);
 		service.setNodeDao(nodeDao);
 
-		service.setValue(NodePath.at("/App/version"), "1.0.0");
+		service.setValue(versionPath, "1.0.0");
+
+		verify(valueDao).create(new ValueBuilder()
+				.withValue("1.0.0")
+				.withSetting(setting)
+				.withNode(settingNode)
+				.build());
+	}
+
+	/**
+	 * Existing setting, existing path.
+	 */
+	@Test
+	public void existingSettingExistingPathTest() {
+		final ValueDao valueDao = mock(ValueDao.class);
+
+		final NodePath versionPath = NodePath.at("/App/version");
+		final Value value = new ValueBuilder()
+				.build();
+
+		when(valueDao.findByPath(versionPath))
+				.thenReturn(value);
+
+		final SettingService service = new SettingService();
+		service.setValueDao(valueDao);
+
+		service.setValue(versionPath, "1.0.0");
+
+		verify(valueDao).update(value);
+	}
+
+	/**
+	 * Non existing setting.
+	 */
+	@Test(expected=IllegalDataException.class)
+	public void nonExistingSettingExistingPathTest() {
+		final ValueDao valueDao = mock(ValueDao.class);
+		final SettingDao settingDao = mock(SettingDao.class);
+
+		final NodePath versionPath = NodePath.at("/App/version");
+		when(valueDao.findByPath(versionPath))
+				.thenReturn(null);
+
+		final SettingService service = new SettingService();
+		service.setValueDao(valueDao);
+		service.setSettingDao(settingDao);
+
+		service.setValue(versionPath, "1.0.0");
+	}
+
+	/**
+	 * Non existing root.
+	 */
+	@Test
+	public void nonExistingRootTest() {
+		final ValueDao valueDao = mock(ValueDao.class);
+		final SettingDao settingDao = mock(SettingDao.class);
+		final NodeDao nodeDao = mock(NodeDao.class);
+
+		final NodePath versionPath = NodePath.at("/version");
+		when(valueDao.findByPath(versionPath))
+				.thenReturn(null);
+
+		final Setting setting = new SettingBuilder()
+				.withName(versionPath.getLastComponent())
+				.build();
+
+		when(settingDao.findByName(versionPath.getLastComponent()))
+				.thenReturn(setting);
+
+		final SettingService service = new SettingService();
+		service.setValueDao(valueDao);
+		service.setSettingDao(settingDao);
+		service.setNodeDao(nodeDao);
+
+		service.setValue(versionPath, "1.0.0");
+
+		final Node rootNode = new NodeBuilder()
+				.withParent(null)
+				.withPath("/")
+				.build();
+
+		verify(nodeDao).create(rootNode);
+
+		verify(valueDao).create(new ValueBuilder()
+				.withValue("1.0.0")
+				.withSetting(setting)
+				.withNode(rootNode)
+				.build());
 	}
 
 	@Test

@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
@@ -307,6 +309,41 @@ public class Value {
 	 */
 	public void setSetting(final Setting setting) {
 		this.setting = setting;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object == null || !(object instanceof Value)) {
+			return false;
+		}
+		if (this == object) {
+			return true;
+		}
+		final Value rhs = (Value) object;
+		return new EqualsBuilder()
+				.append(id, rhs.id)
+				.append(stringValue, rhs.stringValue)
+				.append(booleanValue, rhs.booleanValue)
+				.append(numericValue, rhs.numericValue)
+				.append(decimalValue, rhs.decimalValue)
+				.append(dateValue, rhs.dateValue)
+				.append(node, rhs.node)
+				.append(setting, rhs.setting)
+				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(id)
+				.append(stringValue)
+				.append(booleanValue)
+				.append(numericValue)
+				.append(decimalValue)
+				.append(dateValue)
+				.append(node)
+				.append(setting)
+				.toHashCode();
 	}
 
 	@Override

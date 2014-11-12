@@ -2,11 +2,11 @@ package com.hawkprime.syndicate.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +105,12 @@ public class FeedServiceTest {
 		final Feed feed = new FeedBuilder().build();
 		feedService.saveTotals(feed, 1, 0);
 
-		verify(updateDao).create(any(Update.class));
+		verify(updateDao).create(new UpdateBuilder()
+				.withFeed(feed)
+				.withNewCount(0L)
+				.withTotalCount(1L)
+				.withUpdated(any(LocalDateTime.class))
+				.build());
 	}
 
 	/**

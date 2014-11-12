@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
@@ -104,6 +106,35 @@ public class Update {
 	 */
 	public void setUpdated(final LocalDateTime updated) {
 		this.updated = updated;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object == null || !(object instanceof Update)) {
+			return false;
+		}
+		if (this == object) {
+			return true;
+		}
+		final Update rhs = (Update) object;
+		return new EqualsBuilder()
+				.append(id, rhs.id)
+				.append(totalCount, rhs.totalCount)
+				.append(newCount, rhs.newCount)
+				.append(updated, rhs.updated)
+				.append(feed, rhs.feed)
+				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(id)
+				.append(totalCount)
+				.append(newCount)
+				.append(updated)
+				.append(feed)
+				.toHashCode();
 	}
 
 	@Override

@@ -35,8 +35,6 @@ public class PostServiceTest {
 				.thenReturn(post);
 
 		assertThat(postService.save(post), is(1));
-
-		verify(postDao).create(post);
 	}
 
 	/**

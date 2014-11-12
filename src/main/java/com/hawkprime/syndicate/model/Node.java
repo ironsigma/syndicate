@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -95,6 +97,33 @@ public class Node {
 	 */
 	public List<Node> getChildren() {
 		return children;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (object == null || !(object instanceof Node)) {
+			return false;
+		}
+		if (this == object) {
+			return true;
+		}
+		final Node rhs = (Node) object;
+		return new EqualsBuilder()
+				.append(id, rhs.id)
+				.append(path, rhs.path)
+				.append(parent, rhs.parent)
+				.append(children, rhs.children)
+				.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(id)
+				.append(path)
+				.append(parent)
+				.append(children)
+				.toHashCode();
 	}
 
 	@Override
