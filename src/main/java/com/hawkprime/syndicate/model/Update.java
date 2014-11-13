@@ -39,6 +39,8 @@ public class Update {
 	private Feed feed;
 
 	/**
+	 * Gets the id.
+	 *
 	 * @return the id
 	 */
 	public Long getId() {
@@ -46,6 +48,8 @@ public class Update {
 	}
 
 	/**
+	 * Sets the id.
+	 *
 	 * @param id the id to set
 	 */
 	public void setId(final Long id) {
@@ -53,6 +57,8 @@ public class Update {
 	}
 
 	/**
+	 * Gets the total count.
+	 *
 	 * @return the totalCount
 	 */
 	public Long getTotalCount() {
@@ -60,6 +66,8 @@ public class Update {
 	}
 
 	/**
+	 * Sets the total count.
+	 *
 	 * @param totalCount the totalCount to set
 	 */
 	public void setTotalCount(final Long totalCount) {
@@ -67,6 +75,8 @@ public class Update {
 	}
 
 	/**
+	 * Gets the new count.
+	 *
 	 * @return the newCount
 	 */
 	public Long getNewCount() {
@@ -74,6 +84,8 @@ public class Update {
 	}
 
 	/**
+	 * Sets the new count.
+	 *
 	 * @param newCount the newCount to set
 	 */
 	public void setNewCount(final Long newCount) {
@@ -81,6 +93,8 @@ public class Update {
 	}
 
 	/**
+	 * Gets the feed.
+	 *
 	 * @return the feed
 	 */
 	public Feed getFeed() {
@@ -88,6 +102,8 @@ public class Update {
 	}
 
 	/**
+	 * Sets the feed.
+	 *
 	 * @param feed the feed to set
 	 */
 	public void setFeed(final Feed feed) {
@@ -95,6 +111,8 @@ public class Update {
 	}
 
 	/**
+	 * Gets the updated.
+	 *
 	 * @return the updated
 	 */
 	public LocalDateTime getUpdated() {
@@ -102,12 +120,17 @@ public class Update {
 	}
 
 	/**
+	 * Sets the updated.
+	 *
 	 * @param updated the updated to set
 	 */
 	public void setUpdated(final LocalDateTime updated) {
 		this.updated = updated;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(final Object object) {
 		if (object == null || !(object instanceof Update)) {
@@ -126,6 +149,9 @@ public class Update {
 				.isEquals();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
@@ -137,6 +163,9 @@ public class Update {
 				.toHashCode();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)

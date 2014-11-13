@@ -13,6 +13,11 @@ import com.hawkprime.syndicate.util.NodePath;
 @Repository
 public class NodeDao extends AbstractDao<Node> {
 
+	/**
+	 * Find closest node by path.
+	 * @param nodePath path
+	 * @return Node or null if none found
+	 */
 	public Node findClosestByPath(final NodePath nodePath) {
 		if (nodePath == null) {
 			return null;

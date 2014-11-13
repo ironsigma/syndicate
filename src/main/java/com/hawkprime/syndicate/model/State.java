@@ -16,6 +16,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 @Table(name="post_state")
 public class State {
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -35,6 +36,8 @@ public class State {
 	private Post post;
 
 	/**
+	 * Gets the id.
+	 *
 	 * @return the id
 	 */
 	public Long getId() {
@@ -42,6 +45,8 @@ public class State {
 	}
 
 	/**
+	 * Sets the id.
+	 *
 	 * @param id the id to set
 	 */
 	public void setId(final Long id) {
@@ -49,6 +54,8 @@ public class State {
 	}
 
 	/**
+	 * Checks if is read.
+	 *
 	 * @return the read
 	 */
 	public Boolean isRead() {
@@ -56,6 +63,8 @@ public class State {
 	}
 
 	/**
+	 * Sets the read.
+	 *
 	 * @param read the read to set
 	 */
 	public void setRead(final Boolean read) {
@@ -63,6 +72,8 @@ public class State {
 	}
 
 	/**
+	 * Checks if is stared.
+	 *
 	 * @return the stared
 	 */
 	public Boolean isStared() {
@@ -70,6 +81,8 @@ public class State {
 	}
 
 	/**
+	 * Sets the stared.
+	 *
 	 * @param stared the stared to set
 	 */
 	public void setStared(final Boolean stared) {
@@ -77,6 +90,8 @@ public class State {
 	}
 
 	/**
+	 * Gets the user.
+	 *
 	 * @return the user
 	 */
 	public User getUser() {
@@ -84,6 +99,8 @@ public class State {
 	}
 
 	/**
+	 * Sets the user.
+	 *
 	 * @param user the user to set
 	 */
 	public void setUser(final User user) {
@@ -91,6 +108,8 @@ public class State {
 	}
 
 	/**
+	 * Gets the post.
+	 *
 	 * @return the post
 	 */
 	public Post getPost() {
@@ -98,12 +117,17 @@ public class State {
 	}
 
 	/**
+	 * Sets the post.
+	 *
 	 * @param post the post to set
 	 */
 	public void setPost(final Post post) {
 		this.post = post;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)

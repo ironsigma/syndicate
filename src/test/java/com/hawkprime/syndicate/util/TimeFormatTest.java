@@ -10,6 +10,9 @@ import static org.junit.Assert.assertThat;
  */
 public class TimeFormatTest {
 
+	/**
+	 * Format milliseconds.
+	 */
 	@Test
 	public void formatMilliseconds() {
 		// CHECKSTYLE:OFF MagicNumber
@@ -49,6 +52,9 @@ public class TimeFormatTest {
 		// CHECKSTYLE:ON MagicNumber
 	}
 
+	/**
+	 * Format seconds.
+	 */
 	@Test
 	public void formatSeconds() {
 		// CHECKSTYLE:OFF MagicNumber
@@ -71,6 +77,9 @@ public class TimeFormatTest {
 		// CHECKSTYLE:ON MagicNumber
 	}
 
+	/**
+	 * Format minutes.
+	 */
 	@Test
 	public void formatMinutes() {
 		// CHECKSTYLE:OFF MagicNumber

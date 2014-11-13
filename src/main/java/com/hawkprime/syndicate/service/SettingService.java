@@ -33,6 +33,12 @@ public class SettingService {
 	@Autowired
 	private NodeDao nodeDao;
 
+	/**
+	 * Sets the value.
+	 *
+	 * @param settingPath the setting path
+	 * @param value the value
+	 */
 	public void setValue(final NodePath settingPath, final String value) {
 		Value settingValue = valueDao.findByPath(settingPath);
 		if (settingValue != null) {
@@ -96,6 +102,12 @@ public class SettingService {
 		valueDao.create(settingValue);
 	}
 
+	/**
+	 * Gets the settings.
+	 *
+	 * @param path the path
+	 * @return the settings
+	 */
 	public Map<String, Object> getSettings(final NodePath path) {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		for (Setting setting : settingDao.findByPath(path)) {
@@ -104,6 +116,14 @@ public class SettingService {
 		return map;
 	}
 
+	/**
+	 * Gets the value.
+	 *
+	 * @param <T> the generic type
+	 * @param path the path
+	 * @param type the type
+	 * @return the value
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getValue(final NodePath path, final Class<T> type) {
 		final Value value = valueDao.findByPath(path);
@@ -113,14 +133,29 @@ public class SettingService {
 		return (T) value.getValue();
 	}
 
+	/**
+	 * Sets the node DAO.
+	 *
+	 * @param nodeDao the new node DAO
+	 */
 	public void setNodeDao(final NodeDao nodeDao) {
 		this.nodeDao = nodeDao;
 	}
 
+	/**
+	 * Sets the value DAO.
+	 *
+	 * @param valueDao the new value DAO
+	 */
 	public void setValueDao(final ValueDao valueDao) {
 		this.valueDao = valueDao;
 	}
 
+	/**
+	 * Sets the setting DAO.
+	 *
+	 * @param settingDao the new setting DAO
+	 */
 	public void setSettingDao(final SettingDao settingDao) {
 		this.settingDao = settingDao;
 	}

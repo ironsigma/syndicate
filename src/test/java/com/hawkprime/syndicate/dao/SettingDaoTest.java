@@ -22,6 +22,9 @@ public class SettingDaoTest extends AbstractDaoTest {
 	@Autowired
 	private SettingDao settingDao;
 
+	/**
+	 * Creates the test.
+	 */
 	@Test
 	@Transactional
 	public void createTest() {
@@ -37,12 +40,18 @@ public class SettingDaoTest extends AbstractDaoTest {
 		assertThat(setting.getName(), is(name));
 	}
 
+	/**
+	 * Read test.
+	 */
 	@Test
 	public void readTest() {
 		final Setting setting = settingDao.findById(1L);
 		assertThat(setting.getName(), is("MaxUpdate"));
 	}
 
+	/**
+	 * Update test.
+	 */
 	@Test
 	@Transactional
 	public void updateTest() {
@@ -65,6 +74,9 @@ public class SettingDaoTest extends AbstractDaoTest {
 		assertThat(setting.getName(), is(newName));
 	}
 
+	/**
+	 * Delete test.
+	 */
 	@Test
 	@Transactional
 	public void deleteTest() {
@@ -81,12 +93,18 @@ public class SettingDaoTest extends AbstractDaoTest {
 		assertThat(setting, is(nullValue()));
 	}
 
+	/**
+	 * Find by name test.
+	 */
 	@Test
 	public void findByNameTest() {
 		assertThat(settingDao.findByName("XXNotASettingXX"), is(nullValue()));
 		assertThat(settingDao.findByName("SortField"), is(not(nullValue())));
 	}
 
+	/**
+	 * Find by path test.
+	 */
 	@Test
 	public void findByPathTest() {
 		final List<Setting> settingList = settingDao.findByPath(NodePath.at("/App/Feed/1"));

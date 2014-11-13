@@ -1,21 +1,26 @@
 package com.hawkprime.syndicate.util;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
+
+import org.junit.Test;
 
 /**
  * Node Path Test.
  */
 public class NodePathTest {
 
+	/**
+	 * No slash test.
+	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void noSlashTest() {
 		NodePath.at("Foo");
 	}
 
+	/**
+	 * Path difference test.
+	 */
 	@Test
 	public void pathDifferenceTest() {
 		assertThat(NodePath.root()
@@ -79,6 +84,9 @@ public class NodePathTest {
 				is(NodePath.at("/bar/bin/dat")));
 	}
 
+	/**
+	 * Common path test.
+	 */
 	@Test
 	public void commonPathTest() {
 		assertThat(NodePath.root()
@@ -126,12 +134,18 @@ public class NodePathTest {
 				is(NodePath.at("/foo/bar")));
 	}
 
+	/**
+	 * Dup slashes test.
+	 */
 	@Test
 	public void dupSlashesTest() {
 		final NodePath path = NodePath.at("//foo///bar/f/x//");
 		assertThat(path.toString(), is("/foo/bar/f/x"));
 	}
 
+	/**
+	 * Dup slashes append test.
+	 */
 	@Test
 	public void dupSlashesAppendTest() {
 		NodePath root = NodePath.root();
@@ -143,31 +157,36 @@ public class NodePathTest {
 		assertThat(path.toString(), is("/foo/bar/foo/bar/f/x"));
 	}
 
-	@Test
-	public void testCopy() {
-		final NodePath aPath = NodePath.at("/foo");
-		final NodePath copyPath = (NodePath) aPath.clone();
-		assertThat(aPath, is(copyPath));
-	}
-
+	/**
+	 * Root node test.
+	 */
 	@Test
 	public void rootNodeTest() {
 		final NodePath path = NodePath.root();
 		assertThat(path.toString(), is("/"));
 	}
 
+	/**
+	 * No ending slash test.
+	 */
 	@Test
 	public void noEndingSlashTest() {
 		final NodePath path = NodePath.at("/foo");
 		assertThat(path.toString(), is("/foo"));
 	}
 
+	/**
+	 * Ending slash test.
+	 */
 	@Test
 	public void endingSlashTest() {
 		final NodePath path = NodePath.at("/foo/");
 		assertThat(path.toString(), is("/foo"));
 	}
 
+	/**
+	 * Append test.
+	 */
 	@Test
 	public void appendTest() {
 		NodePath path = NodePath.at("/foo");
@@ -232,6 +251,9 @@ public class NodePathTest {
 		assertThat(newPath.toString(), is("/fi/fum/foo/bar"));
 	}
 
+	/**
+	 * Append node test.
+	 */
 	@Test
 	public void appendNodeTest() {
 		NodePath path = NodePath.at("/foo");
@@ -269,6 +291,9 @@ public class NodePathTest {
 		assertThat(newPath.toString(), is("/fi/fum/foo/bar"));
 	}
 
+	/**
+	 * Gets the node test.
+	 */
 	@Test
 	public void getNodeTest() {
 		NodePath path = NodePath.root();
@@ -281,6 +306,9 @@ public class NodePathTest {
 		assertThat(path.getLastComponent(), is("bin"));
 	}
 
+	/**
+	 * Gets the parent.
+	 */
 	@Test
 	public void getParent() {
 		NodePath path = NodePath.root();
@@ -300,6 +328,9 @@ public class NodePathTest {
 		assertThat(parent.toString(), is("/foo/bar/bin"));
 	}
 
+	/**
+	 * Equals test.
+	 */
 	@Test
 	public void equalsTest() {
 		final NodePath n = NodePath.root();
@@ -311,6 +342,9 @@ public class NodePathTest {
 		assertThat(NodePath.at("/foo").equals(NodePath.at("/foo/bar")), is(false));
 	}
 
+	/**
+	 * Hash test.
+	 */
 	@Test
 	public void hashTest() {
 		assertThat(NodePath.root().hashCode(), is(NodePath.root().hashCode()));
@@ -318,6 +352,9 @@ public class NodePathTest {
 		assertThat(NodePath.root().hashCode(), is(not(NodePath.at("/foo/bar").hashCode())));
 	}
 
+	/**
+	 * To string test.
+	 */
 	@Test
 	public void toStringTest() {
 		assertThat(NodePath.at("/foo/bar").toString(), is("/foo/bar"));

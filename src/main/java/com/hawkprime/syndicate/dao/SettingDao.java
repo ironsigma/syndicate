@@ -15,6 +15,12 @@ import com.hawkprime.syndicate.util.NodePath;
 @Repository
 public class SettingDao extends AbstractDao<Setting> {
 
+	/**
+	 * Find by path.
+	 *
+	 * @param path the path
+	 * @return the list
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Setting> findByPath(final NodePath path) {
 		return getEntityManager()
@@ -27,6 +33,12 @@ public class SettingDao extends AbstractDao<Setting> {
 				.getResultList();
 	}
 
+	/**
+	 * Find by name.
+	 *
+	 * @param name the name
+	 * @return the setting
+	 */
 	public Setting findByName(final String name) {
 		try {
 			return (Setting) getEntityManager()

@@ -10,6 +10,9 @@ import static org.junit.Assert.assertThat;
  */
 public class NodePathIteratorTest {
 
+	/**
+	 * Root test.
+	 */
 	@Test
 	public void rootTest() {
 		final NodePathIterator itr = new NodePathIterator(NodePath.root());
@@ -18,6 +21,9 @@ public class NodePathIteratorTest {
 		assertThat(itr.hasNext(), is(false));
 	}
 
+	/**
+	 * Long test.
+	 */
 	@Test
 	public void longTest() {
 		final NodePathIterator itr = new NodePathIterator(NodePath.at("/foo/bar/Node/Section 3/Blue"));
@@ -42,6 +48,9 @@ public class NodePathIteratorTest {
 		assertThat(itr.hasNext(), is(false));
 	}
 
+	/**
+	 * Removes the test.
+	 */
 	@Test(expected=UnsupportedOperationException.class)
 	public void removeTest() {
 		final NodePathIterator itr = new NodePathIterator(NodePath.root());

@@ -54,6 +54,8 @@ public class Post {
 	private List<State> states;
 
 	/**
+	 * Gets the id.
+	 *
 	 * @return the id
 	 */
 	public Long getId() {
@@ -61,6 +63,8 @@ public class Post {
 	}
 
 	/**
+	 * Sets the id.
+	 *
 	 * @param id the id to set
 	 */
 	public void setId(final Long id) {
@@ -68,6 +72,8 @@ public class Post {
 	}
 
 	/**
+	 * Gets the title.
+	 *
 	 * @return the title
 	 */
 	public String getTitle() {
@@ -75,6 +81,8 @@ public class Post {
 	}
 
 	/**
+	 * Sets the title.
+	 *
 	 * @param title the title to set
 	 */
 	public void setTitle(final String title) {
@@ -82,6 +90,8 @@ public class Post {
 	}
 
 	/**
+	 * Gets the published.
+	 *
 	 * @return the published
 	 */
 	public LocalDateTime getPublished() {
@@ -89,6 +99,8 @@ public class Post {
 	}
 
 	/**
+	 * Sets the published.
+	 *
 	 * @param published the published to set
 	 */
 	public void setPublished(final LocalDateTime published) {
@@ -96,6 +108,8 @@ public class Post {
 	}
 
 	/**
+	 * Gets the fetched.
+	 *
 	 * @return the fetched
 	 */
 	public LocalDateTime getFetched() {
@@ -103,6 +117,8 @@ public class Post {
 	}
 
 	/**
+	 * Sets the fetched.
+	 *
 	 * @param fetched the fetched to set
 	 */
 	public void setFetched(final LocalDateTime fetched) {
@@ -110,6 +126,8 @@ public class Post {
 	}
 
 	/**
+	 * Gets the text.
+	 *
 	 * @return the text
 	 */
 	public String getText() {
@@ -117,6 +135,8 @@ public class Post {
 	}
 
 	/**
+	 * Sets the text.
+	 *
 	 * @param text the text to set
 	 */
 	public void setText(final String text) {
@@ -124,6 +144,8 @@ public class Post {
 	}
 
 	/**
+	 * Gets the link.
+	 *
 	 * @return the link
 	 */
 	public String getLink() {
@@ -131,6 +153,8 @@ public class Post {
 	}
 
 	/**
+	 * Sets the link.
+	 *
 	 * @param link the link to set
 	 */
 	public void setLink(final String link) {
@@ -138,6 +162,8 @@ public class Post {
 	}
 
 	/**
+	 * Gets the guid.
+	 *
 	 * @return the guid
 	 */
 	public String getGuid() {
@@ -145,13 +171,17 @@ public class Post {
 	}
 
 	/**
-	 * @param guid the guid to set
+	 * Sets the GUID.
+	 *
+	 * @param guid the GUID to set
 	 */
 	public void setGuid(final String guid) {
 		this.guid = guid;
 	}
 
 	/**
+	 * Gets the feed.
+	 *
 	 * @return the feed
 	 */
 	public Feed getFeed() {
@@ -159,12 +189,17 @@ public class Post {
 	}
 
 	/**
+	 * Sets the feed.
+	 *
 	 * @param feed the feed to set
 	 */
 	public void setFeed(final Feed feed) {
 		this.feed = feed;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)

@@ -323,6 +323,9 @@ public class SettingServiceTest {
 				.build());
 	}
 
+	/**
+	 * Gets the settings test.
+	 */
 	@Test
 	public void getSettingsTest() {
 		final ValueDao valueDao = mock(ValueDao.class);
@@ -368,6 +371,9 @@ public class SettingServiceTest {
 		assertThat(settings.get(maxUpdatesSetting.getName()), is(updateIntervalValue.getValue()));
 	}
 
+	/**
+	 * Gets the value test.
+	 */
 	@Test
 	public void getValueTest() {
 		final Integer expectedValue = 60;
@@ -389,6 +395,9 @@ public class SettingServiceTest {
 		assertThat(testValue, is(nullValue()));
 	}
 
+	/**
+	 * Bad cast test.
+	 */
 	@Test(expected=ClassCastException.class)
 	public void badCastTest() {
 		final ValueDao valueDao = mock(ValueDao.class);

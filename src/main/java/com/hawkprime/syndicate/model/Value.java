@@ -79,6 +79,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the type.
+	 *
 	 * @return the type
 	 */
 	public ValueType getType() {
@@ -86,6 +88,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the value.
+	 *
 	 * @return value
 	 */
 	public Object getValue() {
@@ -101,6 +105,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param stringValue the stringValue to set
 	 */
 	public void setValue(final String stringValue) {
@@ -116,6 +122,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param booleanValue the booleanValue to set
 	 */
 	public void setValue(final boolean booleanValue) {
@@ -128,6 +136,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param intValue the intValue to set
 	 */
 	public void setValue(final int intValue) {
@@ -140,6 +150,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param longValue the longValue to set
 	 */
 	public void setValue(final long longValue) {
@@ -152,6 +164,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param decimalValue the decimalValue to set
 	 */
 	public void setValue(final BigDecimal decimalValue) {
@@ -167,6 +181,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param dateValue the dateValue to set
 	 */
 	public void setValue(final LocalDateTime dateValue) {
@@ -182,6 +198,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param doubleValue the new value
 	 */
 	public void setValue(final double doubleValue) {
@@ -189,6 +207,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param floatValue the new value
 	 */
 	public void setValue(final float floatValue) {
@@ -196,6 +216,8 @@ public class Value {
 	}
 
 	/**
+	 * Sets the value.
+	 *
 	 * @param dateValue the dateValue to set
 	 */
 	public void setValue(final Date dateValue) {
@@ -203,6 +225,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the string.
+	 *
 	 * @return the stringValue
 	 */
 	public String getString() {
@@ -213,6 +237,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the boolean.
+	 *
 	 * @return the booleanValue
 	 */
 	public Boolean getBoolean() {
@@ -221,7 +247,10 @@ public class Value {
 		}
 		return booleanValue;
 	}
+
 	/**
+	 * Gets the integer.
+	 *
 	 * @return the integer value
 	 */
 	public Integer getInteger() {
@@ -232,6 +261,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the long.
+	 *
 	 * @return the numericValue
 	 */
 	public Long getLong() {
@@ -242,6 +273,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the decimal.
+	 *
 	 * @return the decimalValue
 	 */
 	public BigDecimal getDecimal() {
@@ -252,6 +285,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the date.
+	 *
 	 * @return the dateValue
 	 */
 	public LocalDateTime getDate() {
@@ -262,6 +297,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the double.
+	 *
 	 * @return the doubleValue
 	 */
 	public Double getDouble() {
@@ -269,6 +306,8 @@ public class Value {
 	}
 
 	/**
+	 * Gets the float.
+	 *
 	 * @return the floatValue
 	 */
 	public Float getFloat() {
@@ -311,6 +350,9 @@ public class Value {
 		this.setting = setting;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(final Object object) {
 		if (object == null || !(object instanceof Value)) {
@@ -332,6 +374,9 @@ public class Value {
 				.isEquals();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
@@ -346,6 +391,9 @@ public class Value {
 				.toHashCode();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)

@@ -15,6 +15,11 @@ public final class NodePath implements Iterable<NodePath> {
 	private final String path;
 	private final int length;
 
+	/**
+	 * Instantiates a new node path.
+	 *
+	 * @param path the path
+	 */
 	private NodePath(final String path) {
 		if (!path.startsWith("/")) {
 			throw new IllegalArgumentException("Path must start with slash");
@@ -32,18 +37,40 @@ public final class NodePath implements Iterable<NodePath> {
 		}
 	}
 
+	/**
+	 * Create a new NodePath at specified path.
+	 *
+	 * @param path the path
+	 * @return the node path
+	 */
 	public static NodePath at(final String path) {
 		return new NodePath(path);
 	}
 
+	/**
+	 * Gets the length.
+	 *
+	 * @return the length
+	 */
 	public int getLength() {
 		return length;
 	}
 
+	/**
+	 * Root instance.
+	 *
+	 * @return the node path
+	 */
 	public static NodePath root() {
 		return NODE_PATH_AT_ROOT;
 	}
 
+	/**
+	 * Gets the path differences.
+	 *
+	 * @param otherNode the other node
+	 * @return the path differences
+	 */
 	public NodePath getPathDifferences(final NodePath otherNode) {
 		final NodePathIterator shortNodePathIterator;
 		final NodePathIterator longNodePathIterator;
@@ -72,6 +99,12 @@ public final class NodePath implements Iterable<NodePath> {
 		return pathDifference;
 	}
 
+	/**
+	 * Gets the common path.
+	 *
+	 * @param otherNode the other node
+	 * @return the common path
+	 */
 	public NodePath getCommonPath(final NodePath otherNode) {
 		final NodePathIterator shortNodePathIterator;
 		final NodePathIterator longNodePathIterator;
@@ -94,10 +127,22 @@ public final class NodePath implements Iterable<NodePath> {
 		return oldPath;
 	}
 
+	/**
+	 * Append.
+	 *
+	 * @param path the path
+	 * @return the node path
+	 */
 	public NodePath append(final NodePath path) {
 		return append(path.path);
 	}
 
+	/**
+	 * Append.
+	 *
+	 * @param appendPath the append path
+	 * @return the node path
+	 */
 	public NodePath append(final String appendPath) {
 		if ("/".equals(appendPath)) {
 			return this;
@@ -123,10 +168,20 @@ public final class NodePath implements Iterable<NodePath> {
 		}
 	}
 
+	/**
+	 * Gets the last component.
+	 *
+	 * @return the last component
+	 */
 	public String getLastComponent() {
 		return path.substring(path.lastIndexOf('/') + 1);
 	}
 
+	/**
+	 * Gets the parent.
+	 *
+	 * @return the parent
+	 */
 	public NodePath getParent() {
 		if ("/".equals(path)) {
 			return null;
@@ -134,6 +189,9 @@ public final class NodePath implements Iterable<NodePath> {
 		return new NodePath(path.substring(0, path.lastIndexOf('/') + 1));
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(final Object object) {
 		if (object == null || !(object instanceof NodePath)) {
@@ -148,11 +206,9 @@ public final class NodePath implements Iterable<NodePath> {
 				.isEquals();
 	}
 
-	@Override
-	public Object clone() {
-		return this;
-	}
-
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
@@ -160,11 +216,17 @@ public final class NodePath implements Iterable<NodePath> {
 				.toHashCode();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return path;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
 	@Override
 	public Iterator<NodePath> iterator() {
 		return new NodePathIterator(this);

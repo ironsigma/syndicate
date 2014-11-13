@@ -1,10 +1,11 @@
 package com.hawkprime.syndicate.dao;
 
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hawkprime.syndicate.util.NodePath;
 
@@ -15,6 +16,9 @@ public class NodeDaoTest extends AbstractDaoTest {
 	@Autowired
 	private NodeDao nodeDao;
 
+	/**
+	 * Find closest by path test.
+	 */
 	@Test
 	public void findClosestByPathTest() {
 		assertThat(nodeDao.findClosestByPath(NodePath.root()).getPath(), is("/"));

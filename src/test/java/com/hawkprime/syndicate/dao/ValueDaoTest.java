@@ -22,6 +22,9 @@ public class ValueDaoTest extends AbstractDaoTest {
 	@Autowired
 	private SettingDao settingDao;
 
+	/**
+	 * Find by path.
+	 */
 	@Test
 	public void findByPath() {
 		final int expectedValue = 60;

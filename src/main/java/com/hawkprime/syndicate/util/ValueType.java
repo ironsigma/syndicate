@@ -4,5 +4,21 @@ package com.hawkprime.syndicate.util;
  * Value Type Enumeration.
  */
 public enum ValueType {
-	STRING, BOOLEAN, INTEGER, LONG, DECIMAL, DATE
+	/** String type. */
+	STRING,
+
+	/** Boolean type. */
+	BOOLEAN,
+
+	/** Short, Integer type. */
+	INTEGER,
+
+	/** Long type. */
+	LONG,
+
+	/** Double, Float type. */
+	DECIMAL,
+
+	/** Date, LocalDateTime type. */
+	DATE
 }

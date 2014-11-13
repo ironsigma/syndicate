@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
 /**
- * Feed.
+ * The Class Feed.
  */
 @Entity
 @Table(name="feed")
@@ -34,67 +34,98 @@ public class Feed {
 	private Integer updateFrequency;
 
 	/**
-	 * Get the Id.
+	 * Gets the id.
+	 *
 	 * @return the id
 	 */
 	public Long getId() {
 		return id;
 	}
+
 	/**
-	 * @param id the id to set
+	 * Sets the id.
+	 *
+	 * @param id the new id
 	 */
 	public void setId(final Long id) {
 		this.id = id;
 	}
+
 	/**
+	 * Gets the name.
+	 *
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
+
 	/**
-	 * @param name the name to set
+	 * Sets the name.
+	 *
+	 * @param name the new name
 	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
+
 	/**
+	 * Gets the url.
+	 *
 	 * @return the url
 	 */
 	public String getUrl() {
 		return url;
 	}
+
 	/**
-	 * @param url the url to set
+	 * Sets the url.
+	 *
+	 * @param url the new url
 	 */
 	public void setUrl(final String url) {
 		this.url = url;
 	}
+
 	/**
-	 * @return the active
+	 * Checks if is active.
+	 *
+	 * @return the boolean
 	 */
 	public Boolean isActive() {
 		return active;
 	}
+
 	/**
-	 * @param active the active to set
+	 * Sets the active.
+	 *
+	 * @param active the new active
 	 */
 	public void setActive(final Boolean active) {
 		this.active = active;
 	}
+
 	/**
-	 * @return the updateFrequency
+	 * Gets the update frequency.
+	 *
+	 * @return the update frequency
 	 */
 	public Integer getUpdateFrequency() {
 		return updateFrequency;
 	}
+
 	/**
-	 * @param updateFrequency the updateFrequency to set
+	 * Sets the update frequency.
+	 *
+	 * @param updateFrequency the new update frequency
 	 */
 	public void setUpdateFrequency(final Integer updateFrequency) {
 		this.updateFrequency = updateFrequency;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(final Object object) {
 		if (object == null || !(object instanceof Feed)) {
@@ -113,6 +144,9 @@ public class Feed {
 				.isEquals();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
@@ -124,6 +158,9 @@ public class Feed {
 				.toHashCode();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
