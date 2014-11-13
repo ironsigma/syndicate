@@ -45,7 +45,7 @@ public class ValueBuilder {
 
 	/**
 	 * With setting.
-	 * @param node setting.
+	 * @param setting setting.
 	 * @return the value builder
 	 */
 	public ValueBuilder withSetting(final Setting setting) {

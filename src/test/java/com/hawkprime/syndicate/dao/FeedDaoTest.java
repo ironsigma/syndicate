@@ -16,6 +16,7 @@ import com.hawkprime.syndicate.model.builder.FeedBuilder;
 /**
  * Feed Dao Tests.
  */
+// CHECKSTYLE:OFF MagicNumber
 public class FeedDaoTest extends AbstractDaoTest {
 	@Autowired
 	private FeedDao feedDao;
@@ -150,3 +151,4 @@ public class FeedDaoTest extends AbstractDaoTest {
 		assertThat(feedList.get(0).getId(), is(activeFeedId));
 	}
 }
+// CHECKSTYLE:ON MagicNumber

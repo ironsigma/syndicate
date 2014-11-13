@@ -34,6 +34,7 @@ public class Feed {
 	private Integer updateFrequency;
 
 	/**
+	 * Get the Id.
 	 * @return the id
 	 */
 	public Long getId() {

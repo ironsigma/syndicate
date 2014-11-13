@@ -128,7 +128,7 @@ public class Value {
 	}
 
 	/**
-	 * @param numericValue the intValue to set
+	 * @param intValue the intValue to set
 	 */
 	public void setValue(final int intValue) {
 		this.numericValue = (long) intValue;
@@ -140,7 +140,7 @@ public class Value {
 	}
 
 	/**
-	 * @param numericValue the longValue to set
+	 * @param longValue the longValue to set
 	 */
 	public void setValue(final long longValue) {
 		this.numericValue = longValue;
