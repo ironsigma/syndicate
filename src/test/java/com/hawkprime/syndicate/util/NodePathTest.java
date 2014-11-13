@@ -304,6 +304,7 @@ public class NodePathTest {
 	public void equalsTest() {
 		final NodePath n = NodePath.root();
 		assertThat(n.equals(n), is(true));
+		// CHECKSTYLE IGNORE StringLiteralEquality FOR NEXT 2 LINES
 		assertThat(NodePath.at("/foo/bar").equals(null), is(false));
 		assertThat(NodePath.at("/foo/bar").equals("/foo/bar"), is(false));
 		assertThat(NodePath.at("/foo/bar").equals(NodePath.at("/foo/bar")), is(true));

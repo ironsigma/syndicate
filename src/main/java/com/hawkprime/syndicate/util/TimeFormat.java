@@ -4,17 +4,17 @@ package com.hawkprime.syndicate.util;
  * The Class TimeFormat.
  */
 public final class TimeFormat {
-	private static final int minuteUTES_IN_DAY = 1440;
-	private static final int minuteUTES_IN_HOUR = 60;
+	private static final int MINUTEUTES_IN_DAY = 1440;
+	private static final int MINUTEUTES_IN_HOUR = 60;
 
-	private static final int secondONDS_IN_DAY = 86400;
-	private static final int secondONDS_IN_HOUR = 3600;
-	private static final int secondONDS_IN_minuteUTE = 60;
+	private static final int SECONDONDS_IN_DAY = 86400;
+	private static final int SECONDONDS_IN_HOUR = 3600;
+	private static final int SECONDONDS_IN_MINUTEUTE = 60;
 
 	private static final int MILLIS_IN_DAY = 86400000;
 	private static final int MILLIS_IN_HOUR = 3600000;
-	private static final int MILLIS_IN_minuteUTE = 60000;
-	private static final int MILLIS_IN_secondOND = 1000;
+	private static final int MILLIS_IN_MINUTEUTE = 60000;
+	private static final int MILLIS_IN_SECONDOND = 1000;
 
 	/**
 	 * Private Constructor.
@@ -32,10 +32,10 @@ public final class TimeFormat {
 		long remainder = millis % MILLIS_IN_DAY;
 		final long hours = remainder / MILLIS_IN_HOUR;
 		remainder %= MILLIS_IN_HOUR;
-		final long minutes = remainder / MILLIS_IN_minuteUTE;
-		remainder %= MILLIS_IN_minuteUTE;
-		final long seconds = remainder / MILLIS_IN_secondOND;
-		remainder %= MILLIS_IN_secondOND;
+		final long minutes = remainder / MILLIS_IN_MINUTEUTE;
+		remainder %= MILLIS_IN_MINUTEUTE;
+		final long seconds = remainder / MILLIS_IN_SECONDOND;
+		remainder %= MILLIS_IN_SECONDOND;
 
 		final StringBuilder str = new StringBuilder();
 		if (days != 0) {
@@ -87,12 +87,12 @@ public final class TimeFormat {
 	 * @return the string
 	 */
 	public static String formatSeconds(final long seconds) {
-		final long days = seconds / secondONDS_IN_DAY;
-		long remainder = seconds % secondONDS_IN_DAY;
-		final long hours = remainder / secondONDS_IN_HOUR;
-		remainder %= secondONDS_IN_HOUR;
-		final long minutes = remainder / secondONDS_IN_minuteUTE;
-		remainder %= secondONDS_IN_minuteUTE;
+		final long days = seconds / SECONDONDS_IN_DAY;
+		long remainder = seconds % SECONDONDS_IN_DAY;
+		final long hours = remainder / SECONDONDS_IN_HOUR;
+		remainder %= SECONDONDS_IN_HOUR;
+		final long minutes = remainder / SECONDONDS_IN_MINUTEUTE;
+		remainder %= SECONDONDS_IN_MINUTEUTE;
 
 		final StringBuilder str = new StringBuilder();
 		if (days != 0) {
@@ -136,10 +136,10 @@ public final class TimeFormat {
 	 * @return the string
 	 */
 	public static String formatMinutes(final long minutes) {
-		final long days = minutes / minuteUTES_IN_DAY;
-		long remainder = minutes % minuteUTES_IN_DAY;
-		final long hours = remainder / minuteUTES_IN_HOUR;
-		remainder %= minuteUTES_IN_HOUR;
+		final long days = minutes / MINUTEUTES_IN_DAY;
+		long remainder = minutes % MINUTEUTES_IN_DAY;
+		final long hours = remainder / MINUTEUTES_IN_HOUR;
+		remainder %= MINUTEUTES_IN_HOUR;
 
 		final StringBuilder str = new StringBuilder();
 		if (days != 0) {

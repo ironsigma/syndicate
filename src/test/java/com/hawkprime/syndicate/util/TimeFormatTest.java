@@ -12,6 +12,7 @@ public class TimeFormatTest {
 
 	@Test
 	public void formatMilliseconds() {
+		// CHECKSTYLE:OFF MagicNumber
 		assertThat(TimeFormat.formatMilliseconds(0), is("0 milliseconds"));
 		assertThat(TimeFormat.formatMilliseconds(999), is("999 milliseconds"));
 		assertThat(TimeFormat.formatMilliseconds(1000), is("1 second, 0 milliseconds"));
@@ -33,14 +34,24 @@ public class TimeFormatTest {
 		assertThat(TimeFormat.formatMilliseconds(3661000), is("1 hour, 1 minute, 1 second, 0 milliseconds"));
 		assertThat(TimeFormat.formatMilliseconds(3661001), is("1 hour, 1 minute, 1 second, 1 millisecond"));
 		assertThat(TimeFormat.formatMilliseconds(7200000), is("2 hours, 0 minutes, 0 seconds, 0 milliseconds"));
-		assertThat(TimeFormat.formatMilliseconds(86399059), is("23 hours, 59 minutes, 59 seconds, 59 milliseconds"));
-		assertThat(TimeFormat.formatMilliseconds(86400000), is("1 day, 0 hours, 0 minutes, 0 seconds, 0 milliseconds"));
-		assertThat(TimeFormat.formatMilliseconds(90061001), is("1 day, 1 hour, 1 minute, 1 second, 1 millisecond"));
-		assertThat(TimeFormat.formatMilliseconds(172800000), is("2 days, 0 hours, 0 minutes, 0 seconds, 0 milliseconds"));
+
+		assertThat(TimeFormat.formatMilliseconds(86399059),
+				is("23 hours, 59 minutes, 59 seconds, 59 milliseconds"));
+
+		assertThat(TimeFormat.formatMilliseconds(86400000),
+				is("1 day, 0 hours, 0 minutes, 0 seconds, 0 milliseconds"));
+
+		assertThat(TimeFormat.formatMilliseconds(90061001),
+				is("1 day, 1 hour, 1 minute, 1 second, 1 millisecond"));
+
+		assertThat(TimeFormat.formatMilliseconds(172800000),
+				is("2 days, 0 hours, 0 minutes, 0 seconds, 0 milliseconds"));
+		// CHECKSTYLE:ON MagicNumber
 	}
 
 	@Test
 	public void formatSeconds() {
+		// CHECKSTYLE:OFF MagicNumber
 		assertThat(TimeFormat.formatSeconds(0), is("0 seconds"));
 		assertThat(TimeFormat.formatSeconds(1), is("1 second"));
 		assertThat(TimeFormat.formatSeconds(59), is("59 seconds"));
@@ -57,10 +68,12 @@ public class TimeFormatTest {
 		assertThat(TimeFormat.formatSeconds(86400), is("1 day, 0 hours, 0 minutes, 0 seconds"));
 		assertThat(TimeFormat.formatSeconds(90061), is("1 day, 1 hour, 1 minute, 1 second"));
 		assertThat(TimeFormat.formatSeconds(172800), is("2 days, 0 hours, 0 minutes, 0 seconds"));
+		// CHECKSTYLE:ON MagicNumber
 	}
 
 	@Test
 	public void formatMinutes() {
+		// CHECKSTYLE:OFF MagicNumber
 		assertThat(TimeFormat.formatMinutes(0), is("0 minutes"));
 		assertThat(TimeFormat.formatMinutes(1), is("1 minute"));
 		assertThat(TimeFormat.formatMinutes(59), is("59 minutes"));
@@ -73,5 +86,6 @@ public class TimeFormatTest {
 		assertThat(TimeFormat.formatMinutes(1500), is("1 day, 1 hour, 0 minutes"));
 		assertThat(TimeFormat.formatMinutes(1501), is("1 day, 1 hour, 1 minute"));
 		assertThat(TimeFormat.formatMinutes(2880), is("2 days, 0 hours, 0 minutes"));
+		// CHECKSTYLE:ON MagicNumber
 	}
 }
