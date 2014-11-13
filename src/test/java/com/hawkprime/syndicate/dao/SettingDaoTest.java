@@ -1,9 +1,8 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import com.hawkprime.syndicate.model.Setting;
+import com.hawkprime.syndicate.model.builder.SettingBuilder;
+import com.hawkprime.syndicate.util.NodePath;
 
 import java.util.List;
 
@@ -11,14 +10,15 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hawkprime.syndicate.model.Setting;
-import com.hawkprime.syndicate.model.builder.SettingBuilder;
-import com.hawkprime.syndicate.util.NodePath;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Setting DAO Test.
  */
 public class SettingDaoTest extends AbstractDaoTest {
+	private static final String SETTING_MAX_UPDATE = "MaxUpdate";
+
 	@Autowired
 	private SettingDao settingDao;
 
@@ -28,7 +28,7 @@ public class SettingDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void createTest() {
-		final String name = "MySetting";
+		final String name = "MyNewSetting";
 		Setting setting = new SettingBuilder()
 				.withName(name)
 				.build();
@@ -45,8 +45,8 @@ public class SettingDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void readTest() {
-		final Setting setting = settingDao.findById(1L);
-		assertThat(setting.getName(), is("MaxUpdate"));
+		Setting setting = settingDao.findById(1L);
+		assertThat(setting.getName(), is(SETTING_MAX_UPDATE));
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class SettingDaoTest extends AbstractDaoTest {
 	@Transactional
 	public void updateTest() {
 		final String initialName = "Initial Name";
-		final String newName = "MySetting";
+		final String newName = "MyUpdatedSetting";
 		Setting setting = new SettingBuilder()
 				.withName(initialName)
 				.build();
@@ -83,7 +83,7 @@ public class SettingDaoTest extends AbstractDaoTest {
 		Setting setting = new SettingBuilder().build();
 
 		settingDao.create(setting);
-		final Long id = setting.getId();
+		Long id = setting.getId();
 		setting = null;
 		assertThat(id, is(not(nullValue())));
 
@@ -107,11 +107,12 @@ public class SettingDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void findByPathTest() {
-		final List<Setting> settingList = settingDao.findByPath(NodePath.at("/App/Feed/1"));
+		final int settingCount = 5;
+		List<Setting> settingList = settingDao.findByPath(NodePath.at("/App/Feed/1"));
 		assertThat(settingList.size(), is(not(0)));
 		int count = 0;
 		for (Setting setting : settingList) {
-			if ("MaxUpdate".equals(setting.getName())
+			if (SETTING_MAX_UPDATE.equals(setting.getName())
 			    || "MinUpdate".equals(setting.getName())
 			    || "MaxOptimalRange".equals(setting.getName())
 			    || "MinOptimalRange".equals(setting.getName())
@@ -120,6 +121,6 @@ public class SettingDaoTest extends AbstractDaoTest {
 				count++;
 			}
 		}
-		assertThat(count, is(5));
+		assertThat(count, is(settingCount));
 	}
 }

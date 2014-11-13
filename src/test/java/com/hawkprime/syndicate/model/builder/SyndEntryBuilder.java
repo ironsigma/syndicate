@@ -1,11 +1,11 @@
 package com.hawkprime.syndicate.model.builder;
 
-import java.util.Date;
-
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
+
+import java.util.Date;
 
 /**
  * Post Builder.
@@ -23,14 +23,14 @@ public class SyndEntryBuilder {
 	 * @return the synd entry
 	 */
 	public SyndEntry build() {
-		final SyndEntry entry = new SyndEntryImpl();
+		SyndEntry entry = new SyndEntryImpl();
 		entry.setTitle(title);
 		entry.setUri(uri);
 		entry.setLink(link);
 		entry.setPublishedDate(published);
 
 		if (text != null) {
-			final SyndContent content = new SyndContentImpl();
+			SyndContent content = new SyndContentImpl();
 			content.setType("text");
 			content.setValue(text);
 			entry.setDescription(content);

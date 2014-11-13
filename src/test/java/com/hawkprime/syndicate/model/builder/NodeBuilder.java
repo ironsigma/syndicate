@@ -16,7 +16,7 @@ public class NodeBuilder {
 	 * @return the node
 	 */
 	public Node build() {
-		final Node node = new Node();
+		Node node = new Node();
 		node.setId(id);
 		node.setParent(parent);
 		node.setPath(path);

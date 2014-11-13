@@ -15,7 +15,7 @@ public class NodePathIteratorTest {
 	 */
 	@Test
 	public void rootTest() {
-		final NodePathIterator itr = new NodePathIterator(NodePath.root());
+		NodePathIterator itr = new NodePathIterator(NodePath.root());
 		assertThat(itr.hasNext(), is(true));
 		assertThat(itr.next(), is(NodePath.root()));
 		assertThat(itr.hasNext(), is(false));
@@ -26,7 +26,8 @@ public class NodePathIteratorTest {
 	 */
 	@Test
 	public void longTest() {
-		final NodePathIterator itr = new NodePathIterator(NodePath.at("/foo/bar/Node/Section 3/Blue"));
+		NodePath path = NodePath.at("/foo/bar/Node/Section 3/Blue");
+		NodePathIterator itr = new NodePathIterator(path);
 		assertThat(itr.hasNext(), is(true));
 		assertThat(itr.next(), is(NodePath.root()));
 
@@ -43,7 +44,7 @@ public class NodePathIteratorTest {
 		assertThat(itr.next(), is(NodePath.at("/foo/bar/Node/Section 3")));
 
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(NodePath.at("/foo/bar/Node/Section 3/Blue")));
+		assertThat(itr.next(), is(path));
 
 		assertThat(itr.hasNext(), is(false));
 	}
@@ -53,7 +54,7 @@ public class NodePathIteratorTest {
 	 */
 	@Test(expected=UnsupportedOperationException.class)
 	public void removeTest() {
-		final NodePathIterator itr = new NodePathIterator(NodePath.root());
+		NodePathIterator itr = new NodePathIterator(NodePath.root());
 		itr.remove();
 	}
 }

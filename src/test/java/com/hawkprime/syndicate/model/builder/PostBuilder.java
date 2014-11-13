@@ -1,10 +1,10 @@
 package com.hawkprime.syndicate.model.builder;
 
-import org.joda.time.LocalDateTime;
-
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Post;
 import com.hawkprime.syndicate.util.Sha1;
+
+import org.joda.time.LocalDateTime;
 
 /**
  * Post Builder.
@@ -25,7 +25,7 @@ public class PostBuilder {
 	 * @return the post
 	 */
 	public Post build() {
-		final Post post = new Post();
+		Post post = new Post();
 		post.setId(id);
 		post.setTitle(title);
 		post.setLink(link);

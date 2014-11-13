@@ -1,8 +1,7 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import com.hawkprime.syndicate.model.User;
+import com.hawkprime.syndicate.model.builder.UserBuilder;
 
 import java.util.List;
 
@@ -10,8 +9,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hawkprime.syndicate.model.User;
-import com.hawkprime.syndicate.model.builder.UserBuilder;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * User DAO Tests.
@@ -26,10 +25,9 @@ public class UserDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void findAllTest() {
-		final List<User> allUsers = userDao.findAll();
-
-		// CHECKSTYLE IGNORE MagicNumber
-		assertThat(allUsers.size(), is(2));
+		final int totalUsers = 2;
+		List<User> allUsers = userDao.findAll();
+		assertThat(allUsers.size(), is(totalUsers));
 	}
 
 	/**
@@ -37,7 +35,7 @@ public class UserDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void readUserTest() {
-		final User user = userDao.findById(1L);
+		User user = userDao.findById(1L);
 		assertThat(user.getName(), is("Joe Hawk"));
 	}
 

@@ -18,7 +18,7 @@ public class FeedBuilder {
 	 * @return the feed
 	 */
 	public Feed build() {
-		final Feed feed = new Feed();
+		Feed feed = new Feed();
 		feed.setId(id);
 		feed.setName(name);
 		feed.setUrl(url);
@@ -50,9 +50,9 @@ public class FeedBuilder {
 	}
 
 	/**
-	 * With url.
+	 * With URL.
 	 *
-	 * @param url the url
+	 * @param url the URL
 	 * @return the feed builder
 	 */
 	public FeedBuilder withUrl(final String url) {

@@ -1,16 +1,14 @@
 package com.hawkprime.syndicate.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-
 import com.hawkprime.syndicate.dao.PostDao;
 import com.hawkprime.syndicate.model.Post;
 import com.hawkprime.syndicate.model.builder.PostBuilder;
+
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 /**
  * Post Service Tests.
@@ -24,8 +22,8 @@ public class PostServiceTest {
 	 */
 	@Test
 	public void saveTest() {
-		final Post post = new PostBuilder().build();
-		final PostDao postDao = mock(PostDao.class);
+		Post post = new PostBuilder().build();
+		PostDao postDao = mock(PostDao.class);
 		postService.setPostDao(postDao);
 
 		when(postDao.doesPosExistsWithGuid(post.getGuid()))
@@ -42,8 +40,8 @@ public class PostServiceTest {
 	 */
 	@Test
 	public void saveExistingTest() {
-		final Post post = new PostBuilder().build();
-		final PostDao postDao = mock(PostDao.class);
+		Post post = new PostBuilder().build();
+		PostDao postDao = mock(PostDao.class);
 		postService.setPostDao(postDao);
 
 		when(postDao.doesPosExistsWithGuid(post.getGuid()))
@@ -57,7 +55,7 @@ public class PostServiceTest {
 	 */
 	@Test
 	public void deletePublishedNotStaredByFeedIdOlderThanTest() {
-		final PostDao postDao = mock(PostDao.class);
+		PostDao postDao = mock(PostDao.class);
 		postService.setPostDao(postDao);
 
 		final long feedId = 1L;
@@ -72,7 +70,7 @@ public class PostServiceTest {
 	 */
 	@Test
 	public void deleteReadNotStaredByFeedIdOlderThanTest() {
-		final PostDao postDao = mock(PostDao.class);
+		PostDao postDao = mock(PostDao.class);
 		postService.setPostDao(postDao);
 
 		final long feedId = 1L;
@@ -87,7 +85,7 @@ public class PostServiceTest {
 	 */
 	@Test
 	public void deleteUnreadNotStaredByFeedIdOlderThanTest() {
-		final PostDao postDao = mock(PostDao.class);
+		PostDao postDao = mock(PostDao.class);
 		postService.setPostDao(postDao);
 
 		final long feedId = 1L;

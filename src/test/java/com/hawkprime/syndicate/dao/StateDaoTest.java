@@ -1,8 +1,11 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import com.hawkprime.syndicate.model.Post;
+import com.hawkprime.syndicate.model.State;
+import com.hawkprime.syndicate.model.User;
+import com.hawkprime.syndicate.model.builder.PostBuilder;
+import com.hawkprime.syndicate.model.builder.StateBuilder;
+import com.hawkprime.syndicate.model.builder.UserBuilder;
 
 import java.util.List;
 
@@ -10,12 +13,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hawkprime.syndicate.model.Post;
-import com.hawkprime.syndicate.model.State;
-import com.hawkprime.syndicate.model.User;
-import com.hawkprime.syndicate.model.builder.PostBuilder;
-import com.hawkprime.syndicate.model.builder.StateBuilder;
-import com.hawkprime.syndicate.model.builder.UserBuilder;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * State DAO Tests.
@@ -38,7 +37,7 @@ public class StateDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void findAllTest() {
-		final List<State> allStates = stateDao.findAll();
+		List<State> allStates = stateDao.findAll();
 		assertThat(allStates.size(), is(1));
 	}
 
@@ -47,7 +46,7 @@ public class StateDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void readStateTest() {
-		final State state = stateDao.findById(1L);
+		State state = stateDao.findById(1L);
 		assertThat(state.isRead(), is(true));
 		assertThat(state.isStared(), is(true));
 		assertThat(state.getPost().getId(), is(1L));
@@ -127,9 +126,12 @@ public class StateDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void deleteStateTest() {
+		final long feedId = 1L;
+		final long userId = 2L;
+
 		State state = new StateBuilder()
-				.withPost(postDao.findById(1L))
-				.withUser(userDao.findById(2L))
+				.withPost(postDao.findById(feedId))
+				.withUser(userDao.findById(userId))
 				.build();
 
 		stateDao.create(state);
@@ -156,9 +158,10 @@ public class StateDaoTest extends AbstractDaoTest {
 		postDao.create(post);
 		final long postId = post.getId();
 
+		final long userId = 2L;
 		State state = new StateBuilder()
 			.withPost(postDao.findById(postId))
-			.withUser(userDao.findById(2L))
+			.withUser(userDao.findById(userId))
 			.build();
 
 		stateDao.create(state);

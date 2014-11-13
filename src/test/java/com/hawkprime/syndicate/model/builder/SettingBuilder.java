@@ -15,7 +15,7 @@ public class SettingBuilder {
 	 * @return the setting
 	 */
 	public Setting build() {
-		final Setting setting = new Setting();
+		Setting setting = new Setting();
 		setting.setId(id);
 		setting.setName(name);
 		return setting;

@@ -1,9 +1,9 @@
 package com.hawkprime.syndicate.dao;
 
-import java.util.List;
-
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.builder.FeedBuilder;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,9 @@ public class FeedDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void findAllTest() {
+		final int totalFeeds = 3;
 		List<Feed> allFeeds = feedDao.findAll();
-
-		// CHECKSTYLE IGNORE MagicNumber
-		assertThat(allFeeds.size(), is(3));
+		assertThat(allFeeds.size(), is(totalFeeds));
 	}
 
 	/**
@@ -35,10 +34,10 @@ public class FeedDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void readFeedTest() {
+		final int feedUpdateFrequency = 60;
 		Feed feed = feedDao.findById(1L);
 
-		// CHECKSTYLE IGNORE MagicNumber
-		assertThat(feed.getUpdateFrequency(), is(60));
+		assertThat(feed.getUpdateFrequency(), is(feedUpdateFrequency));
 		assertThat(feed.getName(), is("MyFeed"));
 		assertThat(feed.getUrl(), is("http://myfeed.com/rss"));
 		assertThat(feed.isActive(), is(true));
@@ -146,10 +145,9 @@ public class FeedDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void findActiveFeedsTest() {
+		final int numberOfActiveFeeds = 2;
 		List<Feed> feedList = feedDao.findActive();
-
-		// CHECKSTYLE IGNORE MagicNumber
-		assertThat(feedList.size(), is(2));
+		assertThat(feedList.size(), is(numberOfActiveFeeds));
 		assertThat(feedList.get(0).getId(), is(1L));
 	}
 }

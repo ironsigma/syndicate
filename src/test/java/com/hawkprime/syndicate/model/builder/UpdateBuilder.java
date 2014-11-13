@@ -1,9 +1,9 @@
 package com.hawkprime.syndicate.model.builder;
 
-import org.joda.time.LocalDateTime;
-
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Update;
+
+import org.joda.time.LocalDateTime;
 
 /**
  * Update Builder.
@@ -24,7 +24,7 @@ public class UpdateBuilder {
 	 * @return the update
 	 */
 	public Update build() {
-		final Update post = new Update();
+		Update post = new Update();
 		post.setId(id);
 		post.setTotalCount(totalCount);
 		post.setNewCount(newCount);

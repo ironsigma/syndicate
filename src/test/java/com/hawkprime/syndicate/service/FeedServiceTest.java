@@ -1,19 +1,5 @@
 package com.hawkprime.syndicate.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.LocalDateTime;
-import org.junit.Test;
-
 import com.hawkprime.syndicate.dao.FeedDao;
 import com.hawkprime.syndicate.dao.UpdateDao;
 import com.hawkprime.syndicate.model.Feed;
@@ -21,6 +7,17 @@ import com.hawkprime.syndicate.model.Update;
 import com.hawkprime.syndicate.model.builder.FeedBuilder;
 import com.hawkprime.syndicate.model.builder.UpdateBuilder;
 import com.hawkprime.syndicate.util.FrequencyCalculator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.LocalDateTime;
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 /**
  * Feed Service Tests.
@@ -34,23 +31,25 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void postPerMinuteTest() {
-		final Feed feed = new FeedBuilder().build();
+		Feed feed = new FeedBuilder().build();
 
-		final UpdateDao updateDao = mock(UpdateDao.class);
+		UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 
 		final LocalDateTime now = LocalDateTime.now();
 		final Long totalPosts = 20L;
+		final int minutesPriorToUpdate = 5;
 
 		when(updateDao.countNewPostsByFeedId(feed.getId()))
 				.thenReturn(totalPosts);
 
 		when(updateDao.findOldestUpdateByFeedId(feed.getId()))
 				.thenReturn(new UpdateBuilder()
-						.withUpdated(now.minusMinutes(5))
+						.withUpdated(now.minusMinutes(minutesPriorToUpdate))
 						.build());
 
-		assertThat(feedService.postPerMinute(feed), is(4L));
+		final long expectedPostsPerMinute = 4L;
+		assertThat(feedService.postPerMinute(feed), is(expectedPostsPerMinute));
 	}
 
 	/**
@@ -58,9 +57,9 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void postPerMinuteNoUpdatesTest() {
-		final Feed feed = new FeedBuilder().build();
+		Feed feed = new FeedBuilder().build();
 
-		final UpdateDao updateDao = mock(UpdateDao.class);
+		UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 
 		when(updateDao.findOldestUpdateByFeedId(feed.getId()))
@@ -74,20 +73,21 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void yearsOfPostPerMinuteTest() {
-		final Feed feed = new FeedBuilder().build();
+		Feed feed = new FeedBuilder().build();
 
-		final UpdateDao updateDao = mock(UpdateDao.class);
+		UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 
 		final LocalDateTime now = LocalDateTime.now();
 		final Long totalPosts = 40000000L;
+		final int yearsPriorToUpdate = 5;
 
 		when(updateDao.countNewPostsByFeedId(feed.getId()))
 				.thenReturn(totalPosts);
 
 		when(updateDao.findOldestUpdateByFeedId(feed.getId()))
 				.thenReturn(new UpdateBuilder()
-						.withUpdated(now.minusYears(5))
+						.withUpdated(now.minusYears(yearsPriorToUpdate))
 						.build());
 
 		final Long expectedPostsPerMinute = 15L;
@@ -99,10 +99,10 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void saveTotalsTest() {
-		final UpdateDao updateDao = mock(UpdateDao.class);
+		UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 
-		final Feed feed = new FeedBuilder().build();
+		Feed feed = new FeedBuilder().build();
 		feedService.saveTotals(feed, 1, 0);
 
 		verify(updateDao).create(new UpdateBuilder()
@@ -118,8 +118,8 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void findAllTest() {
-		final FeedDao feedDao = mock(FeedDao.class);
-		final List<Feed> allFeeds = new ArrayList<Feed>();
+		FeedDao feedDao = mock(FeedDao.class);
+		List<Feed> allFeeds = new ArrayList<Feed>();
 		when(feedDao.findAll()).thenReturn(allFeeds);
 		feedService.setFeedDao(feedDao);
 
@@ -131,8 +131,8 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void findActiveTest() {
-		final FeedDao feedDao = mock(FeedDao.class);
-		final List<Feed> activeFeeds = new ArrayList<Feed>();
+		FeedDao feedDao = mock(FeedDao.class);
+		List<Feed> activeFeeds = new ArrayList<Feed>();
 		when(feedDao.findActive()).thenReturn(activeFeeds);
 		feedService.setFeedDao(feedDao);
 
@@ -162,10 +162,10 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void noUpdateFoundTest() {
-		final UpdateDao updateDao = mock(UpdateDao.class);
+		UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 
-		final Feed feed = new FeedBuilder()
+		Feed feed = new FeedBuilder()
 				.withUpdateFrequency(1)
 				.build();
 
@@ -184,14 +184,14 @@ public class FeedServiceTest {
 	private Feed updateTestSetup(final int feedUpdateFrequency) {
 		final int minutesSinceLastFeedUpdate = 15;
 
-		final UpdateDao updateDao = mock(UpdateDao.class);
+		UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 
-		final Feed feed = new FeedBuilder()
+		Feed feed = new FeedBuilder()
 				.withUpdateFrequency(feedUpdateFrequency)
 				.build();
 
-		final Update update = new UpdateBuilder()
+		Update update = new UpdateBuilder()
 				.withFeed(feed)
 				.withUpdated(LocalDateTime.now().minusMinutes(minutesSinceLastFeedUpdate))
 				.build();
@@ -208,7 +208,7 @@ public class FeedServiceTest {
 	@Test
 	public void needsUpdateTest() {
 		final int feedUpdateFrequency = 10;
-		final Feed feed = updateTestSetup(feedUpdateFrequency);
+		Feed feed = updateTestSetup(feedUpdateFrequency);
 		assertThat(feedService.needsUpdate(feed), is(true));
 	}
 
@@ -218,7 +218,7 @@ public class FeedServiceTest {
 	@Test
 	public void needsNoUpdateTest() {
 		final int feedUpdateFrequency = 20;
-		final Feed feed = updateTestSetup(feedUpdateFrequency);
+		Feed feed = updateTestSetup(feedUpdateFrequency);
 		assertThat(feedService.needsUpdate(feed), is(false));
 	}
 
@@ -228,7 +228,7 @@ public class FeedServiceTest {
 	@Test
 	public void rightAtUpdateTest() {
 		final int feedUpdateFrequency = 15;
-		final Feed feed = updateTestSetup(feedUpdateFrequency);
+		Feed feed = updateTestSetup(feedUpdateFrequency);
 		assertThat(feedService.needsUpdate(feed), is(true));
 	}
 
@@ -237,14 +237,14 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void updateFrequencyTest() {
-		final UpdateDao updateDao = mock(UpdateDao.class);
+		UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 
-		final FeedDao feedDao = mock(FeedDao.class);
+		FeedDao feedDao = mock(FeedDao.class);
 		feedService.setFeedDao(feedDao);
 
 		final int feedUpdateFrequency = 60;
-		final Feed feed = new FeedBuilder()
+		Feed feed = new FeedBuilder()
 				.withUpdateFrequency(feedUpdateFrequency)
 				.build();
 
@@ -253,7 +253,7 @@ public class FeedServiceTest {
 				.thenReturn(percentNewPosts);
 
 		final int newCalculatedFrequency = 80;
-		final FrequencyCalculator frequencyCalculator = mock(FrequencyCalculator.class);
+		FrequencyCalculator frequencyCalculator = mock(FrequencyCalculator.class);
 		feedService.setFrequencyCalculator(frequencyCalculator);
 		when(frequencyCalculator.calculateNewFrequency(feedUpdateFrequency, percentNewPosts))
 				.thenReturn(newCalculatedFrequency);
@@ -268,14 +268,14 @@ public class FeedServiceTest {
 	 */
 	@Test
 	public void unchangedFrequencyTest() {
-		final UpdateDao updateDao = mock(UpdateDao.class);
+		UpdateDao updateDao = mock(UpdateDao.class);
 		feedService.setUpdateDao(updateDao);
 
-		final FeedDao feedDao = mock(FeedDao.class);
+		FeedDao feedDao = mock(FeedDao.class);
 		feedService.setFeedDao(feedDao);
 
 		final int feedUpdateFrequency = 60;
-		final Feed feed = new FeedBuilder()
+		Feed feed = new FeedBuilder()
 				.withUpdateFrequency(feedUpdateFrequency)
 				.build();
 
@@ -283,7 +283,7 @@ public class FeedServiceTest {
 		when(updateDao.percentNewByFeedId(feed.getId()))
 				.thenReturn(percentNewPosts);
 
-		final FrequencyCalculator frequencyCalculator = mock(FrequencyCalculator.class);
+		FrequencyCalculator frequencyCalculator = mock(FrequencyCalculator.class);
 		feedService.setFrequencyCalculator(frequencyCalculator);
 		when(frequencyCalculator.calculateNewFrequency(feedUpdateFrequency, percentNewPosts))
 				.thenReturn(feedUpdateFrequency);

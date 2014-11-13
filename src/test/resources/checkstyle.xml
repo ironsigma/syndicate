@@ -100,7 +100,7 @@
       <property name="allowedAbbreviations" value="0"/>
     </module>
     <module name="AvoidStaticImport">
-      <property name="excludes" value="org.hamcrest.CoreMatchers.*, org.junit.Assert.assertThat"/>
+      <property name="excludes" value="org.hamcrest.CoreMatchers.*, org.junit.Assert.assertThat, org.mockito.Mockito.*, org.mockito.Matchers.*"/>
     </module>
     <module name="ImportOrder"/>
     <module name="AnonInnerLength"/>
@@ -156,7 +156,7 @@
     <property name="message" value="Line has trailing spaces."/>
   </module>
   <module name="SuppressWithNearbyCommentFilter">
-    <property name="commentFormat" value="CHECKSTYLE IGNORE (\w+) FOR THE NEXT (\d+) LINES?"/>
+    <property name="commentFormat" value="CHECKSTYLE IGNORE (\w+) FOR (\d+) LINES"/>
     <property name="checkFormat" value="$1"/>
     <property name="influenceFormat" value="$2"/>
   </module>

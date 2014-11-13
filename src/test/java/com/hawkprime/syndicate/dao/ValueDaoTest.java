@@ -1,16 +1,14 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import com.hawkprime.syndicate.model.Value;
+import com.hawkprime.syndicate.util.NodePath;
+import com.hawkprime.syndicate.util.ValueType;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hawkprime.syndicate.model.Value;
-import com.hawkprime.syndicate.util.NodePath;
-import com.hawkprime.syndicate.util.ValueType;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Value DAO Tests.

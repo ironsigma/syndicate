@@ -1,26 +1,25 @@
 package com.hawkprime.syndicate.model.builder;
 
+import com.hawkprime.syndicate.model.Node;
+import com.hawkprime.syndicate.model.Setting;
+import com.hawkprime.syndicate.model.Value;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 import org.joda.time.LocalDateTime;
 
-import com.hawkprime.syndicate.model.Node;
-import com.hawkprime.syndicate.model.Setting;
-import com.hawkprime.syndicate.model.Value;
-
 /**
  * The Class ValueBuilder.
  */
 public class ValueBuilder {
-	private final Value instance = new Value();
+	private final Value value = new Value();
 
 	/**
 	 * Default values.
 	 */
 	public ValueBuilder() {
-		instance.setId(null);
-		instance.setValue("MyValue");
+		value.setValue("MyValue");
 	}
 
 	/**
@@ -29,7 +28,7 @@ public class ValueBuilder {
 	 * @return value object
 	 */
 	public Value build() {
-		return instance;
+		return value;
 	}
 
 	/**
@@ -39,7 +38,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withId(final Long aValue) {
-		instance.setId(aValue);
+		value.setId(aValue);
 		return this;
 	}
 
@@ -49,7 +48,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withSetting(final Setting setting) {
-		instance.setSetting(setting);
+		value.setSetting(setting);
 		return this;
 	}
 
@@ -59,7 +58,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withNode(final Node node) {
-		instance.setNode(node);
+		value.setNode(node);
 		return this;
 	}
 
@@ -70,7 +69,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final String aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 
@@ -81,7 +80,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final boolean aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 
@@ -92,7 +91,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final int aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 
@@ -103,7 +102,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final long aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 
@@ -114,7 +113,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final double aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 
@@ -125,7 +124,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final float aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 
@@ -136,7 +135,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final BigDecimal aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 
@@ -147,7 +146,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final Date aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 
@@ -158,7 +157,7 @@ public class ValueBuilder {
 	 * @return the value builder
 	 */
 	public ValueBuilder withValue(final LocalDateTime aValue) {
-		instance.setValue(aValue);
+		value.setValue(aValue);
 		return this;
 	}
 }

@@ -1,9 +1,10 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import com.hawkprime.syndicate.model.Feed;
+import com.hawkprime.syndicate.model.Post;
+import com.hawkprime.syndicate.model.State;
+import com.hawkprime.syndicate.model.builder.PostBuilder;
+import com.hawkprime.syndicate.model.builder.StateBuilder;
 
 import java.util.List;
 
@@ -12,16 +13,15 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hawkprime.syndicate.model.Feed;
-import com.hawkprime.syndicate.model.Post;
-import com.hawkprime.syndicate.model.State;
-import com.hawkprime.syndicate.model.builder.PostBuilder;
-import com.hawkprime.syndicate.model.builder.StateBuilder;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Post DAO Tests.
  */
 public class PostDaoTest extends AbstractDaoTest {
+	private static final String FEED_1_GUID = "2048a082fd924a742f9d92b83c24092af8309a72";
+
 	@Autowired
 	private PostDao postDao;
 
@@ -39,7 +39,7 @@ public class PostDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void findAllTest() {
-		final List<Post> allPosts = postDao.findAll();
+		List<Post> allPosts = postDao.findAll();
 		assertThat(allPosts.size(), is(1));
 	}
 
@@ -48,11 +48,11 @@ public class PostDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void readPostTest() {
-		final Post post = postDao.findById(1L);
+		Post post = postDao.findById(1L);
 		assertThat(post.getTitle(), is("My First Post"));
 		assertThat(post.getLink(), is("http://myfeed.com/my_first_post"));
 		assertThat(post.getText(), is("This is my first post!"));
-		assertThat(post.getGuid(), is("2048a082fd924a742f9d92b83c24092af8309a72"));
+		assertThat(post.getGuid(), is(FEED_1_GUID));
 		assertThat(post.getPublished(), is(LocalDateTime.parse("2014-10-17T14:39:00")));
 		assertThat(post.getFetched(), is(LocalDateTime.parse("2014-10-29T14:08:00")));
 		assertThat(post.getFeed().getId(), is(1L));
@@ -181,7 +181,7 @@ public class PostDaoTest extends AbstractDaoTest {
 	 */
 	private Post createPost(final Feed feed, final int fetched, final int published,
 			final boolean withState, final Boolean read, final Boolean stared) {
-		final Post post = new PostBuilder()
+		Post post = new PostBuilder()
 			.withFeed(feed)
 			.withFetched(LocalDateTime.now().minusDays(fetched))
 			.withPublished(LocalDateTime.now().minusDays(published))
@@ -191,7 +191,7 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(post.getId(), is(not(nullValue())));
 
 		if (withState) {
-			final State state = new StateBuilder()
+			State state = new StateBuilder()
 					.withPost(post)
 					.withRead(read)
 					.withStared(stared)
@@ -209,11 +209,13 @@ public class PostDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void deleteOldUnreadPostsTest() {
-		final Feed feed = feedDao.findById(1L);
-		final Feed otherFeed = feedDao.findById(2L);
 		final int recent = 29;
 		final int published = 90;
 		final int fetched = 30;
+
+		final Feed feed = feedDao.findById(1L);
+		final Feed otherFeed = feedDao.findById(2L);
+
 		final long postNoStateId = createPost(feed, fetched, published, false, null, null).getId();
 		final long postWithStateUnreadId = createPost(feed, fetched, published, true, false, false).getId();
 		final long postWithStateUnreadStaredId = createPost(feed, fetched, published, true, false, true).getId();
@@ -233,7 +235,6 @@ public class PostDaoTest extends AbstractDaoTest {
 
 		assertThat(postDao.findById(postNoStateId), is(nullValue()));
 		assertThat(postDao.findById(postWithStateUnreadId), is(nullValue()));
-
 		assertThat(postDao.findById(postOtherNoStateId), is(not(nullValue())));
 		assertThat(postDao.findById(postOtherWithStateUnreadId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateUnreadStaredId), is(not(nullValue())));
@@ -252,11 +253,13 @@ public class PostDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void deleteOldReadPostsTest() {
-		final Feed feed = feedDao.findById(1L);
-		final Feed otherFeed = feedDao.findById(2L);
 		final int recent = 44;
 		final int published = 90;
 		final int fetched = 45;
+
+		final Feed feed = feedDao.findById(1L);
+		final Feed otherFeed = feedDao.findById(2L);
+
 		final long postNoStateId = createPost(feed, fetched, published, false, null, null).getId();
 		final long postWithStateUnreadId = createPost(feed, fetched, published, true, false, false).getId();
 		final long postWithStateUnreadStaredId = createPost(feed, fetched, published, true, false, true).getId();
@@ -274,7 +277,6 @@ public class PostDaoTest extends AbstractDaoTest {
 		postDao.getEntityManager().flush();
 
 		assertThat(postDao.findById(postWithStateReadId), is(nullValue()));
-
 		assertThat(postDao.findById(postOtherWithStateReadId), is(not(nullValue())));
 		assertThat(postDao.findById(postNoStateId), is(not(nullValue())));
 		assertThat(postDao.findById(postWithStateUnreadId), is(not(nullValue())));
@@ -293,11 +295,13 @@ public class PostDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void deleteOldPublishedPostsTest() {
-		final Feed feed = feedDao.findById(1L);
-		final Feed otherFeed = feedDao.findById(2L);
 		final int recent = 89;
 		final int published = 90;
 		final int fetched = 60;
+
+		final Feed otherFeed = feedDao.findById(2L);
+		final Feed feed = feedDao.findById(1L);
+
 		final long postNoStateId = createPost(feed, fetched, published, false, null, null).getId();
 		final long postWithStateUnreadId = createPost(feed, fetched, published, true, false, false).getId();
 		final long postWithStateUnreadStaredId = createPost(feed, fetched, published, true, false, true).getId();
@@ -319,7 +323,6 @@ public class PostDaoTest extends AbstractDaoTest {
 		assertThat(postDao.findById(postNoStateId), is(nullValue()));
 		assertThat(postDao.findById(postWithStateUnreadId), is(nullValue()));
 		assertThat(postDao.findById(postWithStateReadId), is(nullValue()));
-
 		assertThat(postDao.findById(postOtherNoStateId), is(not(nullValue())));
 		assertThat(postDao.findById(postOtherWithStateUnreadId), is(not(nullValue())));
 		assertThat(postDao.findById(postOtherWithStateReadId), is(not(nullValue())));
@@ -338,7 +341,7 @@ public class PostDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void postExistsTest() {
-		assertThat(postDao.doesPosExistsWithGuid("2048a082fd924a742f9d92b83c24092af8309a72"), is(true));
+		assertThat(postDao.doesPosExistsWithGuid(FEED_1_GUID), is(true));
 		assertThat(postDao.doesPosExistsWithGuid("abc123"), is(false));
 	}
 }

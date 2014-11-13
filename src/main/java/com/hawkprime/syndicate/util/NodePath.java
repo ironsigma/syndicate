@@ -10,7 +10,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * Node Path.
  */
 public final class NodePath implements Iterable<NodePath> {
-	private static final NodePath NODE_PATH_AT_ROOT = new NodePath("/");
+	/** Path Separator. */
+	public static final String SEPARATOR = "/";
+
+	private static final NodePath NODE_PATH_AT_ROOT = new NodePath(SEPARATOR);
 
 	private final String path;
 	private final int length;
@@ -21,19 +24,19 @@ public final class NodePath implements Iterable<NodePath> {
 	 * @param path the path
 	 */
 	private NodePath(final String path) {
-		if (!path.startsWith("/")) {
-			throw new IllegalArgumentException("Path must start with slash");
+		String normalized = path.replaceAll(SEPARATOR + "+", SEPARATOR);
+		if (!path.startsWith(SEPARATOR)) {
+			normalized = SEPARATOR + normalized;
 		}
-		final String normalized = path.replaceAll("/+", "/");
-		if (!"/".equals(normalized) && normalized.endsWith("/")) {
+		if (!SEPARATOR.equals(normalized) && normalized.endsWith(SEPARATOR)) {
 			this.path = normalized.substring(0, normalized.length() - 1);
 		} else {
 			this.path = normalized;
 		}
-		if (this.path.equals("/")) {
+		if (this.path.equals(SEPARATOR)) {
 			length = 1;
 		} else {
-			length = StringUtils.countMatches(this.path, "/") + 1;
+			length = StringUtils.countMatches(this.path, SEPARATOR) + 1;
 		}
 	}
 
@@ -144,28 +147,33 @@ public final class NodePath implements Iterable<NodePath> {
 	 * @return the node path
 	 */
 	public NodePath append(final String appendPath) {
-		if ("/".equals(appendPath)) {
+		if (SEPARATOR.equals(appendPath)) {
 			return this;
 		}
-		String suffix;
-		if (appendPath.endsWith("/")) {
+
+		final String suffix;
+		if (appendPath.endsWith(SEPARATOR)) {
 			suffix = appendPath.substring(0, appendPath.length() - 1);
 		} else {
 			suffix = appendPath;
 		}
-		if ("/".equals(path)) {
-			if (suffix.startsWith("/")) {
-				return new NodePath(suffix);
+
+		final String newPath;
+		if (SEPARATOR.equals(path)) {
+			if (suffix.startsWith(SEPARATOR)) {
+				newPath = suffix;
 			} else {
-				return new NodePath(path + suffix);
+				newPath = path + suffix;
 			}
 		} else {
-			if (suffix.startsWith("/")) {
-				return new NodePath(path + suffix);
+			if (suffix.startsWith(SEPARATOR)) {
+				newPath = path + suffix;
 			} else {
-				return new NodePath(path + "/" + suffix);
+				newPath = path + SEPARATOR + suffix;
 			}
 		}
+
+		return new NodePath(newPath);
 	}
 
 	/**
@@ -174,7 +182,7 @@ public final class NodePath implements Iterable<NodePath> {
 	 * @return the last component
 	 */
 	public String getLastComponent() {
-		return path.substring(path.lastIndexOf('/') + 1);
+		return path.substring(path.lastIndexOf(SEPARATOR) + 1);
 	}
 
 	/**
@@ -183,10 +191,10 @@ public final class NodePath implements Iterable<NodePath> {
 	 * @return the parent
 	 */
 	public NodePath getParent() {
-		if ("/".equals(path)) {
+		if (SEPARATOR.equals(path)) {
 			return null;
 		}
-		return new NodePath(path.substring(0, path.lastIndexOf('/') + 1));
+		return new NodePath(path.substring(0, path.lastIndexOf(SEPARATOR) + 1));
 	}
 
 	/* (non-Javadoc)

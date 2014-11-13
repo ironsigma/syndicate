@@ -15,11 +15,11 @@ public class NodePathIterator implements Iterator<NodePath> {
 	 * @param path the path
 	 */
 	public NodePathIterator(final NodePath path) {
-		pathComponents = path.toString().split("/");
+		pathComponents = path.toString().split(NodePath.SEPARATOR);
 		if (pathComponents.length == 0) {
-			pathComponents = new String[] {"/"};
+			pathComponents = new String[] {NodePath.SEPARATOR};
 		} else {
-			pathComponents[0] = "/";
+			pathComponents[0] = NodePath.SEPARATOR;
 		}
 	}
 
@@ -60,7 +60,7 @@ public class NodePathIterator implements Iterator<NodePath> {
 	private String pathUpTo(final int end) {
 		final StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < end; i++) {
-			sb.append("/");
+			sb.append(NodePath.SEPARATOR);
 			sb.append(pathComponents[i]);
 		}
 		return sb.toString();

@@ -1,9 +1,9 @@
 package com.hawkprime.syndicate.util;
 
+import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 /**
  * Node Path Test.
@@ -13,9 +13,9 @@ public class NodePathTest {
 	/**
 	 * No slash test.
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void noSlashTest() {
-		NodePath.at("Foo");
+		assertThat(NodePath.at("Foo").toString(), is("/Foo"));
 	}
 
 	/**
@@ -23,6 +23,7 @@ public class NodePathTest {
 	 */
 	@Test
 	public void pathDifferenceTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		assertThat(NodePath.root()
 				.getPathDifferences(NodePath.root()),
 				is(nullValue()));
@@ -82,6 +83,7 @@ public class NodePathTest {
 		assertThat(NodePath.at("/foo/xbar/bin")
 				.getPathDifferences(NodePath.at("/foo/bar/bin/dat")),
 				is(NodePath.at("/bar/bin/dat")));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -89,6 +91,7 @@ public class NodePathTest {
 	 */
 	@Test
 	public void commonPathTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		assertThat(NodePath.root()
 				.getCommonPath(NodePath.root()),
 				is(NodePath.root()));
@@ -132,6 +135,7 @@ public class NodePathTest {
 		assertThat(NodePath.at("/foo/bar/bin")
 				.getCommonPath(NodePath.at("/foo/bar/binx")),
 				is(NodePath.at("/foo/bar")));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -139,8 +143,10 @@ public class NodePathTest {
 	 */
 	@Test
 	public void dupSlashesTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		final NodePath path = NodePath.at("//foo///bar/f/x//");
 		assertThat(path.toString(), is("/foo/bar/f/x"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -148,6 +154,7 @@ public class NodePathTest {
 	 */
 	@Test
 	public void dupSlashesAppendTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		NodePath root = NodePath.root();
 		NodePath path = root.append("//foo//bar////f/x//");
 		assertThat(path.toString(), is("/foo/bar/f/x"));
@@ -155,6 +162,7 @@ public class NodePathTest {
 		root = NodePath.at("/foo/bar");
 		path = root.append("//foo//bar////f/x///");
 		assertThat(path.toString(), is("/foo/bar/foo/bar/f/x"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -171,8 +179,10 @@ public class NodePathTest {
 	 */
 	@Test
 	public void noEndingSlashTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		final NodePath path = NodePath.at("/foo");
 		assertThat(path.toString(), is("/foo"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -180,8 +190,10 @@ public class NodePathTest {
 	 */
 	@Test
 	public void endingSlashTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		final NodePath path = NodePath.at("/foo/");
 		assertThat(path.toString(), is("/foo"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -189,6 +201,7 @@ public class NodePathTest {
 	 */
 	@Test
 	public void appendTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		NodePath path = NodePath.at("/foo");
 		NodePath newPath = path.append("/");
 		assertThat(newPath.toString(), is("/foo"));
@@ -249,6 +262,7 @@ public class NodePathTest {
 
 		newPath = path.append("/foo/bar/");
 		assertThat(newPath.toString(), is("/fi/fum/foo/bar"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -256,6 +270,7 @@ public class NodePathTest {
 	 */
 	@Test
 	public void appendNodeTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		NodePath path = NodePath.at("/foo");
 		NodePath newPath = path.append(NodePath.root());
 		assertThat(newPath.toString(), is("/foo"));
@@ -289,6 +304,7 @@ public class NodePathTest {
 
 		newPath = path.append(NodePath.at("/foo/bar/"));
 		assertThat(newPath.toString(), is("/fi/fum/foo/bar"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -296,6 +312,7 @@ public class NodePathTest {
 	 */
 	@Test
 	public void getNodeTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		NodePath path = NodePath.root();
 		assertThat(path.getLastComponent(), is(""));
 
@@ -304,6 +321,7 @@ public class NodePathTest {
 
 		path = NodePath.at("/foo/bar/bin");
 		assertThat(path.getLastComponent(), is("bin"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -311,6 +329,7 @@ public class NodePathTest {
 	 */
 	@Test
 	public void getParent() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		NodePath path = NodePath.root();
 		NodePath parent = path.getParent();
 		assertThat(parent, is(nullValue()));
@@ -326,6 +345,7 @@ public class NodePathTest {
 		path = NodePath.at("/foo/bar/bin/get");
 		parent = path.getParent();
 		assertThat(parent.toString(), is("/foo/bar/bin"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -335,11 +355,14 @@ public class NodePathTest {
 	public void equalsTest() {
 		final NodePath n = NodePath.root();
 		assertThat(n.equals(n), is(true));
-		// CHECKSTYLE IGNORE StringLiteralEquality FOR NEXT 2 LINES
+
+		// CHECKSTYLE:OFF MultipleStringLiterals
+		// CHECKSTYLE IGNORE EqualsAvoidNull FOR 2 LINES
 		assertThat(NodePath.at("/foo/bar").equals(null), is(false));
 		assertThat(NodePath.at("/foo/bar").equals("/foo/bar"), is(false));
 		assertThat(NodePath.at("/foo/bar").equals(NodePath.at("/foo/bar")), is(true));
 		assertThat(NodePath.at("/foo").equals(NodePath.at("/foo/bar")), is(false));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -347,9 +370,11 @@ public class NodePathTest {
 	 */
 	@Test
 	public void hashTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		assertThat(NodePath.root().hashCode(), is(NodePath.root().hashCode()));
 		assertThat(NodePath.at("/foo/bar").hashCode(), is(NodePath.at("/foo/bar").hashCode()));
 		assertThat(NodePath.root().hashCode(), is(not(NodePath.at("/foo/bar").hashCode())));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 
 	/**
@@ -357,6 +382,8 @@ public class NodePathTest {
 	 */
 	@Test
 	public void toStringTest() {
+		// CHECKSTYLE:OFF MultipleStringLiterals
 		assertThat(NodePath.at("/foo/bar").toString(), is("/foo/bar"));
+		// CHECKSTYLE:ON MultipleStringLiterals
 	}
 }

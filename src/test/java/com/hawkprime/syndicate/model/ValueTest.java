@@ -1,7 +1,7 @@
 package com.hawkprime.syndicate.model;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import com.hawkprime.syndicate.model.builder.ValueBuilder;
+import com.hawkprime.syndicate.util.ValueType;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,8 +9,8 @@ import java.util.Date;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import com.hawkprime.syndicate.model.builder.ValueBuilder;
-import com.hawkprime.syndicate.util.ValueType;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Value Tests.
@@ -23,7 +23,7 @@ public class ValueTest {
 	@Test
 	public void booleanValueTest() {
 		final Boolean expectedValue = true;
-		final Value value = new ValueBuilder()
+		Value value = new ValueBuilder()
 			.withValue(expectedValue)
 			.build();
 		assertThat((Boolean) value.getValue(), is(expectedValue));
@@ -35,7 +35,7 @@ public class ValueTest {
 	@Test
 	public void dateValueTest() {
 		final LocalDateTime expectedValue = LocalDateTime.now();
-		final Value value = new ValueBuilder()
+		Value value = new ValueBuilder()
 			.withValue(expectedValue)
 			.build();
 		assertThat((LocalDateTime) value.getValue(), is(expectedValue));
@@ -47,7 +47,7 @@ public class ValueTest {
 	@Test
 	public void decimalValueTest() {
 		final BigDecimal expectedValue = new BigDecimal(3.1416);
-		final Value value = new ValueBuilder()
+		Value value = new ValueBuilder()
 			.withValue(expectedValue)
 			.build();
 		assertThat((BigDecimal) value.getValue(), is(expectedValue));
@@ -59,7 +59,7 @@ public class ValueTest {
 	@Test
 	public void numericValueTest() {
 		final Long expectedValue = 42L;
-		final Value value = new ValueBuilder()
+		Value value = new ValueBuilder()
 			.withValue(expectedValue)
 			.build();
 		assertThat((Long) value.getValue(), is(expectedValue));
@@ -70,8 +70,8 @@ public class ValueTest {
 	 */
 	@Test
 	public void stringValueTest() {
-		final String expectedValue = "expectedValue";
-		final Value value = new ValueBuilder()
+		final String expectedValue = "MyExpectedValue";
+		Value value = new ValueBuilder()
 			.withValue(expectedValue)
 			.build();
 		assertThat((String) value.getValue(), is(expectedValue));
@@ -83,7 +83,7 @@ public class ValueTest {
 	@Test
 	public void stringConstructorsTest() {
 		final String expectedValue = "expectedValue";
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.STRING));
 		assertThat(value.getString(), is(expectedValue));
@@ -95,7 +95,7 @@ public class ValueTest {
 	@Test
 	public void booleanConstructorsTest() {
 		final Boolean expectedValue = true;
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.BOOLEAN));
 		assertThat(value.getBoolean(), is(true));
@@ -107,7 +107,7 @@ public class ValueTest {
 	@Test
 	public void intConstructorsTest() {
 		final int expectedValue = 42;
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.INTEGER));
 		assertThat(value.getInteger(), is(expectedValue));
@@ -119,7 +119,7 @@ public class ValueTest {
 	@Test
 	public void longConstructorsTest() {
 		final long expectedValue = 42;
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.LONG));
 		assertThat(value.getLong(), is(expectedValue));
@@ -131,7 +131,7 @@ public class ValueTest {
 	@Test
 	public void doubleConstructorsTest() {
 		final double expectedValue = 3.1416;
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.DECIMAL));
 		assertThat(value.getDouble(), is(expectedValue));
@@ -143,7 +143,7 @@ public class ValueTest {
 	@Test
 	public void floatConstructorsTest() {
 		final float expectedValue = 3.1416f;
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.DECIMAL));
 		assertThat(value.getFloat(), is(expectedValue));
@@ -155,7 +155,7 @@ public class ValueTest {
 	@Test
 	public void bigDecimalConstructorsTest() {
 		final BigDecimal expectedValue = new BigDecimal(3.1416);
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.DECIMAL));
 		assertThat(value.getDecimal(), is(expectedValue));
@@ -167,7 +167,7 @@ public class ValueTest {
 	@Test
 	public void dateConstructorsTest() {
 		final Date expectedValue = new Date();
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.DATE));
 		assertThat(value.getDate().toDate(), is(expectedValue));
@@ -179,7 +179,7 @@ public class ValueTest {
 	@Test
 	public void localDateTimeConstructorsTest() {
 		final LocalDateTime expectedValue = LocalDateTime.now();
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.DATE));
 		assertThat(value.getDate(), is(expectedValue));
@@ -191,7 +191,7 @@ public class ValueTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void tryToFetchNonStringValueTest() {
 		final int expectedValue = 42;
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		value.getString();
 	}
@@ -202,7 +202,7 @@ public class ValueTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void tryToFetchNonBooleanValueTest() {
 		final int expectedValue = 42;
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(expectedValue);
 		value.getBoolean();
 	}
@@ -212,7 +212,7 @@ public class ValueTest {
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void tryToFetchNonNumericValueTest() {
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(true);
 		value.getLong();
 	}
@@ -222,7 +222,7 @@ public class ValueTest {
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void tryToFetchNonIntegerValueTest() {
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(true);
 		value.getInteger();
 	}
@@ -232,7 +232,7 @@ public class ValueTest {
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void tryToFetchNonDecimalValueTest() {
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(true);
 		value.getDecimal();
 	}
@@ -242,7 +242,7 @@ public class ValueTest {
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void tryToFetchNonDateValueTest() {
-		final Value value = new Value();
+		Value value = new Value();
 		value.setValue(true);
 		value.getDate();
 	}
@@ -252,7 +252,7 @@ public class ValueTest {
 	 */
 	@Test(expected=NullPointerException.class)
 	public void nullStringTest() {
-		final Value value = new Value();
+		Value value = new Value();
 		final String expectedValue = null;
 		value.setValue(expectedValue);
 	}
@@ -262,7 +262,7 @@ public class ValueTest {
 	 */
 	@Test(expected=NullPointerException.class)
 	public void nullDecimalTest() {
-		final Value value = new Value();
+		Value value = new Value();
 		final BigDecimal expectedValue = null;
 		value.setValue(expectedValue);
 	}
@@ -272,7 +272,7 @@ public class ValueTest {
 	 */
 	@Test(expected=NullPointerException.class)
 	public void nullDateTest() {
-		final Value value = new Value();
+		Value value = new Value();
 		final LocalDateTime expectedValue = null;
 		value.setValue(expectedValue);
 	}

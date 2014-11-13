@@ -20,9 +20,11 @@ public class NodeDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void findClosestByPathTest() {
-		assertThat(nodeDao.findClosestByPath(NodePath.root()).getPath(), is("/"));
-		assertThat(nodeDao.findClosestByPath(NodePath.at("/App")).getPath(), is("/App"));
-		assertThat(nodeDao.findClosestByPath(NodePath.at("/App/xxxNonExistingxxx")).getPath(), is("/App"));
+		NodePath app = NodePath.at("/App");
+
+		assertThat(nodeDao.findClosestByPath(NodePath.root()).getPath(), is(NodePath.root().toString()));
+		assertThat(nodeDao.findClosestByPath(app).getPath(), is(app.toString()));
+		assertThat(nodeDao.findClosestByPath(NodePath.at("/App/xxxNonExistingxxx")).getPath(), is(app.toString()));
 		assertThat(nodeDao.findClosestByPath(null), is(nullValue()));
 	}
 

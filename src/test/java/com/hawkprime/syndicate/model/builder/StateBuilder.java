@@ -20,7 +20,7 @@ public class StateBuilder {
 	 * @return the state
 	 */
 	public State build() {
-		final State state = new State();
+		State state = new State();
 		state.setId(id);
 		state.setRead(read);
 		state.setStared(stared);

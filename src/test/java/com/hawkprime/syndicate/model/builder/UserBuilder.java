@@ -15,7 +15,7 @@ public class UserBuilder {
 	 * @return the user
 	 */
 	public User build() {
-		final User user = new User();
+		User user = new User();
 		user.setId(id);
 		user.setName(name);
 		return user;
