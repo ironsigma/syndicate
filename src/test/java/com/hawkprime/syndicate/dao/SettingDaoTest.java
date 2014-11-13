@@ -82,6 +82,12 @@ public class SettingDaoTest extends AbstractDaoTest {
 	}
 
 	@Test
+	public void findByNameTest() {
+		assertThat(settingDao.findByName("XXNotASettingXX"), is(nullValue()));
+		assertThat(settingDao.findByName("SortField"), is(not(nullValue())));
+	}
+
+	@Test
 	public void findByPathTest() {
 		final List<Setting> settingList = settingDao.findByPath(NodePath.at("/App/Feed/1"));
 		assertThat(settingList.size(), is(not(0)));

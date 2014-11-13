@@ -14,6 +14,9 @@ import com.hawkprime.syndicate.util.NodePath;
 public class NodeDao extends AbstractDao<Node> {
 
 	public Node findClosestByPath(final NodePath nodePath) {
+		if (nodePath == null) {
+			return null;
+		}
 		try {
 			return (Node) getEntityManager()
 					.createQuery("SELECT n "
