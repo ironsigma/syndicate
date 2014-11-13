@@ -29,7 +29,6 @@
     <module name="StaticVariableName"/>
     <module name="TypeName"/>
     <module name="AvoidStarImport">
-      <property name="excludes" value="org.hamcrest.CoreMatchers"/>
       <property name="allowStaticMemberImports" value="true"/>
     </module>
     <module name="IllegalImport"/>
@@ -75,7 +74,6 @@
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier"/>
     <module name="ArrayTypeStyle"/>
-    <module name="FinalParameters"/>
     <module name="TodoComment"/>
     <module name="UpperEll"/>
     <module name="MagicNumber">
@@ -102,7 +100,7 @@
       <property name="allowedAbbreviations" value="0"/>
     </module>
     <module name="AvoidStaticImport">
-      <property name="excludes" value="org.hamcrest.CoreMatchers"/>
+      <property name="excludes" value="org.hamcrest.CoreMatchers.*, org.junit.Assert.assertThat"/>
     </module>
     <module name="ImportOrder"/>
     <module name="AnonInnerLength"/>
@@ -125,9 +123,6 @@
     <module name="EqualsAvoidNull"/>
     <module name="ExplicitInitialization"/>
     <module name="FallThrough"/>
-    <module name="FinalLocalVariable">
-      <property name="tokens" value="PARAMETER_DEF,VARIABLE_DEF"/>
-    </module>
     <module name="IllegalCatch"/>
     <module name="IllegalThrows"/>
     <module name="IllegalType">
@@ -151,6 +146,7 @@
     <module name="OneStatementPerLine"/>
     <module name="VariableDeclarationUsageDistance"/>
     <module name="OverloadMethodsDeclarationOrder"/>
+    <module name="FinalParameters"/>
   </module>
   <module name="NewlineAtEndOfFile"/>
   <module name="Translation"/>
@@ -160,7 +156,7 @@
     <property name="message" value="Line has trailing spaces."/>
   </module>
   <module name="SuppressWithNearbyCommentFilter">
-    <property name="commentFormat" value="CHECKSTYLE IGNORE (\w+) FOR NEXT (\d+) LINES?"/>
+    <property name="commentFormat" value="CHECKSTYLE IGNORE (\w+) FOR THE NEXT (\d+) LINES?"/>
     <property name="checkFormat" value="$1"/>
     <property name="influenceFormat" value="$2"/>
   </module>
@@ -168,5 +164,10 @@
     <property name="offCommentFormat" value="CHECKSTYLE\:OFF ([\w\|]+)"/>
     <property name="onCommentFormat" value="CHECKSTYLE\:ON ([\w\|]+)"/>
     <property name="checkFormat" value="$1"/>
+  </module>
+  <module name="SuppressWithNearbyCommentFilter">
+    <property name="commentFormat" value="CHECKSTYLE IGNORE ([\w\|]+)"/>
+    <property name="checkFormat" value="$1"/>
+    <property name="influenceFormat" value="1"/>
   </module>
 </module>

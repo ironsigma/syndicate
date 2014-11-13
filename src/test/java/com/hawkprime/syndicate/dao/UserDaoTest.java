@@ -27,6 +27,8 @@ public class UserDaoTest extends AbstractDaoTest {
 	@Test
 	public void findAllTest() {
 		final List<User> allUsers = userDao.findAll();
+
+		// CHECKSTYLE IGNORE MagicNumber
 		assertThat(allUsers.size(), is(2));
 	}
 

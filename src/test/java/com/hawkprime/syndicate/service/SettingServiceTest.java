@@ -362,9 +362,10 @@ public class SettingServiceTest {
 		when(valueDao.findByPath(path.append(maxUpdatesSetting.getName())))
 				.thenReturn(maxUpdatesValue);
 
+		final int expectedNumberOfSettings = 2;
 		final Map<String, Object> settings = settingService.getSettings(path);
 		assertThat(settings, is(not(nullValue())));
-		assertThat(settings.size(), is(2));
+		assertThat(settings.size(), is(expectedNumberOfSettings));
 		assertThat(settings.containsKey(updateIntervalSetting.getName()), is(true));
 		assertThat(settings.get(updateIntervalSetting.getName()), is(updateIntervalValue.getValue()));
 		assertThat(settings.containsKey(maxUpdatesSetting.getName()), is(true));

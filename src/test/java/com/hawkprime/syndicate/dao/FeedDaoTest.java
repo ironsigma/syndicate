@@ -1,22 +1,20 @@
 package com.hawkprime.syndicate.dao;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
 import java.util.List;
+
+import com.hawkprime.syndicate.model.Feed;
+import com.hawkprime.syndicate.model.builder.FeedBuilder;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hawkprime.syndicate.model.Feed;
-import com.hawkprime.syndicate.model.builder.FeedBuilder;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Feed Dao Tests.
  */
-// CHECKSTYLE:OFF MagicNumber
 public class FeedDaoTest extends AbstractDaoTest {
 	@Autowired
 	private FeedDao feedDao;
@@ -26,7 +24,9 @@ public class FeedDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void findAllTest() {
-		final List<Feed> allFeeds = feedDao.findAll();
+		List<Feed> allFeeds = feedDao.findAll();
+
+		// CHECKSTYLE IGNORE MagicNumber
 		assertThat(allFeeds.size(), is(3));
 	}
 
@@ -35,12 +35,13 @@ public class FeedDaoTest extends AbstractDaoTest {
 	 */
 	@Test
 	public void readFeedTest() {
-		final Integer expectedUpdateFrequency = 60;
-		final Feed feed = feedDao.findById(1L);
+		Feed feed = feedDao.findById(1L);
+
+		// CHECKSTYLE IGNORE MagicNumber
+		assertThat(feed.getUpdateFrequency(), is(60));
 		assertThat(feed.getName(), is("MyFeed"));
 		assertThat(feed.getUrl(), is("http://myfeed.com/rss"));
 		assertThat(feed.isActive(), is(true));
-		assertThat(feed.getUpdateFrequency(), is(expectedUpdateFrequency));
 	}
 
 	/**
@@ -63,7 +64,7 @@ public class FeedDaoTest extends AbstractDaoTest {
 
 		feedDao.create(feed);
 
-		final Long id = feed.getId();
+		Long id = feed.getId();
 		feed = null;
 
 		feed = feedDao.findById(id);
@@ -86,7 +87,7 @@ public class FeedDaoTest extends AbstractDaoTest {
 		feedDao.create(feed);
 
 		// clear out
-		final Long id = feed.getId();
+		Long id = feed.getId();
 		feed = null;
 
 		// fetch back
@@ -145,10 +146,10 @@ public class FeedDaoTest extends AbstractDaoTest {
 	@Test
 	@Transactional
 	public void findActiveFeedsTest() {
-		final Long activeFeedId = 1L;
-		final List<Feed> feedList = feedDao.findActive();
+		List<Feed> feedList = feedDao.findActive();
+
+		// CHECKSTYLE IGNORE MagicNumber
 		assertThat(feedList.size(), is(2));
-		assertThat(feedList.get(0).getId(), is(activeFeedId));
+		assertThat(feedList.get(0).getId(), is(1L));
 	}
 }
-// CHECKSTYLE:ON MagicNumber
