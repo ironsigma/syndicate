@@ -18,7 +18,7 @@ public class FeedDao extends AbstractDao<Feed> {
 	@SuppressWarnings("unchecked")
 	public List<Feed> findActive() {
 		return getEntityManager()
-				.createQuery("SELECT f FROM Feed f WHERE active=true ORDER BY name")
+				.createNamedQuery("Feed.findActiveFeeds")
 				.getResultList();
 	}
 }
