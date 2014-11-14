@@ -1,11 +1,11 @@
 package com.hawkprime.syndicate.dao;
 
+import com.hawkprime.syndicate.model.Value;
+import com.hawkprime.syndicate.util.NodePath;
+
 import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
-
-import com.hawkprime.syndicate.model.Value;
-import com.hawkprime.syndicate.util.NodePath;
 
 /**
  * Value DAO.
@@ -22,13 +22,7 @@ public class ValueDao extends AbstractDao<Value> {
 	public Value findByPath(final NodePath path) {
 		try {
 			return (Value) getEntityManager()
-					.createQuery("SELECT v "
-							+ "FROM Value v "
-							+ "JOIN v.node n "
-							+ "JOIN v.setting s "
-							+ "WHERE :path LIKE CONCAT(n.path, '%') "
-							+ "AND s.name = :name "
-							+ "ORDER BY LENGTH(n.path) DESC")
+					.createNamedQuery("Value.findByPath")
 					.setParameter("path", path.getParent().toString())
 					.setParameter("name", path.getLastComponent())
 					.setMaxResults(1)

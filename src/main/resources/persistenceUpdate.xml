@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
+
+	<named-query name="Update.totalAndNewCountByFeedId">
+		<query><![CDATA[
+			SELECT sum(totalCount), sum(newCount)
+			FROM Update
+			WHERE feed.id=:id
+		]]></query>
+	</named-query>
+
+	<named-query name="Update.newCountByFeedId">
+		<query><![CDATA[
+			SELECT sum(newCount)
+			FROM Update WHERE feed.id=:id
+		]]></query>
+	</named-query>
+
+	<named-query name="Update.updatesByFeedIdSortedByUpdatedAsc">
+		<query><![CDATA[
+			SELECT u
+			FROM Update u
+			WHERE feed.id=:id
+			ORDER BY updated ASC
+		]]></query>
+	</named-query>
+
+	<named-query name="Update.updatesByFeedIdSortedByUpdatedDesc">
+		<query><![CDATA[
+			SELECT u
+			FROM Update u
+			WHERE feed.id=:id
+			ORDER BY updated DESC
+		]]></query>
+	</named-query>
+
+</entity-mappings>

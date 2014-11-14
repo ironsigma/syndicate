@@ -20,7 +20,7 @@ public class UpdateDao extends AbstractDao<Update> {
 	 */
 	public int percentNewByFeedId(final Long id) {
 		final Object[] counts = (Object[]) getEntityManager()
-					.createQuery("SELECT sum(totalCount), sum(newCount) FROM Update WHERE feed.id=:id")
+					.createNamedQuery("Update.totalAndNewCountByFeedId")
 					.setParameter(ID, id)
 					.getSingleResult();
 
@@ -46,7 +46,7 @@ public class UpdateDao extends AbstractDao<Update> {
 	 */
 	public long countNewPostsByFeedId(final Long id) {
 		return ((Number) getEntityManager()
-					.createQuery("SELECT sum(newCount) FROM Update WHERE feed.id=:id")
+					.createNamedQuery("Update.newCountByFeedId")
 					.setParameter(ID, id)
 					.getSingleResult())
 					.longValue();
@@ -61,7 +61,7 @@ public class UpdateDao extends AbstractDao<Update> {
 	public Update findOldestUpdateByFeedId(final Long id) {
 		try {
 			return (Update) getEntityManager()
-					.createQuery("SELECT u FROM Update u WHERE feed.id=:id ORDER BY updated ASC")
+					.createNamedQuery("Update.updatesByFeedIdSortedByUpdatedAsc")
 					.setParameter(ID, id)
 					.setMaxResults(1)
 					.getSingleResult();
@@ -79,7 +79,7 @@ public class UpdateDao extends AbstractDao<Update> {
 	public Update findLatestUpdateByFeedId(final Long id) {
 		try {
 			return (Update) getEntityManager()
-					.createQuery("SELECT u FROM Update u WHERE feed.id=:id ORDER BY updated DESC")
+					.createNamedQuery("Update.updatesByFeedIdSortedByUpdatedDesc")
 					.setParameter(ID, id)
 					.setMaxResults(1)
 					.getSingleResult();

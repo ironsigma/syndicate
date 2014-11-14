@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 /**
- * Feed Dao Tests.
+ * Feed DAO Tests.
  */
 public class FeedDaoTest extends AbstractDaoTest {
 	@Autowired

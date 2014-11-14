@@ -19,6 +19,11 @@
 
 		<!-- Mapping Files -->
 		<mapping-file>persistenceFeed.xml</mapping-file>
+		<mapping-file>persistenceNode.xml</mapping-file>
+		<mapping-file>persistencePost.xml</mapping-file>
+		<mapping-file>persistenceSetting.xml</mapping-file>
+		<mapping-file>persistenceUpdate.xml</mapping-file>
+		<mapping-file>persistenceValue.xml</mapping-file>
 
 	</persistence-unit>
 </persistence>

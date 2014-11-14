@@ -1,10 +1,10 @@
 package com.hawkprime.syndicate.dao;
 
+import com.hawkprime.syndicate.model.Feed;
+
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-
-import com.hawkprime.syndicate.model.Feed;
 
 /**
  * Feed DAO.
