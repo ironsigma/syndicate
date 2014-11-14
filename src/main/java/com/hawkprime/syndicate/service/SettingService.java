@@ -1,5 +1,13 @@
 package com.hawkprime.syndicate.service;
 
+import com.hawkprime.syndicate.dao.NodeDao;
+import com.hawkprime.syndicate.dao.SettingDao;
+import com.hawkprime.syndicate.dao.ValueDao;
+import com.hawkprime.syndicate.model.Node;
+import com.hawkprime.syndicate.model.Setting;
+import com.hawkprime.syndicate.model.Value;
+import com.hawkprime.syndicate.util.NodePath;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,14 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.hawkprime.syndicate.dao.NodeDao;
-import com.hawkprime.syndicate.dao.SettingDao;
-import com.hawkprime.syndicate.dao.ValueDao;
-import com.hawkprime.syndicate.model.Node;
-import com.hawkprime.syndicate.model.Setting;
-import com.hawkprime.syndicate.model.Value;
-import com.hawkprime.syndicate.util.NodePath;
 
 /**
  * Setting Service.

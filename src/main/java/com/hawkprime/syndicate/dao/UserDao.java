@@ -1,8 +1,8 @@
 package com.hawkprime.syndicate.dao;
 
-import org.springframework.stereotype.Repository;
-
 import com.hawkprime.syndicate.model.User;
+
+import org.springframework.stereotype.Repository;
 
 /**
  * User DAO.

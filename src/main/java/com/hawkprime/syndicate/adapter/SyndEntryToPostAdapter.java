@@ -1,12 +1,13 @@
 package com.hawkprime.syndicate.adapter;
 
-import org.joda.time.LocalDateTime;
-
 import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Post;
 import com.hawkprime.syndicate.util.Sha1;
+
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
+
+import org.joda.time.LocalDateTime;
 
 /**
  * Convert Syndicate Entry to Post.

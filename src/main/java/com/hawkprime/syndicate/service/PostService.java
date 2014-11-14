@@ -1,11 +1,11 @@
 package com.hawkprime.syndicate.service;
 
+import com.hawkprime.syndicate.dao.PostDao;
+import com.hawkprime.syndicate.model.Post;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.hawkprime.syndicate.dao.PostDao;
-import com.hawkprime.syndicate.model.Post;
 
 /**
  * Post Service.

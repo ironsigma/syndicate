@@ -1,8 +1,8 @@
 package com.hawkprime.syndicate.dao;
 
-import org.springframework.stereotype.Repository;
-
 import com.hawkprime.syndicate.model.State;
+
+import org.springframework.stereotype.Repository;
 
 /**
  * State DAO.

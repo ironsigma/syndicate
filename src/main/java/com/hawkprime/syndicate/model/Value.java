@@ -1,5 +1,7 @@
 package com.hawkprime.syndicate.model;
 
+import com.hawkprime.syndicate.util.ValueType;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -19,14 +21,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
-import com.hawkprime.syndicate.util.ValueType;
-
 /**
  * Setting Value.
  */
 @Entity
 @Table(name="value")
 public class Value {
+	private static final String CANNOT_GET_VALUE_ERR_MSG = "Cannot get value, value is of type: ";
 
 	@Id
 	@GeneratedValue
@@ -233,7 +234,7 @@ public class Value {
 	 */
 	public String getString() {
 		if (type != ValueType.STRING) {
-			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+			throw new IllegalArgumentException(CANNOT_GET_VALUE_ERR_MSG + type.toString());
 		}
 		return stringValue;
 	}
@@ -245,7 +246,7 @@ public class Value {
 	 */
 	public Boolean getBoolean() {
 		if (type != ValueType.BOOLEAN) {
-			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+			throw new IllegalArgumentException(CANNOT_GET_VALUE_ERR_MSG + type.toString());
 		}
 		return booleanValue;
 	}
@@ -257,7 +258,7 @@ public class Value {
 	 */
 	public Integer getInteger() {
 		if (type != ValueType.INTEGER) {
-			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+			throw new IllegalArgumentException(CANNOT_GET_VALUE_ERR_MSG + type.toString());
 		}
 		return (int) (long) numericValue;
 	}
@@ -269,7 +270,7 @@ public class Value {
 	 */
 	public Long getLong() {
 		if (type != ValueType.LONG) {
-			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+			throw new IllegalArgumentException(CANNOT_GET_VALUE_ERR_MSG + type.toString());
 		}
 		return numericValue;
 	}
@@ -281,7 +282,7 @@ public class Value {
 	 */
 	public BigDecimal getDecimal() {
 		if (type != ValueType.DECIMAL) {
-			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+			throw new IllegalArgumentException(CANNOT_GET_VALUE_ERR_MSG + type.toString());
 		}
 		return decimalValue;
 	}
@@ -293,7 +294,7 @@ public class Value {
 	 */
 	public LocalDateTime getDate() {
 		if (type != ValueType.DATE) {
-			throw new IllegalArgumentException("Cannot get value, value is of type: " + type.toString());
+			throw new IllegalArgumentException(CANNOT_GET_VALUE_ERR_MSG + type.toString());
 		}
 		return dateValue;
 	}
