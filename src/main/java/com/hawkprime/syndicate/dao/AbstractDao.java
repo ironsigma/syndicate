@@ -9,6 +9,8 @@ import javax.persistence.PersistenceContext;
 /**
  * Generic DAO.
  * @param <T> Entity type.
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public abstract class AbstractDao<T> {
 

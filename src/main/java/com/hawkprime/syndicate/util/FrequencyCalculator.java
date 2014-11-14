@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * Calculate Frequencies.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Component
 public class FrequencyCalculator {

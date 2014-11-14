@@ -16,6 +16,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Syndicate Entry to Post Adapter Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class SyndEntryToPostAdapterTest {
 

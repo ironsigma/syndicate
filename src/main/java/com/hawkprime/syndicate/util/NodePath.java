@@ -8,6 +8,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Node Path.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public final class NodePath implements Iterable<NodePath> {
 	/** Path Separator. */

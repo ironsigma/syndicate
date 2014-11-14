@@ -7,6 +7,9 @@ import org.joda.time.LocalDateTime;
 
 /**
  * Update Builder.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class UpdateBuilder {
 	private static final Long DEFAULT_TOTAL = 100L;

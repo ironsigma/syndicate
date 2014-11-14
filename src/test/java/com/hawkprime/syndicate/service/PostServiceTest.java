@@ -12,6 +12,9 @@ import static org.mockito.Mockito.*;
 
 /**
  * Post Service Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class PostServiceTest {
 

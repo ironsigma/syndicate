@@ -7,6 +7,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Elapsed Time Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class TimeFormatTest {
 

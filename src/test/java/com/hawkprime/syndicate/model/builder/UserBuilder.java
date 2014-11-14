@@ -4,6 +4,9 @@ import com.hawkprime.syndicate.model.User;
 
 /**
  * User Builder.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class UserBuilder {
 	private Long id;

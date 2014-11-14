@@ -11,6 +11,9 @@ import org.joda.time.LocalDateTime;
 
 /**
  * Convert Syndicate Entry to Post.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public final class SyndEntryToPostAdapter {
 

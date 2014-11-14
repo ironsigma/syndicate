@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Node DAO.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Repository
 public class NodeDao extends AbstractDao<Node> {

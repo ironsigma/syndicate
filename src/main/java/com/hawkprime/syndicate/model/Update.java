@@ -16,6 +16,9 @@ import org.joda.time.LocalDateTime;
 
 /**
  * Feed Update Entity.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Entity
 @Table(name="feed_update")

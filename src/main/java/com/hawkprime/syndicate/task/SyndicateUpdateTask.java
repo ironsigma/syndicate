@@ -29,6 +29,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * RSS Parse Task.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class SyndicateUpdateTask {
 	private static final int DELAY_30_SECONDS = 30000;

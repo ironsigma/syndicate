@@ -4,6 +4,9 @@ import com.hawkprime.syndicate.model.Node;
 
 /**
  * Node Builder.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class NodeBuilder {
 	private Long id;

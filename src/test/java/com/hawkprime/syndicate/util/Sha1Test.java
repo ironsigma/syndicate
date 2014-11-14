@@ -7,6 +7,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * SHA1 Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class Sha1Test {
 

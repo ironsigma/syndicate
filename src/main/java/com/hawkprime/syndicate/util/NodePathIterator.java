@@ -4,6 +4,9 @@ import java.util.Iterator;
 
 /**
  * Node Path Iterator.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class NodePathIterator implements Iterator<NodePath> {
 	private String[] pathComponents;

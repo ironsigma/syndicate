@@ -12,6 +12,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Value DAO Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class ValueDaoTest extends AbstractDaoTest {
 	@Autowired

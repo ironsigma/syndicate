@@ -18,6 +18,9 @@ import org.joda.time.LocalDateTime;
 
 /**
  * Post Entity.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Entity
 @Table(name="post")

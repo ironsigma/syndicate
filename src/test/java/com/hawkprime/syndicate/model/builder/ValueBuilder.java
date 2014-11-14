@@ -11,6 +11,9 @@ import org.joda.time.LocalDateTime;
 
 /**
  * The Class ValueBuilder.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class ValueBuilder {
 	private final Value value = new Value();

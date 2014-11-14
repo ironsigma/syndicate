@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * Setting Service.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Service
 public class SettingService {

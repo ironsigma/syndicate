@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SHA1 Message Digest.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public final class Sha1 {
 	private static final Logger LOG = LoggerFactory.getLogger(Sha1.class);

@@ -8,6 +8,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Frequency Calculator Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class FrequencyCalculatorTest {
 	private final FrequencyCalculator frequencyCalculator = new FrequencyCalculator();

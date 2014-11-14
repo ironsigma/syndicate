@@ -4,6 +4,9 @@ import com.hawkprime.syndicate.model.Setting;
 
 /**
  * Setting Builder.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class SettingBuilder {
 	private Long id;

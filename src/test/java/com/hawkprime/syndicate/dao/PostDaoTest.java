@@ -18,6 +18,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Post DAO Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class PostDaoTest extends AbstractDaoTest {
 	private static final String FEED_1_GUID = "2048a082fd924a742f9d92b83c24092af8309a72";

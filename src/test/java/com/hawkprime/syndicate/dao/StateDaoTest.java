@@ -18,6 +18,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * State DAO Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class StateDaoTest extends AbstractDaoTest {
 	@Autowired

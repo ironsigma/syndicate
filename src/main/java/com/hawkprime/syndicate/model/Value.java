@@ -23,6 +23,9 @@ import org.joda.time.LocalDateTime;
 
 /**
  * Setting Value.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Entity
 @Table(name="value")

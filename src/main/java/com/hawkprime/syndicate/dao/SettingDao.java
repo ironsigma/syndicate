@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Setting DAO.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Repository
 public class SettingDao extends AbstractDao<Setting> {

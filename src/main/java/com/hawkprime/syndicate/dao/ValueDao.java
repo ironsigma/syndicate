@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Value DAO.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Repository
 public class ValueDao extends AbstractDao<Value> {

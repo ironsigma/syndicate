@@ -8,6 +8,9 @@ import org.joda.time.LocalDateTime;
 
 /**
  * Post Builder.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class PostBuilder {
 	private Long id;

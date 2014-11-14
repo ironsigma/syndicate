@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Feed DAO.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Repository
 public class FeedDao extends AbstractDao<Feed> {

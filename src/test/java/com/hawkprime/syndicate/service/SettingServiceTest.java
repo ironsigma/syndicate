@@ -24,6 +24,9 @@ import static org.mockito.Mockito.*;
 
 /**
  * Setting tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class SettingServiceTest {
 	private static final String VERSION_VALUE = "1.0.0";

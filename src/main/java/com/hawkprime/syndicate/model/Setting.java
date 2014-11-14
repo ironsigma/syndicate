@@ -12,6 +12,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * The Class Setting.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Entity
 @Table(name="setting")

@@ -14,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Home Controller.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Controller
 public class HomeController {

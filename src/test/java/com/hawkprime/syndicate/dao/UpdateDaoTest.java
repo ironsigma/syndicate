@@ -15,6 +15,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Update DAO Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class UpdateDaoTest extends AbstractDaoTest {
 	@Autowired

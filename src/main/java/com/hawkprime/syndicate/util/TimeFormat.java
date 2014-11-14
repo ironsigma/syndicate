@@ -2,6 +2,9 @@ package com.hawkprime.syndicate.util;
 
 /**
  * The Class TimeFormat.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public final class TimeFormat {
 	private static final int MINUTEUTES_IN_DAY = 1440;

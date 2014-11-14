@@ -21,6 +21,9 @@ import static org.mockito.Mockito.*;
 
 /**
  * Feed Service Tests.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class FeedServiceTest {
 

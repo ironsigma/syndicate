@@ -15,6 +15,9 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Setting DAO Test.
+ *
+ * @version 5.0.0
+ * @author Juan D Frias <juandfrias@gmail.com>
  */
 public class SettingDaoTest extends AbstractDaoTest {
 	private static final String SETTING_MAX_UPDATE = "MaxUpdate";

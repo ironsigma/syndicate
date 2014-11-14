@@ -12,10 +12,11 @@
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
     <module name="FileContentsHolder"/>
-    <module name="JavadocMethod">
-      <property name="suppressLoadErrors" value="true"/>
+    <module name="JavadocMethod"/>
+    <module name="JavadocType">
+      <property name="authorFormat" value="\w+(\s+\w+)+\s+&lt;[^@]+@[^&gt;]+&gt;"/>
+      <property name="versionFormat" value="\d+.\d+.\d+"/>
     </module>
-    <module name="JavadocType"/>
     <module name="JavadocStyle">
       <property name="checkEmptyJavadoc" value="true"/>
     </module>
@@ -149,6 +150,10 @@
     <module name="VariableDeclarationUsageDistance"/>
     <module name="OverloadMethodsDeclarationOrder"/>
     <module name="FinalParameters"/>
+    <module name="InnerTypeLast"/>
+    <module name="MutableException"/>
+    <module name="ThrowsCount"/>
+    <module name="OneTopLevelClass"/>
   </module>
   <module name="NewlineAtEndOfFile"/>
   <module name="Translation"/>
