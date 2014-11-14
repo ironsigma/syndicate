@@ -45,6 +45,13 @@
 						</goals>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>5.9</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
