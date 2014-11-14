@@ -88,10 +88,16 @@ public class FrequencyCalculator {
 		LOG.debug("Current frequency is every {}, new posts are at {}%",
 				TimeFormat.formatMinutes(currentFrequency), percentNew);
 
+		if (percentNew >= minOptimalRange && percentNew <= maxOptimalRange) {
+			LOG.debug("Percentage is optimal, no adjustments neccesary");
+			return currentFrequency;
+		}
+
+		int adjustment;
 		if (percentNew < minOptimalRange) {
 			LOG.debug("Too few posts, less updates needed, adjusting");
 
-			int adjustment = (int) ((minOptimalRange - percentNew) / PERCENT * currentFrequency);
+			adjustment = (int) ((minOptimalRange - percentNew) / PERCENT * currentFrequency);
 			if (adjustment < 1) {
 				adjustment = 1;
 			}
@@ -103,14 +109,10 @@ public class FrequencyCalculator {
 				adjustment = minFrequency;
 			}
 
-			LOG.debug("Adjusting to {}", TimeFormat.formatMinutes(adjustment));
-
-			return adjustment;
-
-		} else if (percentNew > maxOptimalRange) {
+		} else {
 			LOG.debug("Too many posts, more updates are needed, adjusting");
 
-			int adjustment = (int) ((percentNew - maxOptimalRange) / PERCENT * currentFrequency);
+			adjustment = (int) ((percentNew - maxOptimalRange) / PERCENT * currentFrequency);
 			if (adjustment < 1) {
 				adjustment = 1;
 			}
@@ -121,13 +123,10 @@ public class FrequencyCalculator {
 				LOG.debug("Adjustment would be above maximum update threshold, using maximum update");
 				adjustment = maxFrequency;
 			}
-			LOG.debug("Adjusting to {}", TimeFormat.formatMinutes(adjustment));
 
-			return adjustment;
-
-		} else {
-			LOG.debug("Percentage is optimal, no adjustments neccesary");
-			return currentFrequency;
 		}
+
+		LOG.debug("Adjusting to {}", TimeFormat.formatMinutes(adjustment));
+		return adjustment;
 	}
 }

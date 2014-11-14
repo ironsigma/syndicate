@@ -16,15 +16,23 @@ public final class TimeFormat {
 	private static final int MILLIS_IN_MINUTEUTE = 60000;
 	private static final int MILLIS_IN_SECONDOND = 1000;
 
+	private static final String DAY = " day";
+	private static final String HOUR = " hour";
+	private static final String MINUTE = " minute";
+	private static final String SECOND = " second";
+	private static final String MILLISECOND = " millisecond";
+	private static final String PLURAL = "s";
+	private static final String SEPARATOR = ", ";
+
 	/**
 	 * Private Constructor.
 	 */
 	private TimeFormat() { }
 
 	/**
-	 * Format millisecondonds.
+	 * Format milliseconds.
 	 *
-	 * @param millis the millis
+	 * @param millis the milliseconds
 	 * @return the string
 	 */
 	public static String formatMilliseconds(final long millis) {
@@ -40,50 +48,50 @@ public final class TimeFormat {
 		final StringBuilder str = new StringBuilder();
 		if (days != 0) {
 			str.append(days);
-			str.append(" day");
+			str.append(DAY);
 			if (days != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
 		}
 		if (days != 0 || hours != 0) {
 			if (days != 0) {
-				str.append(", ");
+				str.append(SEPARATOR);
 			}
 			str.append(hours);
-			str.append(" hour");
+			str.append(HOUR);
 			if (hours != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
-			str.append(", ");
+			str.append(SEPARATOR);
 		}
 		if (days != 0 || hours != 0 || minutes != 0) {
 			str.append(minutes);
-			str.append(" minute");
+			str.append(MINUTE);
 			if (minutes != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
-			str.append(", ");
+			str.append(SEPARATOR);
 		}
 		if (days != 0 || hours != 0 || minutes != 0 || seconds != 0) {
 			str.append(seconds);
-			str.append(" second");
+			str.append(SECOND);
 			if (seconds != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
-			str.append(", ");
+			str.append(SEPARATOR);
 		}
 		str.append(remainder);
-		str.append(" millisecond");
+		str.append(MILLISECOND);
 		if (remainder != 1) {
-			str.append("s");
+			str.append(PLURAL);
 		}
 		return str.toString();
 	}
 
 	/**
-	 * Format secondonds.
+	 * Format seconds.
 	 *
-	 * @param seconds the secondonds
+	 * @param seconds the seconds
 	 * @return the string
 	 */
 	public static String formatSeconds(final long seconds) {
@@ -97,42 +105,42 @@ public final class TimeFormat {
 		final StringBuilder str = new StringBuilder();
 		if (days != 0) {
 			str.append(days);
-			str.append(" day");
+			str.append(DAY);
 			if (days != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
 		}
 		if (days != 0 || hours != 0) {
 			if (days != 0) {
-				str.append(", ");
+				str.append(SEPARATOR);
 			}
 			str.append(hours);
-			str.append(" hour");
+			str.append(HOUR);
 			if (hours != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
-			str.append(", ");
+			str.append(SEPARATOR);
 		}
 		if (days != 0 || hours != 0 || minutes != 0) {
 			str.append(minutes);
-			str.append(" minute");
+			str.append(MINUTE);
 			if (minutes != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
-			str.append(", ");
+			str.append(SEPARATOR);
 		}
 		str.append(remainder);
-		str.append(" second");
+		str.append(SECOND);
 		if (remainder != 1) {
-			str.append("s");
+			str.append(PLURAL);
 		}
 		return str.toString();
 	}
 
 	/**
-	 * Format minuteutes.
+	 * Format minutes.
 	 *
-	 * @param minutes the minuteutes
+	 * @param minutes the minutes
 	 * @return the string
 	 */
 	public static String formatMinutes(final long minutes) {
@@ -144,24 +152,24 @@ public final class TimeFormat {
 		final StringBuilder str = new StringBuilder();
 		if (days != 0) {
 			str.append(days);
-			str.append(" day");
+			str.append(DAY);
 			if (days != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
-			str.append(", ");
+			str.append(SEPARATOR);
 		}
 		if (days != 0 || hours != 0) {
 			str.append(hours);
-			str.append(" hour");
+			str.append(HOUR);
 			if (hours != 1) {
-				str.append("s");
+				str.append(PLURAL);
 			}
-			str.append(", ");
+			str.append(SEPARATOR);
 		}
 		str.append(remainder);
-		str.append(" minute");
+		str.append(MINUTE);
 		if (remainder != 1) {
-			str.append("s");
+			str.append(PLURAL);
 		}
 		return str.toString();
 	}

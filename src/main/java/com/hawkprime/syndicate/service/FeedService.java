@@ -1,5 +1,12 @@
 package com.hawkprime.syndicate.service;
 
+import com.hawkprime.syndicate.dao.FeedDao;
+import com.hawkprime.syndicate.dao.UpdateDao;
+import com.hawkprime.syndicate.model.Feed;
+import com.hawkprime.syndicate.model.Update;
+import com.hawkprime.syndicate.util.FrequencyCalculator;
+import com.hawkprime.syndicate.util.TimeFormat;
+
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -9,13 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.hawkprime.syndicate.dao.FeedDao;
-import com.hawkprime.syndicate.dao.UpdateDao;
-import com.hawkprime.syndicate.model.Feed;
-import com.hawkprime.syndicate.model.Update;
-import com.hawkprime.syndicate.util.TimeFormat;
-import com.hawkprime.syndicate.util.FrequencyCalculator;
 
 /**
  * Feed Service.
@@ -104,6 +104,7 @@ public class FeedService {
 	 * @param feed Feed to check
 	 * @return true if updated needed, false otherwise
 	 */
+	// CHECKSTYLE IGNORE ReturnCount
 	@Transactional(readOnly=true)
 	public boolean needsUpdate(final Feed feed) {
 		if (feed.getUpdateFrequency() <= 0) {
@@ -111,22 +112,23 @@ public class FeedService {
 					feed.getName(), TimeFormat.formatMinutes(feed.getUpdateFrequency()));
 			return false;
 		}
+
 		final Update feedUpdate = updateDao.findLatestUpdateByFeedId(feed.getId());
 		if (feedUpdate == null) {
 			LOG.debug("Feed \"{}\" has no previous updates", feed.getName());
 			return true;
 		}
+
 		final LocalDateTime now = LocalDateTime.now();
 		final int minutesSinceUpdate = Minutes.minutesBetween(feedUpdate.getUpdated(), now).getMinutes();
 		if (feed.getUpdateFrequency() <= minutesSinceUpdate) {
-			LOG.debug("Feed \"{}\" updates every {}, "
-					+ "it's been {} since lasts update, update required",
+			LOG.debug("Feed \"{}\" updates every {}, it's been {} since lasts update, update required",
 					feed.getName(), TimeFormat.formatMinutes(feed.getUpdateFrequency()),
 							TimeFormat.formatMinutes(minutesSinceUpdate));
 			return true;
 		}
-		LOG.debug("Feed \"{}\" updates every {}, "
-				+ "it's been {} since lasts update, no update required",
+
+		LOG.debug("Feed \"{}\" updates every {}, it's been {} since lasts update, no update required",
 				feed.getName(), TimeFormat.formatMinutes(feed.getUpdateFrequency()),
 						TimeFormat.formatMinutes(minutesSinceUpdate));
 		return false;
@@ -134,7 +136,7 @@ public class FeedService {
 
 	/**
 	 * Set Update DAO.
-	 * @param updateDao dao
+	 * @param updateDao DAO
 	 */
 	public void setUpdateDao(final UpdateDao updateDao) {
 		this.updateDao = updateDao;
@@ -142,7 +144,7 @@ public class FeedService {
 
 	/**
 	 * Set Feed DAO.
-	 * @param feedDao dao
+	 * @param feedDao DAO
 	 */
 	public void setFeedDao(final FeedDao feedDao) {
 		this.feedDao = feedDao;

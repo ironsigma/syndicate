@@ -1,11 +1,11 @@
 package com.hawkprime.syndicate.dao;
 
+import com.hawkprime.syndicate.model.Node;
+import com.hawkprime.syndicate.util.NodePath;
+
 import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
-
-import com.hawkprime.syndicate.model.Node;
-import com.hawkprime.syndicate.util.NodePath;
 
 /**
  * Node DAO.
@@ -19,9 +19,6 @@ public class NodeDao extends AbstractDao<Node> {
 	 * @return Node or null if none found
 	 */
 	public Node findClosestByPath(final NodePath nodePath) {
-		if (nodePath == null) {
-			return null;
-		}
 		try {
 			return (Node) getEntityManager()
 					.createQuery("SELECT n "
@@ -31,7 +28,7 @@ public class NodeDao extends AbstractDao<Node> {
 					.setParameter("path", nodePath.toString())
 					.setMaxResults(1)
 					.getSingleResult();
-		} catch (final NoResultException ex) {
+		} catch (NullPointerException | NoResultException ex) {
 			return null;
 		}
 	}

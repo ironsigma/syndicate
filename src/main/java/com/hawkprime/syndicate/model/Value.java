@@ -93,15 +93,17 @@ public class Value {
 	 * @return value
 	 */
 	public Object getValue() {
+		final Object value;
 		switch (type) {
-		case BOOLEAN:	return getBoolean();
-		case DATE:		return getDate();
-		case DECIMAL:	return getDecimal();
-		case INTEGER:	return getInteger();
-		case LONG:		return getLong();
-		case STRING:	return getString();
-		default:		return null;
+		case BOOLEAN:	value = getBoolean();	break;
+		case DATE:		value = getDate();		break;
+		case DECIMAL:	value = getDecimal();	break;
+		case INTEGER:	value = getInteger();	break;
+		case LONG:		value = getLong();		break;
+		case STRING:	value = getString();	break;
+		default:		value = null;			break;
 		}
+		return value;
 	}
 
 	/**
