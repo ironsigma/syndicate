@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,12 +21,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 @Entity
 @Table(name="node")
-public class Node {
-
-	@Id
-	@GeneratedValue
-	private Long id;
-
+public class Node extends AbstractEntity {
 	@Column(nullable=false)
 	private String path;
 
@@ -38,24 +31,6 @@ public class Node {
 
 	@OneToMany(mappedBy="parent")
 	private List<Node> children;
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Gets the path.
@@ -112,7 +87,7 @@ public class Node {
 		}
 		final Node rhs = (Node) object;
 		return new EqualsBuilder()
-				.append(id, rhs.id)
+				.append(getId(), rhs.getId())
 				.append(path, rhs.path)
 				.append(parent, rhs.parent)
 				.append(children, rhs.children)
@@ -122,7 +97,7 @@ public class Node {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
-				.append(id)
+				.append(getId())
 				.append(path)
 				.append(parent)
 				.append(children)
@@ -132,7 +107,7 @@ public class Node {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("id", id)
+				.append("id", getId())
 				.append("path", path)
 				.toString();
 	}

@@ -2,8 +2,6 @@ package com.hawkprime.syndicate.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -18,32 +16,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 @Entity
 @Table(name="setting")
-public class Setting {
-
-	@Id
-	@GeneratedValue
-	private Long id;
-
+public class Setting extends AbstractEntity {
 	@Column(nullable=false)
 	private String name;
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Gets the name.
@@ -73,7 +48,7 @@ public class Setting {
 		}
 		final Setting rhs = (Setting) object;
 		return new EqualsBuilder()
-				.append(id, rhs.id)
+				.append(getId(), rhs.getId())
 				.append(name, rhs.name)
 				.isEquals();
 	}
@@ -81,7 +56,7 @@ public class Setting {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
-				.append(id)
+				.append(getId())
 				.append(name)
 				.toHashCode();
 	}
@@ -89,7 +64,7 @@ public class Setting {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("id", id)
+				.append("id", getId())
 				.append("name", name)
 				.toString();
 	}

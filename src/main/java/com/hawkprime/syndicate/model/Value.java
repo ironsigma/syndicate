@@ -9,8 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -29,12 +27,8 @@ import org.joda.time.LocalDateTime;
  */
 @Entity
 @Table(name="value")
-public class Value {
+public class Value extends AbstractEntity {
 	private static final String CANNOT_GET_VALUE_ERR_MSG = "Cannot get value, value is of type: ";
-
-	@Id
-	@GeneratedValue
-	private Long id;
 
 	@Column(name="value_type", nullable=false)
 	@Enumerated(EnumType.STRING)
@@ -63,24 +57,6 @@ public class Value {
 	@ManyToOne
 	@JoinColumn(name="setting_id", nullable=false)
 	private Setting setting;
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Gets the type.
@@ -369,7 +345,7 @@ public class Value {
 		}
 		final Value rhs = (Value) object;
 		return new EqualsBuilder()
-				.append(id, rhs.id)
+				.append(getId(), rhs.getId())
 				.append(stringValue, rhs.stringValue)
 				.append(booleanValue, rhs.booleanValue)
 				.append(numericValue, rhs.numericValue)
@@ -386,7 +362,7 @@ public class Value {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
-				.append(id)
+				.append(getId())
 				.append(stringValue)
 				.append(booleanValue)
 				.append(numericValue)
@@ -403,7 +379,7 @@ public class Value {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("id", id)
+				.append("id", getId())
 				.append("node", node.getPath())
 				.append("setting", setting.getName())
 				.append("type", type)

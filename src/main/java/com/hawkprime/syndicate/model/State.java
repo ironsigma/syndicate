@@ -2,8 +2,6 @@ package com.hawkprime.syndicate.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,11 +16,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 @Entity
 @Table(name="post_state")
-public class State {
-
-	@Id
-	@GeneratedValue
-	private Long id;
+public class State extends AbstractEntity {
 
 	@Column(nullable=false)
 	private Boolean read;
@@ -37,24 +31,6 @@ public class State {
 	@ManyToOne
 	@JoinColumn(name="post_id", nullable=false)
 	private Post post;
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the id to set
-	 */
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Checks if is read.
@@ -134,7 +110,7 @@ public class State {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("id", id)
+				.append("id", getId())
 				.append("read", read)
 				.append("stared", stared)
 				.append("user", user.getName())

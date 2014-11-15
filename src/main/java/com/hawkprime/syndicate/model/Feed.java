@@ -2,8 +2,6 @@ package com.hawkprime.syndicate.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -19,11 +17,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 @Entity
 @Table(name="feed")
-public class Feed {
-	@Id
-	@GeneratedValue
-	private Long id;
-
+public class Feed extends AbstractEntity {
 	@Column(nullable=false)
 	private String name;
 
@@ -35,24 +29,6 @@ public class Feed {
 
 	@Column(nullable=false, name="update_frequency")
 	private Integer updateFrequency;
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Gets the name.
@@ -139,7 +115,7 @@ public class Feed {
 		}
 		final Feed rhs = (Feed) object;
 		return new EqualsBuilder()
-				.append(id, rhs.id)
+				.append(getId(), rhs.getId())
 				.append(name, rhs.name)
 				.append(url, rhs.url)
 				.append(active, rhs.active)
@@ -153,7 +129,7 @@ public class Feed {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
-				.append(id)
+				.append(getId())
 				.append(name)
 				.append(url)
 				.append(active)
@@ -167,7 +143,7 @@ public class Feed {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("id", id)
+				.append("id", getId())
 				.append("name", name)
 				.toString();
 	}

@@ -2,8 +2,6 @@ package com.hawkprime.syndicate.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -22,11 +20,7 @@ import org.joda.time.LocalDateTime;
  */
 @Entity
 @Table(name="feed_update")
-public class Update {
-	@Id
-	@GeneratedValue
-	private Long id;
-
+public class Update extends AbstractEntity {
 	@Column(name="total_count", nullable=false)
 	private Long totalCount;
 
@@ -40,24 +34,6 @@ public class Update {
 	@ManyToOne
 	@JoinColumn(name="feed_id", nullable=false)
 	private Feed feed;
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the id to set
-	 */
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Gets the total count.
@@ -144,7 +120,7 @@ public class Update {
 		}
 		final Update rhs = (Update) object;
 		return new EqualsBuilder()
-				.append(id, rhs.id)
+				.append(getId(), rhs.getId())
 				.append(totalCount, rhs.totalCount)
 				.append(newCount, rhs.newCount)
 				.append(updated, rhs.updated)
@@ -158,7 +134,7 @@ public class Update {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
-				.append(id)
+				.append(getId())
 				.append(totalCount)
 				.append(newCount)
 				.append(updated)
@@ -172,7 +148,7 @@ public class Update {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("id", id)
+				.append("id", getId())
 				.append("total", totalCount)
 				.append("new", newCount)
 				.append("date", updated)

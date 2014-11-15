@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -24,11 +22,7 @@ import org.joda.time.LocalDateTime;
  */
 @Entity
 @Table(name="post")
-public class Post {
-	@Id
-	@GeneratedValue
-	private Long id;
-
+public class Post extends AbstractEntity {
 	@Column(nullable=false)
 	private String title;
 
@@ -55,24 +49,6 @@ public class Post {
 
 	@OneToMany(mappedBy="post", cascade={ CascadeType.DETACH, CascadeType.REMOVE })
 	private List<State> states;
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the id to set
-	 */
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Gets the title.
@@ -206,7 +182,7 @@ public class Post {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("id", id)
+				.append("id", getId())
 				.append("title", title)
 				.toString();
 	}

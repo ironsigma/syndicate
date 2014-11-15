@@ -154,6 +154,20 @@
     <module name="MutableException"/>
     <module name="ThrowsCount"/>
     <module name="OneTopLevelClass"/>
+    <module name="TrailingComment"/>
+    <module name="UncommentedMain"/>
+    <module name="OuterTypeFilename"/>
+    <module name="AvoidEscapedUnicodeCharacters"/>
+    <module name="ClassDataAbstractionCoupling"/>
+    <module name="BooleanExpressionComplexity">
+      <property name="max" value="5"/>
+    </module>
+    <module name="ClassFanOutComplexity"/>
+    <module name="CyclomaticComplexity">
+      <property name="max" value="15"/>
+    </module>
+    <module name="JavaNCSS"/>
+    <module name="NPathComplexity"/>
   </module>
   <module name="NewlineAtEndOfFile"/>
   <module name="Translation"/>
@@ -177,4 +191,6 @@
     <property name="checkFormat" value="$1"/>
     <property name="influenceFormat" value="1"/>
   </module>
+  <module name="UniqueProperties"/>
+  <module name="StrictDuplicateCode"/>
 </module>

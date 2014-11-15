@@ -32,6 +32,19 @@ public class PostDao extends AbstractDao<Post> {
 	}
 
 	/**
+	 * Delete posts.
+	 * @param postIdList list of IDs to delete
+	 */
+	private void deletePosts(final List<Long> postIdList) {
+		for (Long postId : postIdList) {
+			getEntityManager()
+					.createNamedQuery(DELETE_WITH_ID_QUERY)
+					.setParameter(ID, postId)
+					.executeUpdate();
+		}
+	}
+
+	/**
 	 * Delete posts that are unread and not stared.
 	 * @param feedId Feed id to delete from
 	 * @param days Any post at or before days will be deleted
@@ -45,12 +58,7 @@ public class PostDao extends AbstractDao<Post> {
 				.setParameter(DATE, LocalDateTime.now().minusDays(days))
 				.getResultList();
 
-		for (Long postId : postIdList) {
-			getEntityManager()
-					.createNamedQuery(DELETE_WITH_ID_QUERY)
-					.setParameter(ID, postId)
-					.executeUpdate();
-		}
+		deletePosts(postIdList);
 
 		return postIdList.size();
 	}
@@ -69,12 +77,7 @@ public class PostDao extends AbstractDao<Post> {
 				.setParameter(DATE, LocalDateTime.now().minusDays(days))
 				.getResultList();
 
-		for (Long postId : postIdList) {
-			getEntityManager()
-					.createNamedQuery(DELETE_WITH_ID_QUERY)
-					.setParameter(ID, postId)
-					.executeUpdate();
-		}
+		deletePosts(postIdList);
 
 		return postIdList.size();
 	}
@@ -93,12 +96,7 @@ public class PostDao extends AbstractDao<Post> {
 				.setParameter(DATE, LocalDateTime.now().minusDays(days))
 				.getResultList();
 
-		for (Long postId : postIdList) {
-			getEntityManager()
-					.createNamedQuery(DELETE_WITH_ID_QUERY)
-					.setParameter(ID, postId)
-					.executeUpdate();
-		}
+		deletePosts(postIdList);
 
 		return postIdList.size();
 	}

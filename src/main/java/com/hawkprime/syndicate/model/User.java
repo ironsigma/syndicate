@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,34 +18,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 @Entity
 @Table(name="user")
-public class User {
-	@Id
-	@GeneratedValue
-	private Long id;
-
+public class User extends AbstractEntity {
 	@Column(nullable=false)
 	private String name;
 
 	@OneToMany(mappedBy="user", cascade={ CascadeType.DETACH, CascadeType.REMOVE })
 	private List<State> states;
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the id to set
-	 */
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Gets the name.
@@ -73,7 +49,7 @@ public class User {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("id", id)
+				.append("id", getId())
 				.append("name", name)
 				.toString();
 	}
