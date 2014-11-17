@@ -109,6 +109,8 @@ public class Node extends AbstractEntity {
 		return new ToStringBuilder(this)
 				.append("id", getId())
 				.append("path", path)
+				.append("parent", parent)
+				.append("children", children)
 				.toString();
 	}
 }
