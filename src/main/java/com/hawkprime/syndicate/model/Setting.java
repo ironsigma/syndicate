@@ -21,7 +21,7 @@ public class Setting extends AbstractEntity {
 	private String name;
 
 	/**
-	 * Gets the name.
+	 * Gets the setting name.
 	 *
 	 * @return the name
 	 */
@@ -30,7 +30,7 @@ public class Setting extends AbstractEntity {
 	}
 
 	/**
-	 * Sets the name.
+	 * Sets the setting name.
 	 *
 	 * @param name the new name
 	 */

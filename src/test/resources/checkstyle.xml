@@ -133,7 +133,9 @@
     <module name="ModifiedControlVariable"/>
     <module name="MultipleStringLiterals"/>
     <module name="MultipleVariableDeclarations"/>
-    <module name="NestedForDepth"/>
+    <module name="NestedForDepth">
+      <property name="max" value="2"/>
+    </module>
     <module name="NestedIfDepth">
       <property name="max" value="2"/>
     </module>
@@ -164,7 +166,7 @@
     </module>
     <module name="ClassFanOutComplexity"/>
     <module name="CyclomaticComplexity">
-      <property name="max" value="15"/>
+      <property name="max" value="25"/>
     </module>
     <module name="JavaNCSS"/>
     <module name="NPathComplexity"/>

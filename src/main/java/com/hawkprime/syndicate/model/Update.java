@@ -72,7 +72,7 @@ public class Update extends AbstractEntity {
 	}
 
 	/**
-	 * Gets the feed.
+	 * Gets the post's feed.
 	 *
 	 * @return the feed
 	 */
@@ -81,7 +81,7 @@ public class Update extends AbstractEntity {
 	}
 
 	/**
-	 * Sets the feed.
+	 * Sets the post's feed.
 	 *
 	 * @param feed the feed to set
 	 */

@@ -219,8 +219,8 @@ public class PostDaoTest extends AbstractDaoTest {
 		final Feed feed = feedDao.findById(1L);
 		final Feed otherFeed = feedDao.findById(2L);
 
-		final long postNoStateId = createPost(feed, fetched, published, false, null, null).getId();
 		final long postWithStateUnreadId = createPost(feed, fetched, published, true, false, false).getId();
+		final long postNoStateId = createPost(feed, fetched, published, false, null, null).getId();
 		final long postWithStateUnreadStaredId = createPost(feed, fetched, published, true, false, true).getId();
 		final long postWithStateReadStaredId = createPost(feed, fetched, published, true, true, true).getId();
 		final long postWithStateReadId = createPost(feed, fetched, published, true, true, false).getId();

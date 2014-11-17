@@ -26,7 +26,7 @@ public class User extends AbstractEntity {
 	private List<State> states;
 
 	/**
-	 * Gets the name.
+	 * Gets the user name.
 	 *
 	 * @return the name
 	 */
@@ -35,7 +35,7 @@ public class User extends AbstractEntity {
 	}
 
 	/**
-	 * Sets the name.
+	 * Sets the user name.
 	 *
 	 * @param name the name to set
 	 */
@@ -43,9 +43,6 @@ public class User extends AbstractEntity {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
