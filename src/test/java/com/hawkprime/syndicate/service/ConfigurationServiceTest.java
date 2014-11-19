@@ -30,12 +30,12 @@ import static org.mockito.Mockito.*;
  * @version 5.0.0
  * @author Juan D Frias <juandfrias@gmail.com>
  */
-public class SettingServiceTest {
+public class ConfigurationServiceTest {
 	private static final String VERSION_VALUE = "1.0.0";
 	private static final NodePath APP_VERSION_PATH = NodePath.at("/App/version");
 	private static final NodePath UPDATE_INTERVAL_PATH = NodePath.at("/App/Feed/1/UpdateInterval");
 
-	private SettingService settingService;
+	private ConfigurationService configService;
 	private SettingDao settingDao;
 	private ValueDao valueDao;
 	private NodeDao nodeDao;
@@ -48,10 +48,10 @@ public class SettingServiceTest {
 		settingDao = mock(SettingDao.class);
 		valueDao = mock(ValueDao.class);
 		nodeDao = mock(NodeDao.class);
-		settingService = new SettingService();
-		settingService.setSettingDao(settingDao);
-		settingService.setValueDao(valueDao);
-		settingService.setNodeDao(nodeDao);
+		configService = new ConfigurationService();
+		configService.setSettingDao(settingDao);
+		configService.setValueDao(valueDao);
+		configService.setNodeDao(nodeDao);
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class SettingServiceTest {
 	 */
 	private void setValueTest(final NodePath parentPath, final NodePath childPath) {
 		Setting setting = setupMockValues(parentPath, childPath);
-		settingService.setValue(childPath, VERSION_VALUE);
+		configService.setValue(childPath, VERSION_VALUE);
 		verifyNodeCreate(setting, parentPath, childPath);
 	}
 
@@ -173,7 +173,7 @@ public class SettingServiceTest {
 		when(settingDao.findByName(versionPath.getLastComponent()))
 				.thenReturn(setting);
 
-		settingService.setValue(versionPath, VERSION_VALUE);
+		configService.setValue(versionPath, VERSION_VALUE);
 
 		Node rootNode = new NodeBuilder()
 				.withParent(null)
@@ -200,7 +200,7 @@ public class SettingServiceTest {
 		when(valueDao.findByPath(APP_VERSION_PATH))
 				.thenReturn(value);
 
-		settingService.setValue(APP_VERSION_PATH, VERSION_VALUE);
+		configService.setValue(APP_VERSION_PATH, VERSION_VALUE);
 
 		verify(valueDao).update(value);
 	}
@@ -213,7 +213,7 @@ public class SettingServiceTest {
 		when(valueDao.findByPath(APP_VERSION_PATH))
 				.thenReturn(null);
 
-		settingService.setValue(APP_VERSION_PATH, VERSION_VALUE);
+		configService.setValue(APP_VERSION_PATH, VERSION_VALUE);
 	}
 
 	/**
@@ -221,8 +221,8 @@ public class SettingServiceTest {
 	 */
 	@Test
 	public void getSettingsTest() {
-		settingService.setValueDao(valueDao);
-		settingService.setSettingDao(settingDao);
+		configService.setValueDao(valueDao);
+		configService.setSettingDao(settingDao);
 
 		Setting updateIntervalSetting = new SettingBuilder().withName("UpdateInterval").build();
 		Setting maxUpdatesSetting = new SettingBuilder().withName("MaxUpdates").build();
@@ -254,7 +254,7 @@ public class SettingServiceTest {
 				.thenReturn(maxUpdatesValue);
 
 		final int expectedNumberOfSettings = 2;
-		Map<String, Object> settings = settingService.getSettings(path);
+		Map<String, Object> settings = configService.getSettings(path);
 		assertThat(settings, is(not(nullValue())));
 		assertThat(settings.size(), is(expectedNumberOfSettings));
 		assertThat(settings.containsKey(updateIntervalSetting.getName()), is(true));
@@ -269,7 +269,7 @@ public class SettingServiceTest {
 	@Test
 	public void getValueTest() {
 		final Integer expectedValue = 60;
-		settingService.setValueDao(valueDao);
+		configService.setValueDao(valueDao);
 
 		Value value = new ValueBuilder()
 				.withValue(expectedValue)
@@ -278,12 +278,41 @@ public class SettingServiceTest {
 		when(valueDao.findByPath(UPDATE_INTERVAL_PATH))
 				.thenReturn(value);
 
-		Integer testValue = settingService.getValue(UPDATE_INTERVAL_PATH, Integer.class);
+		Integer testValue = configService.getValue(UPDATE_INTERVAL_PATH, Integer.class);
 		assertThat(testValue, is(not(nullValue())));
 		assertThat(testValue, is(expectedValue));
 
-		testValue = settingService.getValue(NodePath.at("/App/Feed/1/xxxUpdateInterval"), Integer.class);
+		testValue = configService.getValue(NodePath.at("/App/Feed/1/xxxUpdateInterval"), Integer.class);
 		assertThat(testValue, is(nullValue()));
+	}
+
+	/**
+	 * Default value test.
+	 */
+	@Test
+	public void defaultValueTest() {
+		final String settingName = "OsName";
+		final String defaultOsName = "Linux";
+
+		Setting setting = new SettingBuilder()
+				.withName(settingName)
+				.build();
+
+		when(settingDao.create(setting))
+				.thenReturn(setting);
+
+		String osName = configService.getValue(NodePath.root().append(settingName), defaultOsName);
+		assertThat(osName, is(defaultOsName));
+
+		verify(settingDao).create(setting);
+		verify(valueDao).create(new ValueBuilder()
+				.withValue(defaultOsName)
+				.withNode(new NodeBuilder()
+					.withPath(NodePath.root().toString())
+					.build()
+				)
+				.withSetting(setting)
+				.build());
 	}
 
 	/**
@@ -291,7 +320,7 @@ public class SettingServiceTest {
 	 */
 	@Test(expected=ClassCastException.class)
 	public void badCastTest() {
-		settingService.setValueDao(valueDao);
+		configService.setValueDao(valueDao);
 
 		Value value = new ValueBuilder()
 				.withValue(0)
@@ -300,7 +329,7 @@ public class SettingServiceTest {
 		when(valueDao.findByPath(UPDATE_INTERVAL_PATH))
 				.thenReturn(value);
 
-		String testValue = settingService.getValue(UPDATE_INTERVAL_PATH, String.class);
+		String testValue = configService.getValue(UPDATE_INTERVAL_PATH, String.class);
 		assertThat(testValue, is(nullValue()));
 	}
 }

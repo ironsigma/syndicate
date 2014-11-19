@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
  * @author Juan D Frias <juandfrias@gmail.com>
  */
 @Service
-public class SettingService {
-	private static final Logger LOG = LoggerFactory.getLogger(SettingService.class);
+public class ConfigurationService {
+	private static final Logger LOG = LoggerFactory.getLogger(ConfigurationService.class);
 
 	@Autowired
 	private SettingDao settingDao;
@@ -39,10 +39,23 @@ public class SettingService {
 	/**
 	 * Sets the value.
 	 *
+	 * @param <T> Generic type
 	 * @param settingPath the setting path
 	 * @param value the value
 	 */
-	public void setValue(final NodePath settingPath, final String value) {
+	public <T> void setValue(final NodePath settingPath, final T value) {
+		setValue(settingPath, value, false);
+	}
+
+	/**
+	 * Sets the value.
+	 *
+	 * @param <T> the generic type
+	 * @param settingPath the setting path
+	 * @param value the value
+	 * @param createSetting true if setting is to be created, false to throw exception if not found.
+	 */
+	private <T> void setValue(final NodePath settingPath, final T value, final boolean createSetting) {
 		Value settingValue = valueDao.findByPath(settingPath);
 		if (settingValue != null) {
 			LOG.debug("Found setting \"{}\", updating value to \"{}\"", settingPath.toString(), value);
@@ -51,11 +64,7 @@ public class SettingService {
 			return;
 		}
 
-		final Setting setting = settingDao.findByName(settingPath.getLastComponent());
-		if (setting == null) {
-			throw new IllegalDataException("Setting does not exist: " + settingPath.getLastComponent());
-		}
-
+		final Setting setting = getSetting(settingPath.getLastComponent(), createSetting);
 		final NodePath nodePath = settingPath.getParent();
 		Node settingNode = nodeDao.findClosestByPath(nodePath);
 		if (settingNode == null || !settingNode.getPath().equals(nodePath.toString())) {
@@ -106,6 +115,26 @@ public class SettingService {
 	}
 
 	/**
+	 * Find the setting by name.
+	 * @param name Name of setting
+	 * @param create Create setting if it doesn't exist
+	 * @return the setting
+	 */
+	private Setting getSetting(final String name, final boolean create) {
+		Setting setting = settingDao.findByName(name);
+		if (setting == null) {
+			if (create) {
+				setting = new Setting();
+				setting.setName(name);
+				setting = settingDao.create(setting);
+			} else {
+				throw new IllegalDataException("Setting does not exist: " + name);
+			}
+		}
+		return setting;
+	}
+
+	/**
 	 * Gets the settings.
 	 *
 	 * @param path the path
@@ -117,6 +146,24 @@ public class SettingService {
 			map.put(setting.getName(), valueDao.findByPath(path.append(setting.getName())).getValue());
 		}
 		return map;
+	}
+
+	/**
+	 * Gets the value.
+	 *
+	 * @param <T> the generic type
+	 * @param path path
+	 * @param defaultValue value if not found
+	 * @return the value
+	 */
+	public <T extends Object> T getValue(final NodePath path, final T defaultValue) {
+		@SuppressWarnings("unchecked")
+		T value = getValue(path, (Class<T>) defaultValue.getClass());
+		if (value == null) {
+			setValue(path, defaultValue, true);
+			return defaultValue;
+		}
+		return value;
 	}
 
 	/**

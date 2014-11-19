@@ -1,9 +1,14 @@
 package com.hawkprime.syndicate.util;
 
+import com.hawkprime.syndicate.service.ConfigurationService;
+
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Calculate Frequencies.
@@ -16,18 +21,30 @@ public class FrequencyCalculator {
 	private static final Logger LOG = LoggerFactory.getLogger(FrequencyCalculator.class);
 
 	private static final double PERCENT = 100.00;
+	private static final int DEFAULT_MAX_OPTIMAL_RANGE = 80;
+	private static final int DEFAULT_MIN_OPTIMAL_RANGE = 70;
+	private static final int DEFAULT_MAX_FREQUENCY = 1;
+	private static final int DEFAULT_MIN_FREQUENCY = 2880;
 
-	@Value("${syndicate.update.frequency.optimal.max}")
+	@Autowired
+	private ConfigurationService configService;
+
 	private int maxOptimalRange;
-
-	@Value("${syndicate.update.frequency.optimal.min}")
 	private int minOptimalRange;
-
-	@Value("${syndicate.update.frequency.min}")
 	private int minFrequency;
-
-	@Value("${syndicate.update.frequency.max}")
 	private int maxFrequency;
+
+	/**
+	 * Initialize Calculator.
+	 */
+	@PostConstruct
+	@Transactional
+	private void init() {
+		maxOptimalRange = configService.getValue(NodePath.at("/App/Feed/MaxOptimalRange"), DEFAULT_MAX_OPTIMAL_RANGE);
+		minOptimalRange = configService.getValue(NodePath.at("/App/Feed/MinOptimalRange"), DEFAULT_MIN_OPTIMAL_RANGE);
+		maxFrequency = configService.getValue(NodePath.at("/App/Feed/MaxUpdate"), DEFAULT_MAX_FREQUENCY);
+		minFrequency = configService.getValue(NodePath.at("/App/Feed/MinUpdate"), DEFAULT_MIN_FREQUENCY);
+	}
 
 	/**
 	 * Set optimal range.
@@ -42,7 +59,7 @@ public class FrequencyCalculator {
 	/**
 	 * Set update frequency range.
 	 * @param min Minimum number of minutes to check (max wait time)
-	 * @param max Maxinum numbe of minutes to check (min wait time)
+	 * @param max Maximum number of minutes to check (min wait time)
 	 */
 	public void setUpdateFrequencyRange(final int min, final int max) {
 		minFrequency = min;
@@ -58,7 +75,7 @@ public class FrequencyCalculator {
 	}
 
 	/**
-	 * Get mininum optimal percent range.
+	 * Get minimum optimal percent range.
 	 * @return integer range from 0 to 100
 	 */
 	public int getMinOptimalRange() {
@@ -67,14 +84,14 @@ public class FrequencyCalculator {
 
 	/**
 	 * Get maximum update frequency.
-	 * @return maxium number of minutes to wait before update
+	 * @return maximum number of minutes to wait before update
 	 */
 	public int getMaxUpdateFrequency() {
 		return maxFrequency;
 	}
 
 	/**
-	 * Get mininum update frequency.
+	 * Get minimum update frequency.
 	 * @return minimum number of minutes to wait before update
 	 */
 	public int getMinUpdateFrequency() {

@@ -34,19 +34,12 @@ public class PostService {
 	}
 
 	/**
-	 * Set post DAO.
-	 * @param postDao dao
-	 */
-	public void setPostDao(final PostDao postDao) {
-		this.postDao = postDao;
-	}
-
-	/**
 	 * Delete unread not stared posts.
 	 * @param feedId feed id
 	 * @param days anything prior to this will be deleted
 	 * @return number of posts deleted
 	 */
+	@Transactional
 	public int deleteUnreadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		return postDao.deleteUnreadNotStaredByFeedIdOlderThan(feedId, days);
 	}
@@ -57,6 +50,7 @@ public class PostService {
 	 * @param days anything prior to this will be deleted
 	 * @return number of posts deleted
 	 */
+	@Transactional
 	public int deleteReadNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		return postDao.deleteReadNotStaredByFeedIdOlderThan(feedId, days);
 	}
@@ -67,7 +61,17 @@ public class PostService {
 	 * @param days anything prior to this will be deleted
 	 * @return number of posts deleted
 	 */
+	@Transactional
 	public int deletePublishedNotStaredByFeedIdOlderThan(final long feedId, final int days) {
 		return postDao.deletePublishedNotStaredByFeedIdOlderThan(feedId, days);
 	}
+
+	/**
+	 * Set post DAO.
+	 * @param postDao dao
+	 */
+	public void setPostDao(final PostDao postDao) {
+		this.postDao = postDao;
+	}
 }
+

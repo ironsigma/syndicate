@@ -81,10 +81,10 @@ public class ValueTest {
 	}
 
 	/**
-	 * String constructors test.
+	 * String set value test.
 	 */
 	@Test
-	public void stringConstructorsTest() {
+	public void stringSetValueTest() {
 		final String expectedValue = "expectedValue";
 		Value value = new Value();
 		value.setValue(expectedValue);
@@ -93,10 +93,10 @@ public class ValueTest {
 	}
 
 	/**
-	 * Boolean constructors test.
+	 * Boolean set value test.
 	 */
 	@Test
-	public void booleanConstructorsTest() {
+	public void booleanSetValueTest() {
 		final Boolean expectedValue = true;
 		Value value = new Value();
 		value.setValue(expectedValue);
@@ -105,10 +105,10 @@ public class ValueTest {
 	}
 
 	/**
-	 * Integer constructors test.
+	 * Integer set value test.
 	 */
 	@Test
-	public void intConstructorsTest() {
+	public void intSetValueTest() {
 		final int expectedValue = 42;
 		Value value = new Value();
 		value.setValue(expectedValue);
@@ -117,11 +117,11 @@ public class ValueTest {
 	}
 
 	/**
-	 * Long constructors test.
+	 * Long set value test.
 	 */
 	@Test
-	public void longConstructorsTest() {
-		final long expectedValue = 42;
+	public void longSetValueTest() {
+		final long expectedValue = 42L;
 		Value value = new Value();
 		value.setValue(expectedValue);
 		assertThat(value.getType(), is(ValueType.LONG));
@@ -129,10 +129,10 @@ public class ValueTest {
 	}
 
 	/**
-	 * Double constructors test.
+	 * Double set value test.
 	 */
 	@Test
-	public void doubleConstructorsTest() {
+	public void doubleSetValueTest() {
 		final double expectedValue = 3.1416;
 		Value value = new Value();
 		value.setValue(expectedValue);
@@ -141,10 +141,10 @@ public class ValueTest {
 	}
 
 	/**
-	 * Float constructors test.
+	 * Float set value test.
 	 */
 	@Test
-	public void floatConstructorsTest() {
+	public void floatSetValueTest() {
 		final float expectedValue = 3.1416f;
 		Value value = new Value();
 		value.setValue(expectedValue);
@@ -153,10 +153,10 @@ public class ValueTest {
 	}
 
 	/**
-	 * Big decimal constructors test.
+	 * Big decimal set value test.
 	 */
 	@Test
-	public void bigDecimalConstructorsTest() {
+	public void bigDecimalSetValueTest() {
 		final BigDecimal expectedValue = new BigDecimal(3.1416);
 		Value value = new Value();
 		value.setValue(expectedValue);
@@ -165,10 +165,10 @@ public class ValueTest {
 	}
 
 	/**
-	 * Date constructors test.
+	 * Date set value test.
 	 */
 	@Test
-	public void dateConstructorsTest() {
+	public void dateSetValueTest() {
 		final Date expectedValue = new Date();
 		Value value = new Value();
 		value.setValue(expectedValue);
@@ -177,10 +177,10 @@ public class ValueTest {
 	}
 
 	/**
-	 * Local date time constructors test.
+	 * Local date time set value test.
 	 */
 	@Test
-	public void localDateTimeConstructorsTest() {
+	public void localDateTimeSetValueTest() {
 		final LocalDateTime expectedValue = LocalDateTime.now();
 		Value value = new Value();
 		value.setValue(expectedValue);

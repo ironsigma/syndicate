@@ -89,121 +89,49 @@ public class Value extends AbstractEntity {
 	/**
 	 * Sets the value.
 	 *
-	 * @param stringValue the stringValue to set
+	 * @param <T> the generic type
+	 * @param value the new value
 	 */
-	public void setValue(final String stringValue) {
-		if (stringValue == null) {
-			throw new NullPointerException("String value cannot be null");
+	public <T> void setValue(final T value) {
+		stringValue = null;
+		booleanValue = null;
+		decimalValue = null;
+		numericValue = null;
+		dateValue = null;
+		type = null;
+		if (value == null) {
+			throw new NullPointerException("Value cannot be null");
 		}
-		this.stringValue = stringValue;
-		booleanValue = null;
-		decimalValue = null;
-		numericValue = null;
-		dateValue = null;
-		type = ValueType.STRING;
-	}
-
-	/**
-	 * Sets the value.
-	 *
-	 * @param booleanValue the booleanValue to set
-	 */
-	public void setValue(final boolean booleanValue) {
-		this.booleanValue = booleanValue;
-		stringValue = null;
-		decimalValue = null;
-		numericValue = null;
-		dateValue = null;
-		type = ValueType.BOOLEAN;
-	}
-
-	/**
-	 * Sets the value.
-	 *
-	 * @param intValue the intValue to set
-	 */
-	public void setValue(final int intValue) {
-		this.numericValue = (long) intValue;
-		stringValue = null;
-		decimalValue = null;
-		booleanValue = null;
-		dateValue = null;
-		type = ValueType.INTEGER;
-	}
-
-	/**
-	 * Sets the value.
-	 *
-	 * @param longValue the longValue to set
-	 */
-	public void setValue(final long longValue) {
-		this.numericValue = longValue;
-		stringValue = null;
-		decimalValue = null;
-		booleanValue = null;
-		dateValue = null;
-		type = ValueType.LONG;
-	}
-
-	/**
-	 * Sets the value.
-	 *
-	 * @param decimalValue the decimalValue to set
-	 */
-	public void setValue(final BigDecimal decimalValue) {
-		if (decimalValue == null) {
-			throw new NullPointerException("Decimal value cannot be null");
+		if (value instanceof String) {
+			stringValue = (String) value;
+			type = ValueType.STRING;
+		} else if (value instanceof Boolean) {
+			booleanValue = (Boolean) value;
+			type = ValueType.BOOLEAN;
+		} else if (value instanceof Date) {
+			dateValue = new LocalDateTime(value);
+			type = ValueType.DATE;
+		} else if (value instanceof LocalDateTime) {
+			dateValue = (LocalDateTime) value;
+			type = ValueType.DATE;
+		} else if (value instanceof BigDecimal) {
+			decimalValue = (BigDecimal) value;
+			type = ValueType.DECIMAL;
+		} else if (value instanceof Double) {
+			decimalValue = new BigDecimal((Double) value);
+			type = ValueType.DECIMAL;
+		} else if (value instanceof Float) {
+			decimalValue = new BigDecimal((Float) value);
+			type = ValueType.DECIMAL;
+		} else if (value instanceof Integer) {
+			numericValue = new Long((Integer) value);
+			type = ValueType.INTEGER;
+		} else if (value instanceof Long) {
+			numericValue = (Long) value;
+			type = ValueType.LONG;
+		} else {
+			throw new IllegalArgumentException("Unsupported type: " + value.getClass());
 		}
-		this.decimalValue = decimalValue;
-		stringValue = null;
-		numericValue = null;
-		booleanValue = null;
-		dateValue = null;
-		type = ValueType.DECIMAL;
-	}
-
-	/**
-	 * Sets the value.
-	 *
-	 * @param dateValue the dateValue to set
-	 */
-	public void setValue(final LocalDateTime dateValue) {
-		if (dateValue == null) {
-			throw new NullPointerException("Date value cannot be null");
-		}
-		this.dateValue = dateValue;
-		stringValue = null;
-		numericValue = null;
-		booleanValue = null;
-		decimalValue = null;
-		type = ValueType.DATE;
-	}
-
-	/**
-	 * Sets the value.
-	 *
-	 * @param doubleValue the new value
-	 */
-	public void setValue(final double doubleValue) {
-		setValue(new BigDecimal(doubleValue));
-	}
-
-	/**
-	 * Sets the value.
-	 *
-	 * @param floatValue the new value
-	 */
-	public void setValue(final float floatValue) {
-		setValue(new BigDecimal(floatValue));
-	}
-
-	/**
-	 * Sets the value.
-	 *
-	 * @param dateValue the dateValue to set
-	 */
-	public void setValue(final Date dateValue) {
-		setValue(new LocalDateTime(dateValue));
 	}
 
 	/**
