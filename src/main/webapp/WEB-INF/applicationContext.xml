@@ -7,7 +7,6 @@
 
 	<context:component-scan base-package="com.hawkprime.syndicate" />
 
-	<import resource="applicationContext-propertyPlaceholder.xml" />
 	<import resource="applicationContext-updateTask.xml" />
 	<import resource="applicationContext-dataSource.xml" />
 

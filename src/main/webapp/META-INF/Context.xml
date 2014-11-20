@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-	<Environment override="true" name="config/syndicate" type="java.lang.String"
-		value="file:///Users/m075878/Servers/config/syndicate.properties" />
-
 	<Environment name="jdbc/syndicate/dialect" type="java.lang.String"
 		value="org.hibernate.dialect.MySQLDialect" />
 

@@ -70,10 +70,10 @@ public class ConfigurationService {
 		if (settingNode == null || !settingNode.getPath().equals(nodePath.toString())) {
 			final NodePath nodePathToBuildOut;
 			if (settingNode == null) {
-				LOG.debug("No closest setting match found");
+				LOG.debug("No path to setting found");
 				nodePathToBuildOut = nodePath;
 			} else {
-				LOG.debug("Closest setting match was \"{}\"", settingNode.getPath());
+				LOG.debug("Closest path to setting was \"{}\"", settingNode.getPath());
 				nodePathToBuildOut = nodePath.getPathDifferences(NodePath.at(settingNode.getPath()));
 			}
 			LOG.debug("Will have to build out \"{}\"", nodePathToBuildOut.toString());
@@ -89,11 +89,8 @@ public class ConfigurationService {
 					path = NodePath.root().toString();
 
 				} else {
-					LOG.debug("Creating node \"{}/{}\"", parentNode.getPath(),
-							nodePathToCreate.getLastComponent());
-
-					path = NodePath.at(parentNode.getPath())
-								.append(nodePathToCreate.getLastComponent()).toString();
+					path = NodePath.at(parentNode.getPath()).append(nodePathToCreate.getLastComponent()).toString();
+					LOG.debug("Creating node \"{}\"", path);
 				}
 
 				newNode = new Node();
@@ -124,6 +121,7 @@ public class ConfigurationService {
 		Setting setting = settingDao.findByName(name);
 		if (setting == null) {
 			if (create) {
+				LOG.debug("Creating setting \"{}\"", name);
 				setting = new Setting();
 				setting.setName(name);
 				setting = settingDao.create(setting);
@@ -160,6 +158,7 @@ public class ConfigurationService {
 		@SuppressWarnings("unchecked")
 		T value = getValue(path, (Class<T>) defaultValue.getClass());
 		if (value == null) {
+			LOG.debug("No value found for \"{}\" using default \"{}\"", path.toString(), defaultValue);
 			setValue(path, defaultValue, true);
 			return defaultValue;
 		}

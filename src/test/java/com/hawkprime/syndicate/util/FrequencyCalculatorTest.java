@@ -1,10 +1,14 @@
 package com.hawkprime.syndicate.util;
 
+import com.hawkprime.syndicate.service.ConfigurationService;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Frequency Calculator Tests.
@@ -14,6 +18,7 @@ import static org.junit.Assert.assertThat;
  */
 public class FrequencyCalculatorTest {
 	private final FrequencyCalculator frequencyCalculator = new FrequencyCalculator();
+	private ConfigurationService configService;
 
 	/**
 	 * Set-up.
@@ -22,31 +27,24 @@ public class FrequencyCalculatorTest {
 	public void setUp() {
 		final int minRange = 70;
 		final int maxRange = 80;
-		frequencyCalculator.setOptimalRange(minRange, maxRange);
-
 		final int minUpdate = 2880;
 		final int maxUpdate = 1;
-		frequencyCalculator.setUpdateFrequencyRange(minUpdate, maxUpdate);
-	}
 
-	/**
-	 * Getters Setters test.
-	 */
-	@Test
-	public void gettersSettersTest() {
-		final int minRange = 50;
-		final int maxRange = 60;
+		configService = mock(ConfigurationService.class);
 
-		frequencyCalculator.setOptimalRange(minRange, maxRange);
-		assertThat(frequencyCalculator.getMinOptimalRange(), is(minRange));
-		assertThat(frequencyCalculator.getMaxOptimalRange(), is(maxRange));
+		when(configService.getValue(eq(NodePath.at("/App/Feed/MaxOptimalRange")), anyInt()))
+				.thenReturn(maxRange);
 
-		final int minUpdate = 60;
-		final int maxUpdate = 1;
+		when(configService.getValue(eq(NodePath.at("/App/Feed/MinOptimalRange")), anyInt()))
+				.thenReturn(minRange);
 
-		frequencyCalculator.setUpdateFrequencyRange(minUpdate, maxUpdate);
-		assertThat(frequencyCalculator.getMinUpdateFrequency(), is(minUpdate));
-		assertThat(frequencyCalculator.getMaxUpdateFrequency(), is(maxUpdate));
+		when(configService.getValue(eq(NodePath.at("/App/Feed/MaxUpdate")), anyInt()))
+				.thenReturn(maxUpdate);
+
+		when(configService.getValue(eq(NodePath.at("/App/Feed/MinUpdate")), anyInt()))
+				.thenReturn(minUpdate);
+
+		frequencyCalculator.setConfigurationService(configService);
 	}
 
 	/**

@@ -2,13 +2,10 @@ package com.hawkprime.syndicate.util;
 
 import com.hawkprime.syndicate.service.ConfigurationService;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Calculate Frequencies.
@@ -29,75 +26,6 @@ public class FrequencyCalculator {
 	@Autowired
 	private ConfigurationService configService;
 
-	private int maxOptimalRange;
-	private int minOptimalRange;
-	private int minFrequency;
-	private int maxFrequency;
-
-	/**
-	 * Initialize Calculator.
-	 */
-	@PostConstruct
-	@Transactional
-	private void init() {
-		maxOptimalRange = configService.getValue(NodePath.at("/App/Feed/MaxOptimalRange"), DEFAULT_MAX_OPTIMAL_RANGE);
-		minOptimalRange = configService.getValue(NodePath.at("/App/Feed/MinOptimalRange"), DEFAULT_MIN_OPTIMAL_RANGE);
-		maxFrequency = configService.getValue(NodePath.at("/App/Feed/MaxUpdate"), DEFAULT_MAX_FREQUENCY);
-		minFrequency = configService.getValue(NodePath.at("/App/Feed/MinUpdate"), DEFAULT_MIN_FREQUENCY);
-	}
-
-	/**
-	 * Set optimal range.
-	 * @param min Minimum post per update percentage
-	 * @param max Max post per update percentage
-	 */
-	public void setOptimalRange(final int min, final int max) {
-		maxOptimalRange = max;
-		minOptimalRange = min;
-	}
-
-	/**
-	 * Set update frequency range.
-	 * @param min Minimum number of minutes to check (max wait time)
-	 * @param max Maximum number of minutes to check (min wait time)
-	 */
-	public void setUpdateFrequencyRange(final int min, final int max) {
-		minFrequency = min;
-		maxFrequency = max;
-	}
-
-	/**
-	 * Get maximum optimal percent range.
-	 * @return integer range from 0 to 100
-	 */
-	public int getMaxOptimalRange() {
-		return maxOptimalRange;
-	}
-
-	/**
-	 * Get minimum optimal percent range.
-	 * @return integer range from 0 to 100
-	 */
-	public int getMinOptimalRange() {
-		return minOptimalRange;
-	}
-
-	/**
-	 * Get maximum update frequency.
-	 * @return maximum number of minutes to wait before update
-	 */
-	public int getMaxUpdateFrequency() {
-		return maxFrequency;
-	}
-
-	/**
-	 * Get minimum update frequency.
-	 * @return minimum number of minutes to wait before update
-	 */
-	public int getMinUpdateFrequency() {
-		return minFrequency;
-	}
-
 	/**
 	 * Calculate new frequency to update.
 	 * @param currentFrequency current number of minutes between updates
@@ -105,6 +33,11 @@ public class FrequencyCalculator {
 	 * @return new number of minutes to wait before updates
 	 */
 	public int calculateNewFrequency(final int currentFrequency, final int percentNew) {
+		final int maxOptimalRange = configService.getValue(NodePath.at("/App/Feed/MaxOptimalRange"), DEFAULT_MAX_OPTIMAL_RANGE);
+		final int minOptimalRange = configService.getValue(NodePath.at("/App/Feed/MinOptimalRange"), DEFAULT_MIN_OPTIMAL_RANGE);
+		final int maxFrequency = configService.getValue(NodePath.at("/App/Feed/MaxUpdate"), DEFAULT_MAX_FREQUENCY);
+		final int minFrequency = configService.getValue(NodePath.at("/App/Feed/MinUpdate"), DEFAULT_MIN_FREQUENCY);
+
 		LOG.debug("Current frequency is every {}, new posts are at {}%",
 				TimeFormat.formatMinutes(currentFrequency), percentNew);
 
@@ -148,5 +81,14 @@ public class FrequencyCalculator {
 
 		LOG.debug("Adjusting to {}", TimeFormat.formatMinutes(adjustment));
 		return adjustment;
+	}
+
+	/**
+	 * Sets the configuration service.
+	 *
+	 * @param configurationService the new configuration service
+	 */
+	public void setConfigurationService(final ConfigurationService configurationService) {
+		this.configService = configurationService;
 	}
 }
