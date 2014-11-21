@@ -4,11 +4,6 @@ import com.hawkprime.syndicate.model.Node;
 import com.hawkprime.syndicate.model.Setting;
 import com.hawkprime.syndicate.model.Value;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
-import org.joda.time.LocalDateTime;
-
 /**
  * The Class ValueBuilder.
  *
@@ -68,98 +63,11 @@ public class ValueBuilder {
 	/**
 	 * With value.
 	 *
+	 * @param <T> the value type
 	 * @param aValue the a value
 	 * @return the value builder
 	 */
-	public ValueBuilder withValue(final String aValue) {
-		value.setValue(aValue);
-		return this;
-	}
-
-	/**
-	 * With value.
-	 *
-	 * @param aValue the a value
-	 * @return the value builder
-	 */
-	public ValueBuilder withValue(final boolean aValue) {
-		value.setValue(aValue);
-		return this;
-	}
-
-	/**
-	 * With value.
-	 *
-	 * @param aValue the a value
-	 * @return the value builder
-	 */
-	public ValueBuilder withValue(final int aValue) {
-		value.setValue(aValue);
-		return this;
-	}
-
-	/**
-	 * With value.
-	 *
-	 * @param aValue the a value
-	 * @return the value builder
-	 */
-	public ValueBuilder withValue(final long aValue) {
-		value.setValue(aValue);
-		return this;
-	}
-
-	/**
-	 * With value.
-	 *
-	 * @param aValue the a value
-	 * @return the value builder
-	 */
-	public ValueBuilder withValue(final double aValue) {
-		value.setValue(aValue);
-		return this;
-	}
-
-	/**
-	 * With value.
-	 *
-	 * @param aValue the a value
-	 * @return the value builder
-	 */
-	public ValueBuilder withValue(final float aValue) {
-		value.setValue(aValue);
-		return this;
-	}
-
-	/**
-	 * With value.
-	 *
-	 * @param aValue the a value
-	 * @return the value builder
-	 */
-	public ValueBuilder withValue(final BigDecimal aValue) {
-		value.setValue(aValue);
-		return this;
-	}
-
-	/**
-	 * With value.
-	 *
-	 * @param aValue the a value
-	 * @return the value builder
-	 */
-	public ValueBuilder withValue(final Date aValue) {
-		value.setValue(aValue);
-		return this;
-	}
-
-	/**
-	 * With value.
-	 *
-	 * @param aValue the a value
-	 * @return the value builder
-	 */
-	public ValueBuilder withValue(final LocalDateTime aValue) {
+	public <T> ValueBuilder withValue(final T aValue) {
 		value.setValue(aValue);
 		return this;
 	}

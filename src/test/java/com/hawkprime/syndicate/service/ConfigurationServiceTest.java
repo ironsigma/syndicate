@@ -85,7 +85,7 @@ public class ConfigurationServiceTest {
 	 * @param parent parent node
 	 * @param child child node
 	 */
-	private void verifyNodeCreate(final Setting setting, final NodePath parent, final NodePath child) {
+	private void verifyNodeCreate(final Setting setting, final NodePath parent, final NodePath child, final Object value) {
 		Node parentNode = new NodeBuilder()
 					.withParent(null)
 					.withPath(parent.toString())
@@ -108,10 +108,35 @@ public class ConfigurationServiceTest {
 		}
 
 		verify(valueDao).create(new ValueBuilder()
-				.withValue(VERSION_VALUE)
+				.withValue(value)
 				.withSetting(setting)
 				.withNode(parentNode)
 				.build());
+	}
+
+	/**
+	 * Test get with default value.
+	 */
+	@Test
+	public void getDefaultValueTest() {
+		NodePath path = NodePath.at("/xxx");
+		Setting setting = setupMockValues(NodePath.root(), path);
+
+		final int expectedValue = 2995;
+		int value = configService.getValue(path, expectedValue);
+
+		assertThat(value, is(expectedValue));
+		verifyNodeCreate(setting, NodePath.root(), path, expectedValue);
+
+		path = NodePath.at("/App/Feed/MaxUpdate");
+
+		when(valueDao.findByPath(path))
+			.thenReturn(new ValueBuilder()
+					.withValue(expectedValue)
+					.build());
+
+		value = configService.getValue(path, 0);
+		assertThat(value, is(expectedValue));
 	}
 
 	/**
@@ -122,7 +147,7 @@ public class ConfigurationServiceTest {
 	private void setValueTest(final NodePath parentPath, final NodePath childPath) {
 		Setting setting = setupMockValues(parentPath, childPath);
 		configService.setValue(childPath, VERSION_VALUE);
-		verifyNodeCreate(setting, parentPath, childPath);
+		verifyNodeCreate(setting, parentPath, childPath, VERSION_VALUE);
 	}
 
 	/**
