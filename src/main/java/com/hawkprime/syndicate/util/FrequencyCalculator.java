@@ -18,11 +18,6 @@ public class FrequencyCalculator {
 	private static final Logger LOG = LoggerFactory.getLogger(FrequencyCalculator.class);
 
 	private static final double PERCENT = 100.00;
-	private static final int DEFAULT_MAX_OPTIMAL_RANGE = 80;
-	private static final int DEFAULT_MIN_OPTIMAL_RANGE = 70;
-	private static final int DEFAULT_MAX_FREQUENCY = 1;
-	private static final int DEFAULT_MIN_FREQUENCY = 2880;
-
 	@Autowired
 	private ConfigurationService configService;
 
@@ -33,10 +28,10 @@ public class FrequencyCalculator {
 	 * @return new number of minutes to wait before updates
 	 */
 	public int calculateNewFrequency(final int currentFrequency, final int percentNew) {
-		final int maxOptimalRange = configService.getValue(NodePath.at("/App/Feed/MaxOptimalRange"), DEFAULT_MAX_OPTIMAL_RANGE);
-		final int minOptimalRange = configService.getValue(NodePath.at("/App/Feed/MinOptimalRange"), DEFAULT_MIN_OPTIMAL_RANGE);
-		final int maxFrequency = configService.getValue(NodePath.at("/App/Feed/MaxUpdate"), DEFAULT_MAX_FREQUENCY);
-		final int minFrequency = configService.getValue(NodePath.at("/App/Feed/MinUpdate"), DEFAULT_MIN_FREQUENCY);
+		final int maxOptimalRange = configService.getValue(NodePath.at("/App/Feed/MaxOptimalRange"), Integer.class);
+		final int minOptimalRange = configService.getValue(NodePath.at("/App/Feed/MinOptimalRange"), Integer.class);
+		final int maxFrequency = configService.getValue(NodePath.at("/App/Feed/MaxUpdate"), Integer.class);
+		final int minFrequency = configService.getValue(NodePath.at("/App/Feed/MinUpdate"), Integer.class);
 
 		LOG.debug("Current frequency is every {}, new posts are at {}%",
 				TimeFormat.formatMinutes(currentFrequency), percentNew);

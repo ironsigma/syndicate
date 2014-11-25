@@ -84,6 +84,7 @@ public class ConfigurationServiceTest {
 	 * @param setting Setting to verify.
 	 * @param parent parent node
 	 * @param child child node
+	 * @param value value to verify
 	 */
 	private void verifyNodeCreate(final Setting setting, final NodePath parent, final NodePath child, final Object value) {
 		Node parentNode = new NodeBuilder()
@@ -112,31 +113,6 @@ public class ConfigurationServiceTest {
 				.withSetting(setting)
 				.withNode(parentNode)
 				.build());
-	}
-
-	/**
-	 * Test get with default value.
-	 */
-	@Test
-	public void getDefaultValueTest() {
-		NodePath path = NodePath.at("/xxx");
-		Setting setting = setupMockValues(NodePath.root(), path);
-
-		final int expectedValue = 2995;
-		int value = configService.getValue(path, expectedValue);
-
-		assertThat(value, is(expectedValue));
-		verifyNodeCreate(setting, NodePath.root(), path, expectedValue);
-
-		path = NodePath.at("/App/Feed/MaxUpdate");
-
-		when(valueDao.findByPath(path))
-			.thenReturn(new ValueBuilder()
-					.withValue(expectedValue)
-					.build());
-
-		value = configService.getValue(path, 0);
-		assertThat(value, is(expectedValue));
 	}
 
 	/**
@@ -312,12 +288,25 @@ public class ConfigurationServiceTest {
 	}
 
 	/**
-	 * Default value test.
+	 * Has value test.
 	 */
 	@Test
-	public void defaultValueTest() {
+	public void hasValueTest() {
+		final NodePath settingPath = NodePath.at("/App/Feed/MaxUpdate");
+		when(valueDao.findByPath(settingPath))
+				.thenReturn(new ValueBuilder().build());
+
+		assertThat(configService.hasValue(settingPath), is(true));
+		assertThat(configService.hasValue(NodePath.at("/App/xxxDoesNotExistxxx")), is(false));
+	}
+
+	/**
+	 * Create value test.
+	 */
+	@Test
+	public void createValueTest() {
 		final String settingName = "OsName";
-		final String defaultOsName = "Linux";
+		final String osName = "Linux";
 
 		Setting setting = new SettingBuilder()
 				.withName(settingName)
@@ -326,12 +315,11 @@ public class ConfigurationServiceTest {
 		when(settingDao.create(setting))
 				.thenReturn(setting);
 
-		String osName = configService.getValue(NodePath.root().append(settingName), defaultOsName);
-		assertThat(osName, is(defaultOsName));
+		configService.createSettingWithValue(NodePath.root().append(settingName), osName);
 
 		verify(settingDao).create(setting);
 		verify(valueDao).create(new ValueBuilder()
-				.withValue(defaultOsName)
+				.withValue(osName)
 				.withNode(new NodeBuilder()
 					.withPath(NodePath.root().toString())
 					.build()

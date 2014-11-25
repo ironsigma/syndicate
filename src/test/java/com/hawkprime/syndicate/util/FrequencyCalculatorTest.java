@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -32,16 +31,16 @@ public class FrequencyCalculatorTest {
 
 		configService = mock(ConfigurationService.class);
 
-		when(configService.getValue(eq(NodePath.at("/App/Feed/MaxOptimalRange")), anyInt()))
+		when(configService.getValue(NodePath.at("/App/Feed/MaxOptimalRange"), Integer.class))
 				.thenReturn(maxRange);
 
-		when(configService.getValue(eq(NodePath.at("/App/Feed/MinOptimalRange")), anyInt()))
+		when(configService.getValue(NodePath.at("/App/Feed/MinOptimalRange"), Integer.class))
 				.thenReturn(minRange);
 
-		when(configService.getValue(eq(NodePath.at("/App/Feed/MaxUpdate")), anyInt()))
+		when(configService.getValue(NodePath.at("/App/Feed/MaxUpdate"), Integer.class))
 				.thenReturn(maxUpdate);
 
-		when(configService.getValue(eq(NodePath.at("/App/Feed/MinUpdate")), anyInt()))
+		when(configService.getValue(NodePath.at("/App/Feed/MinUpdate"), Integer.class))
 				.thenReturn(minUpdate);
 
 		frequencyCalculator.setConfigurationService(configService);

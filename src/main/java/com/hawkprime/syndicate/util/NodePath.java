@@ -53,6 +53,21 @@ public final class NodePath implements Iterable<NodePath> {
 		return new NodePath(path);
 	}
 
+
+	/**
+	 * Create a new NodePath concatenating the given objects.
+	 *
+	 * @param componentList the component list
+	 * @return the node path
+	 */
+	public static NodePath at(final Object ... componentList) {
+		NodePath path = NodePath.root();
+		for (Object component : componentList) {
+			path = path.append(component.toString());
+		}
+		return path;
+	}
+
 	/**
 	 * Gets the length.
 	 *

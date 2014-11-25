@@ -1,7 +1,9 @@
 package com.hawkprime.syndicate.service;
 
 import com.hawkprime.syndicate.dao.PostDao;
+import com.hawkprime.syndicate.model.Feed;
 import com.hawkprime.syndicate.model.Post;
+import com.hawkprime.syndicate.util.NodePath;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class PostService {
+	@Autowired
+	private ConfigurationService configService;
 
 	@Autowired
 	private PostDao postDao;
@@ -67,11 +71,29 @@ public class PostService {
 	}
 
 	/**
+	 * Clean-up old posts in feed.
+	 * @param feed feed to cleanup
+	 */
+	@Transactional
+	public void deleteOldPosts(final Feed feed) {
+		final NodePath feedRootConfig = NodePath.at("App/Feed/", feed.getId());
+		deleteReadNotStaredByFeedIdOlderThan(feed.getId(),
+				configService.getValue(feedRootConfig.append("DeleteReadAfterDays"), Integer.class));
+
+		deleteUnreadNotStaredByFeedIdOlderThan(feed.getId(),
+				configService.getValue(feedRootConfig.append("DeleteUnReadAfterDays"), Integer.class));
+
+		deletePublishedNotStaredByFeedIdOlderThan(feed.getId(),
+				configService.getValue(feedRootConfig.append("DeletePublishedAfterDays"), Integer.class));
+	}
+
+	/**
 	 * Set post DAO.
 	 * @param postDao dao
 	 */
 	public void setPostDao(final PostDao postDao) {
 		this.postDao = postDao;
 	}
+
 }
 

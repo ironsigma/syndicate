@@ -1,0 +1,18 @@
+App:
+  Version: 5.0.0
+  Build: 2014-11-24T15:51:03.234
+  CpuThreshold: .89
+  StartupInactive: False
+  ShutdownAutomatically: true
+  Feed:
+    UpdateInterval: 15
+    MaxOptimalRange: 80
+    MinOptimalRange: 70
+    MaxUpdate: 1
+    MinUpdate: 2880
+    DeleteReadAfter: 14
+    DeleteUnReadAfter: 30
+    DeletePublishedAfter: 60
+  User:
+    SortOrder: DESC
+    SortField: PUBLISHED

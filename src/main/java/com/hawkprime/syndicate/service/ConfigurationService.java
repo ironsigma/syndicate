@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Setting Service.
@@ -37,12 +38,27 @@ public class ConfigurationService {
 	private NodeDao nodeDao;
 
 	/**
-	 * Sets the value.
+	 * Create the setting and assign a value.
 	 *
 	 * @param <T> Generic type
 	 * @param settingPath the setting path
 	 * @param value the value
 	 */
+	@Transactional
+	public <T> void createSettingWithValue(final NodePath settingPath, final T value) {
+		setValue(settingPath, value, true);
+	}
+
+	/**
+	 * Sets the value of a setting.
+	 *
+	 * If the setting does not exists, the value will not be created.
+	 *
+	 * @param <T> Generic type
+	 * @param settingPath the setting path
+	 * @param value the value
+	 */
+	@Transactional
 	public <T> void setValue(final NodePath settingPath, final T value) {
 		setValue(settingPath, value, false);
 	}
@@ -112,6 +128,17 @@ public class ConfigurationService {
 	}
 
 	/**
+	 * Checks for value.
+	 *
+	 * @param settingPath the setting path
+	 * @return true, if value exists
+	 */
+	@Transactional(readOnly=true)
+	public boolean hasValue(final NodePath settingPath) {
+		return null != valueDao.findByPath(settingPath);
+	}
+
+	/**
 	 * Find the setting by name.
 	 * @param name Name of setting
 	 * @param create Create setting if it doesn't exist
@@ -138,6 +165,7 @@ public class ConfigurationService {
 	 * @param path the path
 	 * @return the settings
 	 */
+	@Transactional(readOnly=true)
 	public Map<String, Object> getSettings(final NodePath path) {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		for (Setting setting : settingDao.findByPath(path)) {
@@ -150,30 +178,12 @@ public class ConfigurationService {
 	 * Gets the value.
 	 *
 	 * @param <T> the generic type
-	 * @param path path
-	 * @param defaultValue value if not found
-	 * @return the value
-	 */
-	public <T extends Object> T getValue(final NodePath path, final T defaultValue) {
-		@SuppressWarnings("unchecked")
-		T value = getValue(path, (Class<T>) defaultValue.getClass());
-		if (value == null) {
-			LOG.debug("No value found for \"{}\" using default \"{}\"", path.toString(), defaultValue);
-			setValue(path, defaultValue, true);
-			return defaultValue;
-		}
-		return value;
-	}
-
-	/**
-	 * Gets the value.
-	 *
-	 * @param <T> the generic type
 	 * @param path the path
 	 * @param type the type
 	 * @return the value
 	 */
 	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
 	public <T> T getValue(final NodePath path, final Class<T> type) {
 		final Value value = valueDao.findByPath(path);
 		if (value == null) {

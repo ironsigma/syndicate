@@ -103,7 +103,6 @@
     <module name="AvoidStaticImport">
       <property name="excludes" value="org.hamcrest.CoreMatchers.*, org.junit.Assert.assertThat, org.mockito.Mockito.*, org.mockito.Matchers.*"/>
     </module>
-    <module name="ImportOrder"/>
     <module name="AnonInnerLength"/>
     <module name="ExecutableStatementCount">
       <property name="max" value="50"/>
